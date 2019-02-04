@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Easy Help</title>
+  <script src="jquery-3.3.1.min.js"></script>
+
+</head>
+
+<body>
+
+<div id="app">
+    <ul>
+
+        <li v-for="doctor in doctors">
+        {{doctor.id}} {{doctor.firstName}}
+        </li>
+
+    </ul>
+
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+<script>
+    new Vue({
+        el: '#app',
+        data () {
+            return {
+                doctors : []
+
+            }
+        },
+
+        created () {
+            // axios
+                fetch('https://easy-help-backend.herokuapp.com/api/doctors')
+                .then(response => response.json())
+                .then(json => {
+                    this.doctors = json
+                })
+
+                .catch(error => {
+                    console.log(error)
+                    this.info = true
+                })
+                .finally(() => this.loading = false)
+        }
+
+
+
+    })
+
+</script>
+
+</body>
+
+</html>
