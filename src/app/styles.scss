@@ -1,0 +1,93 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~bootstrap/dist/css/bootstrap.css";
+$white: #fff;
+$black: #120309;
+$primary: #fff;
+$light-blue: #5C86B3;
+$light-gray: #fafaff;
+$secondary: #6bb7bc;
+$dark-blue: #133961;
+$third-color: #133961;
+$red: #7f0e24;
+$emergency: #7f0e24;
+$dark: #120309;
+$grey: #dddddd;
+body {
+    background-color: $light-gray;
+}
+
+.error-message {
+    color: red;
+}
+
+.log-out {
+    img {
+        fill: $white;
+        width: 32px;
+        cursor: pointer;
+    }
+}
+
+.log-out:hover {
+    img {
+        fill: $black;
+    }
+}
+
+.nav-bar {
+    margin-bottom: 32px;
+    background-color: $light-blue;
+    .logo-div {
+        padding: 16px 0;
+        text-align: center;
+    }
+}
+
+.back-button {
+    cursor: pointer;
+    img {
+        width: 32px;
+    }
+}
+
+.add-button {
+    cursor: pointer;
+    img {
+        width: 32px;
+    }
+}
+
+.import-button {
+    padding-top: 6px;
+    cursor: pointer;
+    img {
+        width: 32px;
+    }
+}
+
+.export-button {
+    padding-top: 6px;
+    cursor: pointer;
+    img {
+        width: 26px;
+    }
+}
+
+.edit-button {
+    cursor: pointer;
+    img {
+        width: 32px;
+    }
+}
+
+.invite-button {
+    cursor: pointer;
+    img {
+        width: 32px;
+    }
+}
+
+.clickable {
+    cursor: pointer;
+}
