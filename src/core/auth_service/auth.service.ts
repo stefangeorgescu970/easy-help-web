@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import * as jwt_decode from 'jwt-decode';
+import * as jwt from 'jwt-decode';
 import { environment } from 'src/environments/environment.prod';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -23,14 +23,14 @@ export class AuthService {
       localStorage.setItem(TOKEN_NAME, token);
     }
 
-    getTokenExpirationDate(token: string): string {
-    //   const decoded = jwt_decode(token);
+getTokenExpirationDate(token: string): Date {
+      const decoded = jwt(token);
 
-    //   if (decoded.exp === undefined) { return null; }
+      if (decoded.exp === undefined) { return null; }
 
-    //   const date = new Date(0);
-    //   date.setUTCSeconds(decoded.exp);
-      return Date();
+      const date = new Date(0);
+      date.setUTCSeconds(decoded.exp);
+      return date;
     }
 
     isTokenExpired(token?: string): boolean {
@@ -39,8 +39,7 @@ export class AuthService {
 
       const date = this.getTokenExpirationDate(token);
       if (date === undefined) { return false; }
-      return false;
-    //   return !(date.valueOf() > new Date().valueOf());
+      return !(date.valueOf() > new Date().valueOf());
     }
 
     login(email: string, password: string): Observable<string> {
@@ -48,6 +47,7 @@ export class AuthService {
 
         return this.http.post(environment.apiUrl + '/login', JSON.stringify({email: email, password: password}), {headers: myheader})
         .pipe(map((res: any) => {
+            this.setToken(res.token);
             return res.token;
         }));
     }

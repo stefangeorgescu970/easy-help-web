@@ -25,6 +25,7 @@ export class JwtInterceptor implements HttpInterceptor {
         if (err.status === 401) {
           // redirect to the login route
           // or show a modal
+          // or relogin
         }
       }
     });
