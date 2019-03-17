@@ -48,6 +48,13 @@ export class AuthService {
 
         return this.http.post(environment.apiUrl + '/login', JSON.stringify({email: email, password: password}), {headers: myheader})
         .pipe(map((res: any) => {
+            return res.token;
+        }));
+    }
+
+    logout(): Observable<string> {
+        return this.http.post(environment.apiUrl + '/logout', {headers: {}})
+        .pipe(map((res: any) => {
             return res;
         }));
     }
