@@ -5,22 +5,22 @@ import {
   HttpEvent,
   HttpInterceptor
 } from '@angular/common/http';
-import { AuthService } from './auth.service';
+import { AuthService } from '../../core/auth_service/auth.service';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class TokenInterceptor implements HttpInterceptor {
+export class JwtInterceptor implements HttpInterceptor {
 
     constructor(public auth: AuthService) {}
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const idToken = this.auth.getToken();
+        const currentUser = this.auth.getUser();
 
-        if (idToken) {
+        if (currentUser) {
 
             const cloned = request.clone({
                 setHeaders: {
-                Authorization: `${idToken}`
+                Authorization: `${currentUser.token}`
                 }
             });
 

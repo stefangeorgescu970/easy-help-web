@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/auth_service/auth.service';
+import { ProfileData } from 'src/shared/models/profile-data/profile-data';
+import { LoginResult } from 'src/shared/models/login-result/login-result';
 
 @Component({
   selector: 'app-login',
@@ -29,14 +31,21 @@ export class LoginComponent implements OnInit {
 
 
     this.authService.login(username, password)
-      .subscribe((res: any) => {
-        if (res.status === false) {
+      .subscribe((res: LoginResult) => {
+        if (res.success === false) {
             this.errorMessage = true;
             return;
         } else {
-            this.errorMessage = false;
 
-            alert(res);
+            const profileData = res.profileData;
+
+            if (profileData !== undefined) {
+                switch (profileData.role) {
+                    case 'SYSADMIN':
+                    this.router.navigate(['admin']);
+                    break;
+                }
+            }
         }
       });
   }

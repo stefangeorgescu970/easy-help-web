@@ -4,8 +4,10 @@ import * as jwt from 'jwt-decode';
 import { environment } from 'src/environments/environment.prod';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ProfileData } from 'src/shared/models/profile-data/profile-data';
+import { LoginResult } from 'src/shared/models/login-result/login-result';
 
-export const TOKEN_NAME = 'jwt_token';
+export const USER_NAME = 'current-user';
 
 @Injectable({
     providedIn: 'root'
@@ -15,46 +17,36 @@ export class AuthService {
 
     constructor(private http: HttpClient) { }
 
-    getToken(): string {
-      return localStorage.getItem(TOKEN_NAME);
+    setUser(user: ProfileData): void {
+        localStorage.setItem(USER_NAME, JSON.stringify(user));
     }
 
-    setToken(token: string): void {
-      localStorage.setItem(TOKEN_NAME, token);
+    getUser(): ProfileData {
+        const userString = localStorage.getItem(USER_NAME);
+        return JSON.parse(userString) as ProfileData;
     }
 
-getTokenExpirationDate(token: string): Date {
-      const decoded = jwt(token);
-
-      if (decoded.exp === undefined) { return null; }
-
-      const date = new Date(0);
-      date.setUTCSeconds(decoded.exp);
-      return date;
-    }
-
-    isTokenExpired(token?: string): boolean {
-      if (!token) { token = this.getToken(); }
-      if (!token) { return true; }
-
-      const date = this.getTokenExpirationDate(token);
-      if (date === undefined) { return false; }
-      return !(date.valueOf() > new Date().valueOf());
-    }
-
-    login(email: string, password: string): Observable<string> {
+    login(email: string, password: string): Observable<LoginResult> {
         const myheader = new HttpHeaders().set('Content-Type', 'application/json');
 
         return this.http.post(environment.apiUrl + '/login', JSON.stringify({email: email, password: password}), {headers: myheader})
         .pipe(map((res: any) => {
-            this.setToken(res.token);
-            return res.token;
+            const body = res.body;
+
+            if (body.status === true) {
+                const profile = new ProfileData(body.object.token, body.object.user.userType);
+                this.setUser(profile);
+                return new LoginResult(true, profile);
+            } else {
+                return new LoginResult(false, null);
+            }
         }));
     }
 
     logout(): Observable<string> {
         return this.http.post(environment.apiUrl + '/logout', {headers: {}})
         .pipe(map((res: any) => {
+            localStorage.removeItem(USER_NAME);
             return res;
         }));
     }

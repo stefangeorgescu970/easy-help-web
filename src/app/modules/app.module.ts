@@ -5,14 +5,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './home/app.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptor } from '../../core/auth_service/token.interceptor';
 import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { DoctorAccountRequestsComponent } from './components/admin/doctor-account-requests/doctor-account-requests.component';
+import { JwtInterceptor } from 'src/app/helpers/jwt.interceptor';
+import { ErrorInterceptor } from '../helpers/error.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    DoctorAccountRequestsComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
   providers: [
       {
         provide: HTTP_INTERCEPTORS,
-        useClass: TokenInterceptor,
+        useClass: JwtInterceptor,
+        multi: true
+      },
+      {
+        provide: HTTP_INTERCEPTORS,
+        useClass: ErrorInterceptor,
         multi: true
       }
     ],
