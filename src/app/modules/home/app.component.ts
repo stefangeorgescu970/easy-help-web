@@ -12,22 +12,6 @@ export class AppComponent {
   canLogout = true;
 
   constructor(private authService: AuthService, private router: Router) { }
-  
-  ngOnInit(): void {
-    if (this.router.url.includes('student') || this.router.url.includes('professor')) {
-      this.canLogout = true;
-    } else {
-      this.canLogout = false;
-    }
-
-    this.router.events.subscribe(res => {
-      if (this.router.url.includes('student') || this.router.url.includes('professor')) {
-        this.canLogout = true;
-      } else {
-        this.canLogout = false;
-      }
-    });
-  }
 
   logout() {
     this.authService.logout()

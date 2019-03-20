@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import * as jwt from 'jwt-decode';
 import { environment } from 'src/environments/environment.prod';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';
 import { LoginResult } from 'src/shared/models/login-result/login-result';
@@ -44,10 +44,13 @@ export class AuthService {
     }
 
     logout(): Observable<string> {
-        return this.http.post(environment.apiUrl + '/logout', {headers: {}})
-        .pipe(map((res: any) => {
-            localStorage.removeItem(USER_NAME);
-            return res;
-        }));
+        // return this.http.post(environment.apiUrl + '/logout', {headers: {}})
+        // .pipe(map((res: any) => {
+        //     localStorage.removeItem(USER_NAME);
+        //     return res;
+        // }));
+
+        localStorage.removeItem(USER_NAME);
+        return of('string');
     }
 }
