@@ -1,7 +1,18 @@
 <div class="row nav-bar">
-    <h1> Admin page</h1>    
-</div>
-        
+<mat-toolbar color="primary">
+            <span>
+                <img class="faculty-logo" src="../../../assets/images/bloodDrop.jpg">
+                Admin
+            </span> <span class="example-spacer"></span>
+            <a routerLink="doctor-reqs" class="error-message" mat-button>Doctor Account Requests</a> 
+            <a routerLink="dcp-reqs" class="error-message" mat-button>DCP Account Requests</a>
+            <a routerLink="doctors" class="error-message" mat-button>Doctor Accounts</a>
+            <a routerLink="dcps" class="error-message" mat-button>DCP Accounts</a>
+            <a routerLink="hospitals" class="error-message" mat-button>Hospitals</a> 
+            <a routerLink="donation-centers" class="error-message" mat-button>Donation Centers</a>
+    </mat-toolbar>
+</div>  
+    
     <div class="content">
         <div class="card col-lg-8 mx-auto mt-3 p-5">
             <router-outlet></router-outlet>
