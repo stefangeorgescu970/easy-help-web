@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DonationCenterService } from 'src/core/donation-center-service/donation-center.service';
+import { RealLocation } from 'src/shared/models/locations/real-location';
 
 @Component({
   selector: 'app-donation-centers',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DonationCentersComponent implements OnInit {
 
-  constructor() { }
+    constructor(private donationCenterService: DonationCenterService) { }
 
-  ngOnInit() {
-  }
+    donationCenters: RealLocation[];
+
+    ngOnInit() {
+        this.donationCenterService.getDonationCenters().subscribe(
+            (res: RealLocation[]) => {
+              this.donationCenters = res;
+            }
+        );
+    }
 
 }

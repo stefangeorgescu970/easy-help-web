@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HospitalService } from 'src/core/hospital-service/hospital.service';
+import { RealLocation } from 'src/shared/models/locations/real-location';
 
 @Component({
   selector: 'app-hospitals',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HospitalsComponent implements OnInit {
 
-  constructor() { }
+    constructor(private hospitalService: HospitalService) { }
 
-  ngOnInit() {
-  }
+    hospitals: RealLocation[];
 
+    ngOnInit() {
+        this.hospitalService.getHospitals().subscribe(
+            (res: RealLocation[]) => {
+              this.hospitals = res;
+            }
+        );
+    }
 }
