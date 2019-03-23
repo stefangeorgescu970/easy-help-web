@@ -65,7 +65,6 @@ import {CdkTreeModule} from '@angular/cdk/tree';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { DcpAccountRequestsComponent } from './components/admin/dcp-account-requests/dcp-account-requests.component';
 import { DoctorAccountsComponent } from './components/admin/doctor-accounts/doctor-accounts.component';
-import { DcpComponent } from './components/admin/dcp/dcp.component';
 import { DcpAccountsComponent } from './components/admin/dcp-accounts/dcp-accounts.component';
 import { HospitalsComponent } from './components/admin/hospitals/hospitals.component';
 import { DonationCentersComponent } from './components/admin/donation-centers/donation-centers.component';
@@ -80,7 +79,6 @@ import { DonationCentersComponent } from './components/admin/donation-centers/do
     AdminLayoutComponent,
     DcpAccountRequestsComponent,
     DoctorAccountsComponent,
-    DcpComponent,
     DcpAccountsComponent,
     HospitalsComponent,
     DonationCentersComponent

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../../../core/auth_service/auth.service';
+import { AuthService } from '../../../../core/auth-service/auth.service';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';
 import { LoginResult } from 'src/shared/models/login-result/login-result';
 
