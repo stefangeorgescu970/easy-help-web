@@ -17,6 +17,8 @@ export class AuthService {
 
     constructor(private http: HttpClient) { }
 
+    myheader = new HttpHeaders().set('Content-Type', 'application/json');
+
     setUser(user: ProfileData): void {
         localStorage.setItem(USER_NAME, JSON.stringify(user));
     }
@@ -27,9 +29,7 @@ export class AuthService {
     }
 
     login(email: string, password: string): Observable<LoginResult> {
-        const myheader = new HttpHeaders().set('Content-Type', 'application/json');
-
-        return this.http.post(environment.apiUrl + '/login', JSON.stringify({email: email, password: password}), {headers: myheader})
+        return this.http.post(environment.apiUrl + '/login', JSON.stringify({email: email, password: password}), {headers: this.myheader})
         .pipe(map((res: any) => {
             const body = res.body;
 

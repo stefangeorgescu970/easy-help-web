@@ -1,3 +1,23 @@
-<p>
-  dcp-account-requests works!
-</p>
+
+<h2>Donation Center Personnel Account Requests</h2>
+
+
+<table class="table table-hover" *ngIf="dcpAccounts && dcpAccounts.length > 0; else no_account_requests">
+        <thead>
+          <tr>
+            <th scope="col" class="th-id">Id</th>
+            <th scope="col" class="th-email">Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let accountReq of dcpAccounts" data-="accountReq.id">
+            <td class="td-id">{{ accountReq.id }}</td>
+            <td class="td-email">{{ accountReq.email }}</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <ng-template #no_account_requests>
+        <h5>No Donation Center Personnel account requests.</h5>
+      </ng-template>
+      

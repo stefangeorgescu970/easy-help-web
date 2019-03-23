@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from 'src/core/admin-service/admin-service.service';
+import { DcpAccount } from 'src/shared/models/accounts/dcp-account/dcp-account';
 
 @Component({
   selector: 'app-dcp-account-requests',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DcpAccountRequestsComponent implements OnInit {
 
-  constructor() { }
+    constructor(private adminService: AdminService) { }
 
-  ngOnInit() {
-  }
+    dcpAccounts: DcpAccount[];
 
+    ngOnInit() {
+        this.adminService.getDcpAccountRequests().subscribe(
+            (res: DcpAccount[]) => {
+              this.dcpAccounts = res;
+            }
+        );
+    }
+  
 }

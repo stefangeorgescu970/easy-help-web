@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from 'src/core/admin-service/admin-service.service';
+import { DoctorAccount } from 'src/shared/models/accounts/doctor-account/doctor-account';
 
 @Component({
   selector: 'app-doctor-accounts',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DoctorAccountsComponent implements OnInit {
 
-  constructor() { }
+    constructor(private adminService: AdminService) { }
 
-  ngOnInit() {
-  }
+    activeDoctorAccounts: DoctorAccount[];
+    bannedDoctorAccounts: DoctorAccount[];
 
+    ngOnInit() {
+        this.adminService.getDoctorAccounts(true).subscribe(
+            (res: DoctorAccount[]) => {
+              this.activeDoctorAccounts = res;
+            }
+        );
+
+        this.adminService.getDoctorAccounts(false).subscribe(
+            (res: DoctorAccount[]) => {
+                this.bannedDoctorAccounts = res;
+            }
+        );
+    }
 }

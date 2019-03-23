@@ -1,3 +1,40 @@
-<p>
-  dcp-accounts works!
-</p>
+
+<h2>Active Donation Center Personnel Accounts</h2>
+
+<table class="table table-hover" *ngIf="activeDcpAccounts && activeDcpAccounts.length > 0; else no_active_dcp">
+        <thead>
+          <tr>
+            <th scope="col" class="th-id">Id</th>
+            <th scope="col" class="th-email">Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let account of activeDcpAccounts" data-="account.id">
+            <td class="td-id">{{ account.id }}</td>
+            <td class="td-email">{{ account.email }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <ng-template #no_active_dcp>
+        <h5>No active donation center personnel.</h5>
+      </ng-template>
+      
+      <h2>Banned Donation Center Personnel Accounts</h2>
+      <table class="table table-hover" *ngIf="bannedDcpAccounts && bannedDcpAccounts.length > 0; else no_banned_dcp">
+            <thead>
+              <tr>
+                <th scope="col" class="th-id">Id</th>
+                <th scope="col" class="th-email">Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let account of bannedDcpAccounts" data-="account.id">
+                <td class="td-id">{{ account.id }}</td>
+                <td class="td-email">{{ account.email }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <ng-template #no_banned_dcp>
+            <h5>No banned donation center personnel accounts.</h5>
+          </ng-template>
+          

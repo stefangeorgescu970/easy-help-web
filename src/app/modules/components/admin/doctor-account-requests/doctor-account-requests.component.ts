@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from 'src/core/admin-service/admin-service.service';
+import { DoctorAccount } from 'src/shared/models/accounts/doctor-account/doctor-account';
 
 @Component({
   selector: 'app-doctor-account-requests',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DoctorAccountRequestsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private adminService: AdminService) { }
+
+  doctorAccounts: DoctorAccount[];
 
   ngOnInit() {
+      this.adminService.getDoctorAccountRequests().subscribe(
+          (res: DoctorAccount[]) => {
+            this.doctorAccounts = res;
+          }
+      );
   }
 
 }
