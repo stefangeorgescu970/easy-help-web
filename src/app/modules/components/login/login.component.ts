@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
                 const profileData = res.profileData;
 
                 if (profileData !== undefined) {
-                    this.redirect(profileData)
+                    this.redirect(profileData);
                 }
             }
         });

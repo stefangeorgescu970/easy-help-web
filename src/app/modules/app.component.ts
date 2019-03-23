@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../../core/auth_service/auth.service';
+import { AuthService } from './../../core/auth_service/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  template: `<router-outlet></router-outlet>`,
+  styles: []
 })
 export class AppComponent {
   title = 'easy-help-web';
