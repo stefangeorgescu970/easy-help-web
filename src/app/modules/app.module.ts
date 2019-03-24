@@ -68,6 +68,8 @@ import { DoctorAccountsComponent } from './components/admin/doctor-accounts/doct
 import { DcpAccountsComponent } from './components/admin/dcp-accounts/dcp-accounts.component';
 import { HospitalsComponent } from './components/admin/hospitals/hospitals.component';
 import { DonationCentersComponent } from './components/admin/donation-centers/donation-centers.component';
+import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +83,9 @@ import { DonationCentersComponent } from './components/admin/donation-centers/do
     DoctorAccountsComponent,
     DcpAccountsComponent,
     HospitalsComponent,
-    DonationCentersComponent
+    DonationCentersComponent,
+    LoginLayoutComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
