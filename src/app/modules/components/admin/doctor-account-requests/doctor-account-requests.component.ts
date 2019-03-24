@@ -23,7 +23,7 @@ export class DoctorAccountRequestsComponent implements OnInit {
   }
 
   approveDoctorRequest(requestId: number, index: number) {
-    this.adminService.acceptRequest(requestId)
+    this.adminService.acceptDoctorRequest(requestId)
       .subscribe((res: BooleanServerResponse) => {
         if (res.success === true){
           this.doctorAccounts.splice(index, 1);
@@ -34,7 +34,7 @@ export class DoctorAccountRequestsComponent implements OnInit {
   }
 
   declineDoctorRequest(requestId: number, index : number) {
-    this.adminService.declineRequest(requestId)
+    this.adminService.declineDoctorRequest(requestId)
       .subscribe((res: BooleanServerResponse) => {
         if (res.success === true){
           this.doctorAccounts.splice(index, 1);
@@ -43,5 +43,5 @@ export class DoctorAccountRequestsComponent implements OnInit {
         }
       });
   }
-
+  
 }

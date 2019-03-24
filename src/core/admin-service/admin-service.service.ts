@@ -106,7 +106,7 @@ export class AdminService {
         }));
     }
 
-    acceptRequest(requestId: number): Observable<BooleanServerResponse> {
+    acceptDoctorRequest(requestId: number): Observable<BooleanServerResponse> {
         return this.http
         .post(environment.apiUrl + '/admin/approveDoctorAccount', JSON.stringify({id: requestId}), {headers: this.myheader})
         .pipe(map((res: any) => {
@@ -118,9 +118,33 @@ export class AdminService {
         }));
     }
 
-    declineRequest(requestId: number ): Observable<BooleanServerResponse> {
+    declineDoctorRequest(requestId: number ): Observable<BooleanServerResponse> {
         return this.http
         .post(environment.apiUrl + '/admin/rejectDoctorAccount', JSON.stringify({id: requestId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            let booleanResponse = new BooleanServerResponse(res.status)
+            if(res.status === false){
+                booleanResponse.exception = res.exception
+            }
+            return booleanResponse
+        }));
+    }
+
+    acceptDCPRequest(requestId: number): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/admin/approveDcpAccount', JSON.stringify({id: requestId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            let booleanResponse = new BooleanServerResponse(res.status)
+            if(res.status === false){
+                booleanResponse.exception = res.exception
+            }
+            return booleanResponse
+        }));
+    }
+
+    declineDCPRequest(requestId: number ): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/admin/rejectDcpAccount', JSON.stringify({id: requestId}), {headers: this.myheader})
         .pipe(map((res: any) => {
             let booleanResponse = new BooleanServerResponse(res.status)
             if(res.status === false){
