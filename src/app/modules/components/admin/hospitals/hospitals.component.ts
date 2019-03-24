@@ -4,6 +4,7 @@ import { RealLocation } from 'src/shared/models/locations/real-location';
 import { EnumsService } from 'src/core/enums-service/enums-service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
+import { LocationResponse } from 'src/shared/models/locations/location-response';
 
 
 @Component({
@@ -43,20 +44,32 @@ export class HospitalsComponent implements OnInit {
     }
 
     enumToOption(enu: string): string {
-      if(enu !== undefined){
-        return enu.split('_')
+         return enu.split('_')
         .map((s: string) => s.slice(0, 1) + s.slice(1).toLowerCase())
         .join(' ');
-      }
-      return enu;
     }
 
     addHospital() {
       const hospital = this.hospitalForm.value;
       this.hospitalService.addHospital(hospital).subscribe(
-        (res: BooleanServerResponse) => {
-          alert("aaa" + res.success)
+        (res: LocationResponse) => {
+          if(res.success){
+            this.hospitals.push(res.model);
+          }else{
+            alert(res.exception)
+          } 
         } );
+      }
+
+      removeHospital(hospitalId: number, index : number) {
+        this.hospitalService.removeHospital(hospitalId)
+          .subscribe((res: BooleanServerResponse) => {
+            if (res.success === true){
+              this.hospitals.splice(index, 1);
+            }else{
+              alert(res.exception)
+            }
+          });
       }
 
 }

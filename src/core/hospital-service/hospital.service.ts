@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment.prod';
 import { map } from 'rxjs/operators';
 import { RealLocation } from 'src/shared/models/locations/real-location';
 import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
+import { LocationResponse } from 'src/shared/models/locations/location-response';
 
 @Injectable({
   providedIn: 'root'
@@ -37,9 +38,23 @@ export class HospitalService {
         }));
     }
 
-    addHospital(hospital : RealLocation): Observable<BooleanServerResponse> {
+    addHospital(hospital : RealLocation): Observable<LocationResponse> {
         return this.http
-        .post(environment.apiUrl + '/hospital/add', hospital, {headers: this.myheader})
+        .post(environment.apiUrl + '/hospital/add',hospital, {headers: this.myheader})
+        .pipe(map((res: any) => {
+            let response = new LocationResponse(res.status)
+            if(res.status === true){
+                response.model = res.object
+            }else{
+                response.exception = res.exception
+            }
+            return response
+        }));
+    }
+
+    removeHospital(requestId: number ): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/hospital/remove', JSON.stringify({id: requestId}), {headers: this.myheader})
         .pipe(map((res: any) => {
             let booleanResponse = new BooleanServerResponse(res.status)
             if(res.status === false){
