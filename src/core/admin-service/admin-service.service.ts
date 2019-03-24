@@ -5,6 +5,7 @@ import { DoctorAccount } from 'src/shared/models/accounts/doctor-account/doctor-
 import { environment } from 'src/environments/environment.prod';
 import { map } from 'rxjs/operators';
 import { DcpAccount } from 'src/shared/models/accounts/dcp-account/dcp-account';
+import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
 
 @Injectable({
   providedIn: 'root'
@@ -102,6 +103,30 @@ export class AdminService {
                 const myList: Array<DcpAccount> = [];
                 return myList;
             }
+        }));
+    }
+
+    acceptRequest(requestId: number): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/admin/approveDoctorAccount', JSON.stringify({id: requestId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            let booleanResponse = new BooleanServerResponse(res.status)
+            if(res.status === false){
+                booleanResponse.exception = res.exception
+            }
+            return booleanResponse
+        }));
+    }
+
+    declineRequest(requestId: number ): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/admin/rejectDoctorAccount', JSON.stringify({id: requestId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            let booleanResponse = new BooleanServerResponse(res.status)
+            if(res.status === false){
+                booleanResponse.exception = res.exception
+            }
+            return booleanResponse
         }));
     }
 }
