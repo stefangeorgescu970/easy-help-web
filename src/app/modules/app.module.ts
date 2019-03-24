@@ -13,6 +13,7 @@ import { IntroComponent } from './components/intro/intro.component';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AppComponent } from './app.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {
     MatAutocompleteModule,
@@ -68,6 +69,8 @@ import { DoctorAccountsComponent } from './components/admin/doctor-accounts/doct
 import { DcpAccountsComponent } from './components/admin/dcp-accounts/dcp-accounts.component';
 import { HospitalsComponent } from './components/admin/hospitals/hospitals.component';
 import { DonationCentersComponent } from './components/admin/donation-centers/donation-centers.component';
+import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -81,10 +84,13 @@ import { DonationCentersComponent } from './components/admin/donation-centers/do
     DoctorAccountsComponent,
     DcpAccountsComponent,
     HospitalsComponent,
-    DonationCentersComponent
+    DonationCentersComponent,
+    LoginLayoutComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
+    NgbModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,

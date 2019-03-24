@@ -29,15 +29,16 @@ export class AuthService {
     }
 
     login(email: string, password: string): Observable<LoginResult> {
-        return this.http.post(environment.apiUrl + '/users/login', JSON.stringify({email: email, password: password}), {headers: this.myheader})
+        return this.http.post(environment.apiUrl + '/users/login', 
+                              JSON.stringify({email: email, password: password}),
+                              {headers: this.myheader})
         .pipe(map((res: any) => {
-            
             if (res.status === true) {
                 const profile = new ProfileData(res.object.token, res.object.user.userType);
                 this.setUser(profile);
-                return new LoginResult(true, profile);
+                return new LoginResult(true, profile, null);
             } else {
-                return new LoginResult(false, null);
+                return new LoginResult(false, null, res.exception);
             }
         }));
     }

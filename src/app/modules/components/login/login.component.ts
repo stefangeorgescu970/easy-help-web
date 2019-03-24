@@ -51,11 +51,12 @@ export class LoginComponent implements OnInit {
         this.loading = true;
         this.authenticationService.login(this.f.username.value, this.f.password.value)
         .subscribe((res: LoginResult) => {
+            this.loading = false;
             if (res.success === false) {
-                this.error = 'Some error';
+                this.error = res.error;
                 return;
             } else {
-
+                this.error = undefined;
                 const profileData = res.profileData;
 
                 if (profileData !== undefined) {
