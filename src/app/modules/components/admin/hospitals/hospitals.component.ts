@@ -13,7 +13,7 @@ import { BooleanServerResponse } from 'src/shared/models/boolean-server-response
 })
 export class HospitalsComponent implements OnInit {
 
-    constructor(private hospitalService: HospitalService, private enumService : EnumsService) { }
+    constructor(private hospitalService: HospitalService, private enumService: EnumsService) { }
 
     hospitalForm: FormGroup;
     counties: string[];
@@ -43,7 +43,7 @@ export class HospitalsComponent implements OnInit {
     }
 
     enumToOption(enu: string): string {
-      if(enu !== undefined){
+      if (enu !== undefined) {
         return enu.split('_')
         .map((s: string) => s.slice(0, 1) + s.slice(1).toLowerCase())
         .join(' ');

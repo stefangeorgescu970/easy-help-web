@@ -13,13 +13,15 @@ import { DcpAccountsComponent } from './components/admin/dcp-accounts/dcp-accoun
 import { HospitalsComponent } from './components/admin/hospitals/hospitals.component';
 import { DonationCentersComponent } from './components/admin/donation-centers/donation-centers.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
+import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
     { path: '', component: HomeLayoutComponent, children: [
         { path: '', component: IntroComponent }
     ] },
     { path: 'login', component: LoginLayoutComponent, children: [
-        { path: '', component: LoginComponent }
+        { path: '', component: LoginComponent },
+        { path: 'register', component: RegisterComponent}
     ] },
     { path: 'admin', component: AdminLayoutComponent, canActivate: [AuthGuard], data: {roles: [UserRole.Admin]}, children: [
         { path: '', component: DoctorAccountRequestsComponent },

@@ -6,8 +6,6 @@ export class RealLocation {
     county: string;
     address: string;
 
-
-
     constructor(id: number, name: string, long: number, lat: number, county: string, address: string) {
         this.id = id;
         this.name = name;
