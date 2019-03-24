@@ -1,20 +1,63 @@
+
+<h2 class="mt-4">Add new Donation Center</h2>
+
+<form [formGroup]="donationCenterForm" class="mt-4">
+  <div class="form-group col-lg-6">
+    <label>Donation Center Name</label>
+    <input class="form-control" type="text" formControlName="name" placeholder="name">
+  </div>
+
+  <div class="form-group col-lg-6">
+    <label>Address</label>
+    <input class="form-control" type="text" formControlName="address" placeholder="address">
+  </div>
+
+  <div class="form-group col-lg-6">
+    <label>Longitude</label>
+    <input class="form-control" type="text" formControlName="latitude" placeholder="latitude">
+  </div>
+
+  <div class="form-group col-lg-6">
+    <label>Latitude</label>
+    <input class="form-control" type="text" formControlName="longitude" placeholder="longitude">
+  </div>
+
+  <div class="form-group col-lg-6">
+    <label>County</label>
+    <select class="form-control" formControlName="county">
+      <option selected hidden value="">Please select a county</option>
+      <option *ngFor="let county of counties" value="{{ county }}">{{ enumToOption(county) }}</option>
+    </select>
+  </div>
+
+</form>
+
+<div class="row mt-5">
+  <span class="btn btn-success mx-auto col-lg-4" (click)="addDonationCenter()">Submit</span>
+</div>
+
 <h2>Donation Centers</h2>
 
 <table class="table table-hover" *ngIf="donationCenters && donationCenters.length > 0; else no_donation_centers">
         <thead>
           <tr>
-            <th scope="col" class="th-id">Id</th>
             <th scope="col" class="th-name">Name</th>
+            <th scope="col" class="th-id">County</th>
+            <th scope="col" class="th-name">Address</th>
             <th scope="col" class="th-long">Longitude</th>
             <th scope="col" class="th-lat">Latitude</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let dc of donationCenters" data-="dc.id">
-            <td class="td-id">{{ dc.id }}</td>
+          <tr *ngFor="let dc of donationCenters ; let i = index" data-="dc.id">
             <td class="td-name">{{ dc.name }}</td>
-            <td class="td-long">{{ dc.long }}</td>
-            <td class="td-lat">{{ dc.lat }}</td>
+            <td class="td-name">{{ dc.county }}</td>
+            <td class="td-name">{{ dc.address }}</td>
+            <td class="td-long">{{ dc.longitude }}</td>
+            <td class="td-lat">{{ dc.latitude }}</td>
+            <td>
+              <span class="btn btn-danger remove-button" (click)="removeDonationCenter(dc.id, i)">Remove</span>
+            </td>
           </tr>
         </tbody>
       </table>
