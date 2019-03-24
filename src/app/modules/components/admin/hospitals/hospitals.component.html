@@ -1,18 +1,58 @@
+
+<h2 class="mt-4">Add new Hospital</h2>
+
+<form [formGroup]="hospitalForm" class="mt-4">
+  <div class="form-group col-lg-6">
+    <label>Hopspital Name</label>
+    <input class="form-control" type="text" formControlName="name" placeholder="name">
+  </div>
+
+  <div class="form-group col-lg-6">
+    <label>Address</label>
+    <input class="form-control" type="text" formControlName="address" placeholder="address">
+  </div>
+
+  <div class="form-group col-lg-6">
+    <label>Longitude</label>
+    <input class="form-control" type="text" formControlName="latitude" placeholder="latitude">
+  </div>
+
+  <div class="form-group col-lg-6">
+    <label>Latitude</label>
+    <input class="form-control" type="text" formControlName="longitude" placeholder="longitude">
+  </div>
+
+  <div class="form-group col-lg-6">
+    <label>County</label>
+    <select class="form-control" formControlName="county">
+      <option selected hidden value="">Please select a county</option>
+      <option *ngFor="let county of counties" value="{{ county }}">{{ enumToOption(county) }}</option>
+    </select>
+  </div>
+
+</form>
+
+<div class="row mt-5">
+  <span class="btn btn-success mx-auto col-lg-4" (click)="addHospital()">Submit</span>
+</div>
+
 <h2>Hospitals</h2>
 
 <table class="table table-hover" *ngIf="hospitals && hospitals.length > 0; else no_hospitals">
         <thead>
           <tr>
-            <th scope="col" class="th-id">Id</th>
             <th scope="col" class="th-name">Name</th>
+            <th scope="col" class="th-id">County</th>
+            <th scope="col" class="th-name">Address</th>
             <th scope="col" class="th-long">Longitude</th>
             <th scope="col" class="th-lat">Latitude</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let hospital of hospitals" data-="hospital.id">
-            <td class="td-id">{{ hospital.id }}</td>
             <td class="td-name">{{ hospital.name }}</td>
+            <td class="td-name">{{ hospital.county }}</td>
+            <td class="td-name">{{ hospital.address }}</td>
             <td class="td-long">{{ hospital.long }}</td>
             <td class="td-lat">{{ hospital.lat }}</td>
           </tr>

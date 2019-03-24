@@ -23,7 +23,7 @@ export class DonationCenterService {
                 const myList: Array<RealLocation> = [];
 
                 for (const obj of objArray) {
-                    const newHospital = new RealLocation(obj.id, obj.name, obj.longitude, obj.latitude);
+                    const newHospital = new RealLocation(obj.id, obj.name, obj.longitude, obj.latitude, obj.county, obj.address);
                     myList.push(newHospital);
                 }
 
