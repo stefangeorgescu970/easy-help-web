@@ -6,7 +6,7 @@ export class BaseAccount {
     lastName?: string;
     email: string;
     city?: string;
-    country?: string;
+    county?: string;
     type: UserRole;
 
     constructor(id: number, email: string, type: UserRole) {

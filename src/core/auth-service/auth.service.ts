@@ -1,3 +1,5 @@
+import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
+import { RegisterDto } from './../../shared/models/accounts/register-dto/register-dto';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import * as jwt from 'jwt-decode';
@@ -29,7 +31,7 @@ export class AuthService {
     }
 
     login(email: string, password: string): Observable<LoginResult> {
-        return this.http.post(environment.apiUrl + '/users/login', 
+        return this.http.post(environment.apiUrl + '/users/login',
                               JSON.stringify({email: email, password: password}),
                               {headers: this.myheader})
         .pipe(map((res: any) => {
@@ -40,6 +42,13 @@ export class AuthService {
             } else {
                 return new LoginResult(false, null, res.exception);
             }
+        }));
+    }
+
+    register(data: RegisterDto): Observable<BooleanServerResponse> {
+        return this.http.post(environment.apiUrl + '/users/register', data, {headers: this.myheader})
+        .pipe(map((res: any) => {
+            return new BooleanServerResponse(res.status);
         }));
     }
 

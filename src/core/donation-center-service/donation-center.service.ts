@@ -34,4 +34,25 @@ export class DonationCenterService {
             }
         }));
     }
+
+    getDonationCentersInCounty(county: string): Observable<RealLocation[]> {
+        return this.http
+        .post(environment.apiUrl + '/donationCenter/getInCounty', JSON.stringify({county: county}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            if (res.status === true) {
+                const objArray = res.object.objects;
+                const myList: Array<RealLocation> = [];
+
+                for (const obj of objArray) {
+                    const newHospital = new RealLocation(obj.id, obj.name, obj.longitude, obj.latitude, obj.county, obj.address);
+                    myList.push(newHospital);
+                }
+
+                return myList;
+            } else {
+                const myList: Array<RealLocation> = [];
+                return myList;
+            }
+        }));
+    }
 }

@@ -1,9 +1,12 @@
+import { DonationCenterService } from 'src/core/donation-center-service/donation-center.service';
+import { HospitalService } from './../../../../core/hospital-service/hospital.service';
 import { Component, OnInit } from '@angular/core';
 import { EnumsService } from 'src/core/enums-service/enums-service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../core/auth-service/auth.service';
 import { RealLocation } from 'src/shared/models/locations/real-location';
+import { RegisterDto } from 'src/shared/models/accounts/register-dto/register-dto';
 
 @Component({
   selector: 'app-register',
@@ -12,16 +15,21 @@ import { RealLocation } from 'src/shared/models/locations/real-location';
 })
 export class RegisterComponent implements OnInit {
 
+    submitted: boolean;
+    loading = false;
+
     counties: string[];
     registerForm: FormGroup;
+
+    selectedCounty: string;
     locations: RealLocation[];
 
-    shouldShowRegister: boolean;
     shouldShowLocations: boolean;
 
     constructor(private formBuilder: FormBuilder, private route: ActivatedRoute,
-                private router: Router, private authenticationService: AuthService, 
-                private enumService: EnumsService) { }
+                private router: Router, private authenticationService: AuthService,
+                private enumService: EnumsService, private hospService: HospitalService,
+                private dcService: DonationCenterService) { }
 
     ngOnInit() {
 
@@ -40,13 +48,13 @@ export class RegisterComponent implements OnInit {
             password: ['', Validators.required],
             repeatPassword: ['', Validators.required],
             ssn: ['', Validators.required],
-            dob: ['', Validators.required],
+            dateOfBirth: ['', Validators.required],
             userType: ['', Validators.required],
-            location: ['', Validators.required]
+            locationId: ['']
         });
-
-
     }
+
+    get f() { return this.registerForm.controls; }
 
     enumToOption(enu: string): string {
         if (enu !== undefined) {
@@ -58,15 +66,59 @@ export class RegisterComponent implements OnInit {
     }
 
     registerAccount() {
+        this.submitted = true;
 
+        // stop here if form is invalid
+        if (this.registerForm.invalid) {
+            return;
+        }
+
+        this.loading = true;
+        const registerData = this.registerForm.value;
+        registerData.dateOfBirth = String(registerData.dateOfBirth.year) + '-' +
+                                   String(registerData.dateOfBirth.month) + '-' +
+                                   String(registerData.dateOfBirth.day);
+
+        this.authenticationService.register(registerData).subscribe(res => {
+            alert(res);
+        });
+        
     }
 
-    onUserTypeChanged(value: number) {
-        if (value) {
-            this.shouldShowRegister = true;
-        } else {
-            this.shouldShowRegister = false;
+    reloadLocationList() {
+        if (this.f.userType.value) {
+            switch (this.f.userType.value) {
+            case '0':
+                this.shouldShowLocations = false;
+                break;
+            case '1':
+                if (this.selectedCounty) {
+                    this.dcService.getDonationCentersInCounty(this.selectedCounty).subscribe(res => {
+                        this.locations = res;
+                        this.shouldShowLocations = true;
+                    });
+                }
+                break;
+            case '2':
+                if (this.selectedCounty) {
+                    this.hospService.getHospitalsInCounty(this.selectedCounty).subscribe(res => {
+                        this.locations = res;
+                        this.shouldShowLocations = true;
+                    });
+                }
+                break;
+            default:
+                break;
+            }
         }
     }
 
+    onUserTypeChanged(value: string) {
+        this.reloadLocationList();
+    }
+
+    onCountyChanged(value: string) {
+        this.selectedCounty = value;
+        this.reloadLocationList();
+    }
 }
