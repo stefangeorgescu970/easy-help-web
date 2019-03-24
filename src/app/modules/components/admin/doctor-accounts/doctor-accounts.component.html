@@ -9,9 +9,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let account of activeDoctorAccounts" data-="account.id">
+          <tr *ngFor="let account of activeDoctorAccounts ; let i = index" data-="account.id">
             <td class="td-id">{{ account.id }}</td>
             <td class="td-email">{{ account.email }}</td>
+            <td>
+              <span class="btn btn-danger remove-button" (click)="deactivateDoctorAcoount(account.id, i)">Deactivate Account</span>
+            </td>
           </tr>
         </tbody>
       </table>

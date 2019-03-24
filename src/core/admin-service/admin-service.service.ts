@@ -153,4 +153,28 @@ export class AdminService {
             return booleanResponse
         }));
     }
+
+    deactivateDCPAccount(requestId: number ): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/admin/deactivateDcpAccount', JSON.stringify({id: requestId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            let booleanResponse = new BooleanServerResponse(res.status)
+            if(res.status === false){
+                booleanResponse.exception = res.exception
+            }
+            return booleanResponse
+        }));
+    }
+
+    deactivateDoctorAccount(requestId: number ): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/admin/deactivateDoctorAccount', JSON.stringify({id: requestId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            let booleanResponse = new BooleanServerResponse(res.status)
+            if(res.status === false){
+                booleanResponse.exception = res.exception
+            }
+            return booleanResponse
+        }));
+    }
 }
