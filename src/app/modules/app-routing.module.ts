@@ -35,7 +35,7 @@ const routes: Routes = [
         { path: 'donation-centers', component: DonationCentersComponent }
     ] },
 
-    { path: 'dcp', component: DcpLayoutComponent, children: [
+    { path: 'dcp', component: DcpLayoutComponent, canActivate: [AuthGuard], data: {roles: [UserRole.Dcp]}, children: [
         { path: '', component: AllDonorsComponent },
         { path: 'all-donors', component: AllDonorsComponent }
     ] },
