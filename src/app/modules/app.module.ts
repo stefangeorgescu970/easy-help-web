@@ -71,6 +71,8 @@ import { HospitalsComponent } from './components/admin/hospitals/hospitals.compo
 import { DonationCentersComponent } from './components/admin/donation-centers/donation-centers.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
 import { RegisterComponent } from './components/register/register.component';
+import { DcpLayoutComponent } from './layouts/dcp-layout/dcp-layout.component';
+import { AllDonorsComponent } from './components/dcp/all-donors/all-donors.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +88,9 @@ import { RegisterComponent } from './components/register/register.component';
     HospitalsComponent,
     DonationCentersComponent,
     LoginLayoutComponent,
-    RegisterComponent
+    RegisterComponent,
+    DcpLayoutComponent,
+    AllDonorsComponent
   ],
   imports: [
     BrowserModule,

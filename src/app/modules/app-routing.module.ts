@@ -1,3 +1,5 @@
+import { AllDonorsComponent } from './components/dcp/all-donors/all-donors.component';
+import { DcpLayoutComponent } from './layouts/dcp-layout/dcp-layout.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
@@ -32,6 +34,12 @@ const routes: Routes = [
         { path: 'hospitals', component: HospitalsComponent },
         { path: 'donation-centers', component: DonationCentersComponent }
     ] },
+
+    { path: 'dcp', component: DcpLayoutComponent, children: [
+        { path: '', component: AllDonorsComponent },
+        { path: 'all-donors', component: AllDonorsComponent }
+    ] },
+
     { path: '**', redirectTo: '' }
 ];
 
