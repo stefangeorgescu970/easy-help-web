@@ -14,11 +14,10 @@ import { LocationResponse } from 'src/shared/models/locations/location-response'
 })
 export class HospitalsComponent implements OnInit {
 
-    constructor(private hospitalService: HospitalService, private enumService: EnumsService) { }
+    constructor(private hospitalService: HospitalService, private enumService : EnumsService) { }
 
     hospitalForm: FormGroup;
     counties: string[];
-
     hospitals: RealLocation[];
 
     ngOnInit() {

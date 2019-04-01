@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
     constructor(private formBuilder: FormBuilder, private route: ActivatedRoute,
                 private router: Router, private authenticationService: AuthService) {
         // redirect to home if already logged in
+        
         const user = this.authenticationService.getUser();
 
         if (user) {
@@ -70,6 +71,10 @@ export class LoginComponent implements OnInit {
         switch (profileData.role) {
             case 'SYSADMIN':
             this.router.navigate(['admin']);
+            break;
+
+            case 'DONATION_CENTER_PERSONNEL':
+            this.router.navigate(['dcp']);
             break;
         }
     }

@@ -22,17 +22,17 @@ export class DonationCentersComponent implements OnInit {
     ngOnInit() {
       const formBuilder = new FormBuilder();
       
-        this.donationCenterService.getDonationCenters().subscribe(
+      this.donationCenterService.getDonationCenters().subscribe(
             (res: RealLocation[]) => {
               this.donationCenters = res;
             }
         );
 
-        this.enumService.getEnums().subscribe(res => {
+      this.enumService.getEnums().subscribe(res => {
           this.counties = res.object.counties;
         });
 
-        this.donationCenterForm = formBuilder.group({
+      this.donationCenterForm = formBuilder.group({
           name: ['', Validators.required],
           address: ['', Validators.required],
           latitude: ['', Validators.required],
