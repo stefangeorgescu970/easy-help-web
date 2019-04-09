@@ -27,15 +27,7 @@
             <div *ngIf="f.county.errors.required">County is required</div>
         </div>
     </div>
-
-    <div class="form-group col-lg-6">
-        <label>City</label>
-        <input class="form-control" type="text" formControlName="city" placeholder="Your city" [ngClass]="{ 'is-invalid': submitted && f.city.errors }">
-        <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
-            <div *ngIf="f.city.errors.required">City is required</div>
-        </div>
-    </div>
-
+    
     <div class="form-group col-lg-6">
         <label>Email</label>
         <input class="form-control" type="text" formControlName="email" placeholder="Email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
@@ -100,19 +92,23 @@
 
     <div class="form-group col-lg-6" *ngIf="shouldShowLocations">
         <label>Working at</label>
-        <select class="form-control" formControlName="locationId" (change)="onLocationChange($event.target.value)" [ngClass]="{ 'is-invalid': submitted && f.location.errors }">
+        <select class="form-control" formControlName="locationId" [ngClass]="{ 'is-invalid': submitted && f.locationId.errors }">
             <option selected hidden value="">Please select your workplace</option>
             <option *ngFor="let location of locations" value="{{ location.id }}">{{ location.name }}</option>
         </select>
 
-        <div *ngIf="submitted && f.location.errors" class="invalid-feedback">
-            <div *ngIf="f.location.errors.required">Please select your workplace</div>
+        <div *ngIf="submitted && f.locationId.errors" class="invalid-feedback">
+            <div *ngIf="f.locationId.errors.required">Please select your workplace</div>
         </div>
+    </div>
+
+    <div *ngIf="noLocationsAvailable">
+        <h6>No Locations Available for Selected County. Contact us at support@easyhelp.com</h6>
     </div>
 
 </form>
 
 <div class="row mt-5">
-    <span class="btn btn-success mx-auto col-lg-4" (click)="registerAccount()">Register</span>
+    <span class="btn btn-success mx-auto col-lg-4" *ngIf="!noLocationsAvailable" (click)="registerAccount()">Register</span>
 </div>
 

@@ -2,7 +2,7 @@ import { DonationCenterService } from 'src/core/donation-center-service/donation
 import { HospitalService } from './../../../../core/hospital-service/hospital.service';
 import { Component, OnInit } from '@angular/core';
 import { EnumsService } from 'src/core/enums-service/enums-service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../core/auth-service/auth.service';
 import { RealLocation } from 'src/shared/models/locations/real-location';
@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit {
     locations: RealLocation[];
 
     shouldShowLocations: boolean;
+    noLocationsAvailable: boolean;
 
     constructor(private formBuilder: FormBuilder, private route: ActivatedRoute,
                 private router: Router, private authenticationService: AuthService,
@@ -43,7 +44,6 @@ export class RegisterComponent implements OnInit {
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
             county: ['', Validators.required],
-            city: ['', Validators.required],
             email: ['', Validators.required],
             password: ['', Validators.required],
             repeatPassword: ['', Validators.required],
@@ -69,7 +69,7 @@ export class RegisterComponent implements OnInit {
         this.submitted = true;
 
         // stop here if form is invalid
-        if (this.registerForm.invalid) {
+        if (this.registerForm.invalid || this.noLocationsAvailable) {
             return;
         }
 
@@ -82,7 +82,7 @@ export class RegisterComponent implements OnInit {
         this.authenticationService.register(registerData).subscribe(res => {
             alert(res);
         });
-        
+
     }
 
     reloadLocationList() {
@@ -90,20 +90,33 @@ export class RegisterComponent implements OnInit {
             switch (this.f.userType.value) {
             case '0':
                 this.shouldShowLocations = false;
+                this.noLocationsAvailable = false;
                 break;
             case '1':
                 if (this.selectedCounty) {
                     this.dcService.getDonationCentersInCounty(this.selectedCounty).subscribe(res => {
-                        this.locations = res;
-                        this.shouldShowLocations = true;
+                        if (res.length === 0) {
+                            this.shouldShowLocations = false;
+                            this.noLocationsAvailable = true;
+                        } else {
+                            this.locations = res;
+                            this.shouldShowLocations = true;
+                            this.noLocationsAvailable = false;
+                        }
                     });
                 }
                 break;
             case '2':
                 if (this.selectedCounty) {
                     this.hospService.getHospitalsInCounty(this.selectedCounty).subscribe(res => {
-                        this.locations = res;
-                        this.shouldShowLocations = true;
+                        if (res.length === 0) {
+                            this.shouldShowLocations = false;
+                            this.noLocationsAvailable = true;
+                        } else {
+                            this.locations = res;
+                            this.shouldShowLocations = true;
+                            this.noLocationsAvailable = false;
+                        }
                     });
                 }
                 break;
@@ -115,6 +128,12 @@ export class RegisterComponent implements OnInit {
 
     onUserTypeChanged(value: string) {
         this.reloadLocationList();
+
+        if (value === '0') {
+            (this.registerForm.get('locationId') as FormControl).setValidators(null);
+        } else {
+            (this.registerForm.get('locationId') as FormControl).setValidators([Validators.required]);
+        }
     }
 
     onCountyChanged(value: string) {

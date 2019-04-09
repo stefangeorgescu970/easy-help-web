@@ -11,7 +11,7 @@ export class RealLocation {
         this.name = name;
         this.longitude = long;
         this.latitude = lat;
-        this.county= county;
-        this.address= address;
+        this.county = county;
+        this.address = address;
     }
 }
