@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';
 import { BaseAccount } from 'src/shared/models/accounts/base-account';

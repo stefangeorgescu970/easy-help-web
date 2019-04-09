@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { RealLocation } from 'src/shared/models/locations/real-location';
 import { LocationResponse } from 'src/shared/models/locations/location-response';

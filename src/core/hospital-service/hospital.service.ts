@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
 import { LocationResponse } from 'src/shared/models/locations/location-response';
 import { RealLocation } from 'src/shared/models/locations/real-location';

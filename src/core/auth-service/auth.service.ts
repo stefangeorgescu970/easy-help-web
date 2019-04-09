@@ -3,7 +3,7 @@ import { RegisterDto } from './../../shared/models/accounts/register-dto/registe
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import * as jwt from 'jwt-decode';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DoctorAccount } from 'src/shared/models/accounts/doctor-account/doctor-account';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { DcpAccount } from 'src/shared/models/accounts/dcp-account/dcp-account';
 import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
