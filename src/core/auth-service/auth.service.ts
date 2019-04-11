@@ -1,3 +1,4 @@
+import { UserRole } from './../../shared/enums/user-role/user-role.enum';
 import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
 import { RegisterDto } from './../../shared/models/accounts/register-dto/register-dto';
 import { Injectable } from '@angular/core';
@@ -36,7 +37,16 @@ export class AuthService {
                               {headers: this.myheader})
         .pipe(map((res: any) => {
             if (res.status === true) {
-                const profile = new ProfileData(res.object.token, res.object.user.userType);
+                const profile = new ProfileData();
+                profile.id = res.object.user.id;
+                profile.token = res.object.token;
+                profile.role = res.object.user.userType;
+                profile.county = res.object.user.county;
+                profile.email = res.object.user.email;
+                profile.firstName = res.object.user.firstName;
+                profile.lastName = res.object.user.lastName;
+                profile.dateOfBirth = res.object.user.dateOfBirth;
+                profile.ssn = res.object.user.ssn;
                 this.setUser(profile);
                 return new LoginResult(true, profile, null);
             } else {

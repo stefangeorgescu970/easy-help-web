@@ -2,10 +2,9 @@ import { UserRole } from 'src/shared/enums/user-role/user-role.enum';
 
 export class BaseAccount {
     id: number;
-    firstName?: string;
-    lastName?: string;
+    firstName: string;
+    lastName: string;
     email: string;
-    city?: string;
     county?: string;
     type: UserRole;
 
