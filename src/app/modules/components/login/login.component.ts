@@ -72,7 +72,9 @@ export class LoginComponent implements OnInit {
             case 'SYSADMIN':
             this.router.navigate(['admin']);
             break;
-
+            case 'DOCTOR':
+            this.router.navigate(['doctor']);
+            break;
             case 'DONATION_CENTER_PERSONNEL':
             this.router.navigate(['dcp']);
             break;

@@ -73,6 +73,8 @@ import { LoginLayoutComponent } from './layouts/login-layout/login-layout.compon
 import { RegisterComponent } from './components/register/register.component';
 import { DcpLayoutComponent } from './layouts/dcp-layout/dcp-layout.component';
 import { AllDonorsComponent } from './components/dcp/all-donors/all-donors.component';
+import { DoctorLayoutComponent } from './layouts/doctor-layout/doctor-layout.component';
+import { RequestBloodComponent } from './components/doctor/request-blood/request-blood.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +92,9 @@ import { AllDonorsComponent } from './components/dcp/all-donors/all-donors.compo
     LoginLayoutComponent,
     RegisterComponent,
     DcpLayoutComponent,
-    AllDonorsComponent
+    AllDonorsComponent,
+    DoctorLayoutComponent,
+    RequestBloodComponent
   ],
   imports: [
     BrowserModule,

@@ -1,3 +1,5 @@
+import { RequestBloodComponent } from './components/doctor/request-blood/request-blood.component';
+import { DoctorLayoutComponent } from './layouts/doctor-layout/doctor-layout.component';
 import { AllDonorsComponent } from './components/dcp/all-donors/all-donors.component';
 import { DcpLayoutComponent } from './layouts/dcp-layout/dcp-layout.component';
 import { NgModule } from '@angular/core';
@@ -38,6 +40,11 @@ const routes: Routes = [
     { path: 'dcp', component: DcpLayoutComponent, canActivate: [AuthGuard], data: {roles: [UserRole.Dcp]}, children: [
         { path: '', component: AllDonorsComponent },
         { path: 'all-donors', component: AllDonorsComponent }
+    ] },
+
+    { path: 'doctor', component: DoctorLayoutComponent, canActivate: [AuthGuard], data: {roles: [UserRole.Doctor]}, children: [
+        { path: '', component: RequestBloodComponent },
+        { path: 'request', component: RequestBloodComponent }
     ] },
 
     { path: '**', redirectTo: '' }
