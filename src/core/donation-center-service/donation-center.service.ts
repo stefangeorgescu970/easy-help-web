@@ -86,6 +86,17 @@ export class DonationCenterService {
         }));
     }
 
+    cancelBooking(booking: DonationBooking): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/donationCenter/cancelBooking', JSON.stringify({id: booking.id}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            const booleanResponse = new BooleanServerResponse(res.status);
+            if (res.status === false) {
+                booleanResponse.exception = res.exception;
+            }
+            return booleanResponse;
+        }));
+    }
     getBookingsAtDonationCenter(donationCenterId: number): Observable<DonationBooking[]> {
         return this.http
         .post(environment.apiUrl + '/donationCenter/getDCBookings', JSON.stringify({id: donationCenterId}), {headers: this.myheader})

@@ -1,3 +1,4 @@
+import { BooleanServerResponse } from './../../../../../shared/models/boolean-server-response/boolean-server-response';
 import { AuthService } from './../../../../../core/auth-service/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { DonationCenterService } from 'src/core/donation-center-service/donation-center.service';
@@ -40,6 +41,11 @@ export class AllBookingsComponent implements OnInit {
     }
 
     cancelBooking(booking: DonationBooking) {
-
+        this.dcService.cancelBooking(booking).subscribe(
+            (res: BooleanServerResponse) => {
+                if (res.success === true) {
+                    this.bookings = this.bookings.filter(obj => obj.id !== booking.id);
+                }
+        });
     }
 }
