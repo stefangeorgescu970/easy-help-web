@@ -1,3 +1,4 @@
+import { DonorAccount } from 'src/shared/models/accounts/donor-account/donor-account';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -6,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { RealLocation } from 'src/shared/models/locations/real-location';
 import { LocationResponse } from 'src/shared/models/locations/location-response';
 import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
+import { DonationBooking } from 'src/shared/models/donation/booking/donation-booking';
 
 @Injectable({
   providedIn: 'root'
@@ -79,6 +81,42 @@ export class DonationCenterService {
                 return myList;
             } else {
                 const myList: Array<RealLocation> = [];
+                return myList;
+            }
+        }));
+    }
+
+    getBookingsAtDonationCenter(donationCenterId: number): Observable<DonationBooking[]> {
+        return this.http
+        .post(environment.apiUrl + '/donationCenter/getDCBookings', JSON.stringify({id: donationCenterId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            if (res.status === true) {
+                const objArray = res.object.objects;
+                const myList: Array<DonationBooking> = [];
+
+                for (const obj of objArray) {
+                    const newBooking = new DonationBooking();
+                    newBooking.bookingDate = new Date(obj.bookingDate);
+                    newBooking.id = obj.id;
+
+                    const donorObj = obj.donor;
+                    const newDonor = new DonorAccount(donorObj.id, donorObj.email, donorObj.userType);
+                    newDonor.canDonate = donorObj.canDonate;
+                    newDonor.dateOfBirth = donorObj.dateOfBirth;
+                    newDonor.firstName = donorObj.firstName;
+                    newDonor.lastName = donorObj.lastName;
+                    newDonor.group = donorObj.bloodGroupLetter;
+                    newDonor.county = donorObj.county;
+                    newDonor.rh = donorObj.rh;
+                    newDonor.ssn = donorObj.ssn;
+                    newBooking.donor = newDonor;
+
+                    myList.push(newBooking);
+                }
+
+                return myList;
+            } else {
+                const myList: Array<DonationBooking> = [];
                 return myList;
             }
         }));

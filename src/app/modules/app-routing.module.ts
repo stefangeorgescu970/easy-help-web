@@ -1,3 +1,4 @@
+import { AllBookingsComponent } from './components/dcp/all-bookings/all-bookings.component';
 import { RequestBloodComponent } from './components/doctor/request-blood/request-blood.component';
 import { DoctorLayoutComponent } from './layouts/doctor-layout/doctor-layout.component';
 import { AllDonorsComponent } from './components/dcp/all-donors/all-donors.component';
@@ -39,7 +40,8 @@ const routes: Routes = [
 
     { path: 'dcp', component: DcpLayoutComponent, canActivate: [AuthGuard], data: {roles: [UserRole.Dcp]}, children: [
         { path: '', component: AllDonorsComponent },
-        { path: 'all-donors', component: AllDonorsComponent }
+        { path: 'all-donors', component: AllDonorsComponent },
+        { path: 'bookings', component: AllBookingsComponent }
     ] },
 
     { path: 'doctor', component: DoctorLayoutComponent, canActivate: [AuthGuard], data: {roles: [UserRole.Doctor]}, children: [

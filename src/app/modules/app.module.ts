@@ -1,3 +1,4 @@
+import { DonationBooking } from 'src/shared/models/donation/booking/donation-booking';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AlertModule } from 'ngx-bootstrap';
@@ -75,6 +76,7 @@ import { DcpLayoutComponent } from './layouts/dcp-layout/dcp-layout.component';
 import { AllDonorsComponent } from './components/dcp/all-donors/all-donors.component';
 import { DoctorLayoutComponent } from './layouts/doctor-layout/doctor-layout.component';
 import { RequestBloodComponent } from './components/doctor/request-blood/request-blood.component';
+import { AllBookingsComponent } from './components/dcp/all-bookings/all-bookings.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +96,8 @@ import { RequestBloodComponent } from './components/doctor/request-blood/request
     DcpLayoutComponent,
     AllDonorsComponent,
     DoctorLayoutComponent,
-    RequestBloodComponent
+    RequestBloodComponent,
+    AllBookingsComponent
   ],
   imports: [
     BrowserModule,

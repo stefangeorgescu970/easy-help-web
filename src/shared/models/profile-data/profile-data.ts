@@ -8,6 +8,7 @@ export class ProfileData {
     role: string;
     ssn: string;
     token: string;
+    locationId: number;
 
     constructor() {}
 }

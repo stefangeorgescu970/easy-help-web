@@ -1,0 +1,44 @@
+<h2>Donation Bookings in Your Donation Center</h2>
+
+
+<table class="table table-hover" *ngIf="bookings && bookings.length > 0; else no_bookings">
+    <thead>
+      <tr>
+        <th scope="col" class="th-name">Donor Name</th>
+        <th scope="col" class="th-name">Booking Date</th>
+        <th scope="col" class="th-name">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let booking of bookings ; let i = index" data-="booking">
+        <td class="td-name">{{ booking.donor.firstName }} {{ booking.donor.lastName }}</td>
+        <td class="td-name">{{ booking.bookingDate.toLocaleString() }}</td>
+        <td>
+            <span class="btn btn-success add-button" (click)="open(content, booking.donor)">Donor Details</span>
+            <span class="example-spacer"></span>
+            <span class="btn btn-danger remove-button" (click)="cancelBooking(booking)">Cancel Booking</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #no_bookings>
+    <h5>No donation bookings in the upcoming period</h5>
+  </ng-template>
+  
+
+  <ng-template #content let-donormodal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Donor Details</h4>
+      <button type="button" class="close" aria-label="Close" (click)="donormodal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <h6>Name: {{ selectedDonor.firstName }} {{ selectedDonor.lastName }}</h6>
+        <h6>Blood Group: {{ selectedDonor.group }} {{ selectedDonor.rh }}</h6>
+        <h6>Email: {{ selectedDonor.email }}</h6>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="donormodal.close()">Close</button>
+    </div>
+  </ng-template>

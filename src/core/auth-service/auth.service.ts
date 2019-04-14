@@ -47,6 +47,7 @@ export class AuthService {
                 profile.lastName = res.object.user.lastName;
                 profile.dateOfBirth = res.object.user.dateOfBirth;
                 profile.ssn = res.object.user.ssn;
+                profile.locationId = res.object.user.locationId;
                 this.setUser(profile);
                 return new LoginResult(true, profile, null);
             } else {

@@ -7,6 +7,7 @@ export class BaseAccount {
     email: string;
     county?: string;
     type: UserRole;
+    ssn: string;
 
     constructor(id: number, email: string, type: UserRole) {
         this.id = id;
