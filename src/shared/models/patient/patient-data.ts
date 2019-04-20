@@ -3,6 +3,7 @@ export class PatientData {
     doctorId: number;
     group: string;
     rh: boolean;
+    id: number;
 
     constructor() {}
 }

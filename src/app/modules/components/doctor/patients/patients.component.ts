@@ -1,30 +1,38 @@
-import { BooleanServerResponse } from './../../../../../shared/models/boolean-server-response/boolean-server-response';
-import { AuthService } from './../../../../../core/auth-service/auth.service';
-import { PatientData } from './../../../../../shared/models/patient/patient-data';
+import { BooleanServerResponse } from '../../../../../shared/models/boolean-server-response/boolean-server-response';
+import { AuthService } from '../../../../../core/auth-service/auth.service';
+import { PatientData } from '../../../../../shared/models/patient/patient-data';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { DoctorService } from 'src/core/doctor-service/doctor.service';
 
 @Component({
-  selector: 'app-add-patient',
-  templateUrl: './add-patient.component.html',
-  styleUrls: ['./add-patient.component.scss']
+  selector: 'app-patients',
+  templateUrl: './patients.component.html',
+  styleUrls: ['./patients.component.scss']
 })
-export class AddPatientComponent implements OnInit {
+export class PatientsComponent implements OnInit {
 
     error = '';
     patientForm: FormGroup;
     submitted = false;
     loading = false;
+    patients: PatientData[];
 
     constructor(private formBuilder: FormBuilder, private authService: AuthService, private doctorService: DoctorService) { }
 
     ngOnInit() {
-
         this.patientForm = this.formBuilder.group({
             ssn: ['', Validators.required],
             group: ['', Validators.required],
             rh: ['', Validators.required]
+        });
+
+        this.loadPatients();
+    }
+
+    loadPatients() {
+        this.doctorService.getPatients(this.authService.getUser().id).subscribe((res: PatientData[]) => {
+            this.patients = res;
         });
     }
 
@@ -50,8 +58,19 @@ export class AddPatientComponent implements OnInit {
             this.loading = false;
             if (res.success === true) {
                 this.error = null;
+                this.loadPatients();
             } else {
                 this.error = res.exception;
+            }
+        });
+    }
+
+    removePatient(patientId: number) {
+        this.doctorService.deletePatient(patientId).subscribe((res: BooleanServerResponse) => {
+            if (res.success === true) {
+                this.loadPatients();
+            } else {
+                alert(res.exception);
             }
         });
     }

@@ -44,3 +44,31 @@
 
     <div *ngIf="error" class="alert alert-danger">{{error}}</div>
 </form>
+
+
+<h2>My Patients</h2>
+
+<table class="table table-hover" *ngIf="patients && patients.length > 0; else no_patients">
+        <thead>
+          <tr>
+            <th scope="col" class="th-name">SSN</th>
+            <th scope="col" class="th-id">Blood Group</th>
+            <th scope="col" class="th-name">Blood RH</th>
+            <th scope="col" class="th-name">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let patient of patients ; let i = index" data-="patient.id">
+            <td class="td-name">{{ patient.ssn }}</td>
+            <td class="td-name">{{ patient.group }}</td>
+            <td class="td-name">{{ patient.rh }}</td>
+            <td>
+              <span class="btn btn-danger remove-button" (click)="removePatient(patient.id)">Remove</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <ng-template #no_patients>
+        <h5>You have no patients.</h5>
+      </ng-template>
+      
