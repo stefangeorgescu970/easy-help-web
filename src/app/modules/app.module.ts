@@ -77,6 +77,7 @@ import { AllDonorsComponent } from './components/dcp/all-donors/all-donors.compo
 import { DoctorLayoutComponent } from './layouts/doctor-layout/doctor-layout.component';
 import { RequestBloodComponent } from './components/doctor/request-blood/request-blood.component';
 import { AllBookingsComponent } from './components/dcp/all-bookings/all-bookings.component';
+import { AddPatientComponent } from './components/doctor/add-patient/add-patient.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { AllBookingsComponent } from './components/dcp/all-bookings/all-bookings
     AllDonorsComponent,
     DoctorLayoutComponent,
     RequestBloodComponent,
-    AllBookingsComponent
+    AllBookingsComponent,
+    AddPatientComponent
   ],
   imports: [
     BrowserModule,

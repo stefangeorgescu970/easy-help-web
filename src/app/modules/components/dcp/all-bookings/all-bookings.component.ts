@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { DonationCenterService } from 'src/core/donation-center-service/donation-center.service';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';
 import { DonationBooking } from 'src/shared/models/donation/booking/donation-booking';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { DonorAccount } from 'src/shared/models/accounts/donor-account/donor-account';
 
 @Component({

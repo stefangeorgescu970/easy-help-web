@@ -1,3 +1,4 @@
+import { AddPatientComponent } from './components/doctor/add-patient/add-patient.component';
 import { AllBookingsComponent } from './components/dcp/all-bookings/all-bookings.component';
 import { RequestBloodComponent } from './components/doctor/request-blood/request-blood.component';
 import { DoctorLayoutComponent } from './layouts/doctor-layout/doctor-layout.component';
@@ -46,7 +47,8 @@ const routes: Routes = [
 
     { path: 'doctor', component: DoctorLayoutComponent, canActivate: [AuthGuard], data: {roles: [UserRole.Doctor]}, children: [
         { path: '', component: RequestBloodComponent },
-        { path: 'request', component: RequestBloodComponent }
+        { path: 'request', component: RequestBloodComponent },
+        { path: 'add-patient', component: AddPatientComponent }
     ] },
 
     { path: '**', redirectTo: '' }
