@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';
 import { LoginResult } from 'src/shared/models/login-result/login-result';
 
-export const USER_NAME = 'current-user';
+export const USER_KEY = 'current-user';
 
 @Injectable({
     providedIn: 'root'
@@ -23,11 +23,11 @@ export class AuthService {
     myheader = new HttpHeaders().set('Content-Type', 'application/json');
 
     setUser(user: ProfileData): void {
-        localStorage.setItem(USER_NAME, JSON.stringify(user));
+        localStorage.setItem(USER_KEY, JSON.stringify(user));
     }
 
     getUser(): ProfileData {
-        const userString = localStorage.getItem(USER_NAME);
+        const userString = localStorage.getItem(USER_KEY);
         return JSON.parse(userString) as ProfileData;
     }
 
@@ -63,14 +63,14 @@ export class AuthService {
         }));
     }
 
-    logout(): Observable<string> {
+    logout(): Observable<boolean> {
         // return this.http.post(environment.apiUrl + '/logout', {headers: {}})
         // .pipe(map((res: any) => {
         //     localStorage.removeItem(USER_NAME);
         //     return res;
         // }));
 
-        localStorage.removeItem(USER_NAME);
-        return of('string');
+        localStorage.removeItem(USER_KEY);
+        return of(true);
     }
 }

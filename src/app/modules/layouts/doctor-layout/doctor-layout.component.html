@@ -2,12 +2,16 @@
     <mat-toolbar color="primary">
                 <span>
                     <img class="faculty-logo" src="../../../assets/images/bloodDrop.jpg">
+                    <span class="example-spacer"></span>
                     Doctor
-                </span> <span class="example-spacer"></span>
+                </span> 
+                <span class="example-spacer"></span>
                 <a routerLink="request" class="error-message" mat-button>Request Blood</a> 
                 <a routerLink="patients" class="error-message" mat-button>My Patients</a> 
-        </mat-toolbar>
-    </div>  
+                <span class="example-fill-remaining-space"></span>
+                <a class="error-message" mat-button (click)="logout()">Logout</a> 
+    </mat-toolbar>
+</div>  
         
         <div class="content">
             <div class="card col-lg-10 mx-auto mt-3 p-5">
