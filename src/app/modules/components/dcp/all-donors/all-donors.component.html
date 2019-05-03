@@ -4,20 +4,20 @@
 <form [formGroup]="filterForm" class="mt-4">
 
   <div class="form-group col-lg-4">
-    <label>Filter By</label>
-    <select class="form-control" formControlName="filterType">
-      <option selected hidden value="">Please select a filter</option>
-      <option *ngFor="let filter of filterOptions" value="{{ filter }}">{{ filter }}</option>
+    <label>Can Donate</label>
+    <select class="form-control" formControlName="canDonateForm"  (change) = "filter()">
+      <option *ngFor="let canDonate of canDonateOptions" value="{{ canDonate }}">{{ canDonate }}</option>
     </select>
   </div>
 
-  <div class="form-group col-lg-4"  *ngIf="filterForm.controls['filterType'].value"  >
-    <label>{{filterForm.controls['filterType'].value}}</label>
-    <select class="form-control" formControlName="filterValue">
-      <option selected hidden value="">Please select a {{filterForm.controls['filterType'].value}}</option>
-      <option *ngFor="let filterValue of getFiltersValues(filterForm.controls['filterType'].value)" value="{{ filterValue }}">{{ enumToOption(filterValue) }}</option>
+  <div class="form-group col-lg-4" >
+    <label>Blood Group</label>
+    <select class="form-control" formControlName="bloodGroupForm" (change) = "filter()">
+      <option *ngFor="let group of bloodGroups" value="{{ group }}">{{ group }}</option>
     </select>
   </div>
+
+  <span class="btn btn-danger add-button" (click)="getAllDonors(true)">Remove Filters</span>
 
 </form>
 
