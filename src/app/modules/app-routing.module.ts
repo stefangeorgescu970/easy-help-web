@@ -20,6 +20,7 @@ import { DonationCentersComponent } from './components/admin/donation-centers/do
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
 import { RegisterComponent } from './components/register/register.component';
 import { PatientsComponent } from './components/doctor/patients/patients.component';
+import { TestPushComponent } from './components/admin/test-push/test-push.component';
 
 const routes: Routes = [
     { path: '', component: HomeLayoutComponent, children: [
@@ -36,7 +37,8 @@ const routes: Routes = [
         { path: 'doctors', component: DoctorAccountsComponent },
         { path: 'dcps', component: DcpAccountsComponent },
         { path: 'hospitals', component: HospitalsComponent },
-        { path: 'donation-centers', component: DonationCentersComponent }
+        { path: 'donation-centers', component: DonationCentersComponent },
+        { path: 'test-push', component: TestPushComponent }
     ] },
 
     { path: 'dcp', component: DcpLayoutComponent, canActivate: [AuthGuard], data: {roles: [UserRole.Dcp]}, children: [
