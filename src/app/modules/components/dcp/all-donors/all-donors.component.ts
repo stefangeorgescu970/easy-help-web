@@ -18,9 +18,8 @@ export class AllDonorsComponent implements OnInit {
               private authService: AuthService) { }
 
   donors: BaseAccount[];
-  counties: string[];
-  filterOptions = ['County', 'Blood Group', 'Something'];
-  bloodGroups = ['0(1)', 'A(2)', 'B(3)', 'AB(4)'];
+  canDonateOptions = [true, false];
+  bloodGroups = ['0', 'A', 'B', 'AB'];
   currentDCP: ProfileData;
   filterForm: FormGroup;
 
@@ -28,35 +27,39 @@ export class AllDonorsComponent implements OnInit {
     const formBuilder = new FormBuilder();
     this.currentDCP = this.authService.getUser();
 
-    this.donorService.getDonorsByCounty(this.currentDCP.county).subscribe(
-      (res: DonorAccount[]) => {
-        this.donors = res;
-      });
-
-    this.enumService.getEnums().subscribe(res => {
-        this.counties = res.object.counties;
-      });
+    this.getAllDonors(false)
 
     this.filterForm = formBuilder.group({
-      filterType : ['', Validators.required],
-      filterValue : ['', Validators.required]
+      canDonateForm : ['', Validators.required],
+      bloodGroupForm : ['', Validators.required]
+    });
+    
+  }
+
+  filter(){
+    var canDonate = this.filterForm.controls['canDonateForm'].value;
+    var group = this.filterForm.controls['bloodGroupForm'].value;
+    if (canDonate === '') {
+      canDonate = true;
+    }
+    if (group === '') {
+      group = null;
+    }
+    this.donorService.filterDonors(this.currentDCP.county, canDonate, group).subscribe(
+      (res: DonorAccount[]) => {
+      this.donors = res;
     });
 
   }
 
-  getFiltersValues(filterType: string) {
-    switch (filterType) {
-      case 'County' : {
-         return this.counties;
+  getAllDonors(clearForm: boolean) {
+      this.donorService.getDonorsByCounty(this.currentDCP.county).subscribe(
+          (res: DonorAccount[]) => {
+           this.donors = res;
+          });
+      if (clearForm === true) {
+          this.filterForm.reset();
       }
-      case 'Blood Group': {
-         return this.bloodGroups;
-      }
-      default: { 
-         //statements; 
-         break; 
-      }
-   }
   }
 
   enumToOption(enu: string): string {
