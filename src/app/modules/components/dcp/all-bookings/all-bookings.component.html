@@ -14,10 +14,11 @@
         <td class="td-name">{{ booking.donor.firstName }} {{ booking.donor.lastName }}</td>
         <td class="td-name">{{ booking.bookingDate.toLocaleString() }}</td>
         <td>
-            <span class="btn btn-success add-button" (click)="open(content, booking.donor)">Donor Details</span>
+            <span class="btn btn-success add-button" (click)="open(content, booking)">Add Donation</span>
             <span class="example-spacer"></span>
             <span class="btn btn-danger remove-button" (click)="cancelBooking(booking)">Cancel Booking</span>
         </td>
+
       </tr>
     </tbody>
   </table>
@@ -35,10 +36,37 @@
     </div>
     <div class="modal-body">
         <h6>Name: {{ selectedDonor.firstName }} {{ selectedDonor.lastName }}</h6>
-        <h6>Blood Group: {{ selectedDonor.group }} {{ selectedDonor.rh }}</h6>
         <h6>Email: {{ selectedDonor.email }}</h6>
+
+        <form class="form-horizontal" [formGroup]="bloodDetailsForm">
+          
+          <div class="form-group col-md-12">
+              <label>Blood Group</label>
+              <select class="form-control" formControlName="group" [ngClass]="{ 'is-invalid': submitted}">
+                  <option selected hidden value="">Please select a blood group</option>
+                  <option value=A>A</option>
+                  <option value=B>B</option>
+                  <option value=AB>AB</option>
+                  <option value=0>0</option>
+              </select>
+          </div>
+      
+          <div class="form-group col-md-12">
+              <label>Blood RH</label>
+              <select class="form-control" formControlName="rh" [ngClass]="{ 'is-invalid': submitted}">
+                  <option selected hidden value="">Please select rh value</option>
+                  <option value=true>Positive</option>
+                  <option value=false>Negative</option>
+              </select>
+          </div>
+
+        </form>
+
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-dark" (click)="donormodal.close()">Close</button>
+
+      <button type="button" class="btn btn-success" (click)="markBookingAsDonated(selectedBooking)">Save Donation</button>
+
     </div>
   </ng-template>

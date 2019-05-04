@@ -97,6 +97,21 @@ export class DonationCenterService {
             return booleanResponse;
         }));
     }
+
+    createDonationFromBooking(booking: DonationBooking, groupLetter: string, rh: boolean): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/donationCenter/createDonation',
+        JSON.stringify({bookingId: booking.id, groupLetter: groupLetter, rh: rh}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            const booleanResponse = new BooleanServerResponse(res.status);
+            if (res.status === false) {
+                booleanResponse.exception = res.exception;
+            }
+            return booleanResponse;
+        }));
+    }
+
+
     getBookingsAtDonationCenter(donationCenterId: number): Observable<DonationBooking[]> {
         return this.http
         .post(environment.apiUrl + '/donationCenter/getDCBookings', JSON.stringify({id: donationCenterId}), {headers: this.myheader})
