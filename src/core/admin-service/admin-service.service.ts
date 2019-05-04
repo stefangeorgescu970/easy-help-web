@@ -177,4 +177,16 @@ export class AdminService {
             return booleanResponse
         }));
     }
+
+    sendTestPush(email: string): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/admin/sendTestNotification', JSON.stringify({param: email}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            const booleanResponse = new BooleanServerResponse(res.status);
+            if (res.status === false) {
+                booleanResponse.exception = res.exception;
+            }
+            return booleanResponse;
+        }));
+    }
 }

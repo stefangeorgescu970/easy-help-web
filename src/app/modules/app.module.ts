@@ -78,6 +78,7 @@ import { DoctorLayoutComponent } from './layouts/doctor-layout/doctor-layout.com
 import { RequestBloodComponent } from './components/doctor/request-blood/request-blood.component';
 import { AllBookingsComponent } from './components/dcp/all-bookings/all-bookings.component';
 import { PatientsComponent } from './components/doctor/patients/patients.component';
+import { TestPushComponent } from './components/admin/test-push/test-push.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import { PatientsComponent } from './components/doctor/patients/patients.compone
     DoctorLayoutComponent,
     RequestBloodComponent,
     AllBookingsComponent,
-    PatientsComponent
+    PatientsComponent,
+    TestPushComponent
   ],
   imports: [
     BrowserModule,
