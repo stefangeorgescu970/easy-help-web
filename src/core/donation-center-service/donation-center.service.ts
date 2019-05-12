@@ -1,3 +1,4 @@
+import { DonationForm } from './../../shared/models/donation/donation-form/donation-form';
 import { DonorAccount } from 'src/shared/models/accounts/donor-account/donor-account';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -136,6 +137,53 @@ export class DonationCenterService {
                     newDonor.rh = donorObj.rh;
                     newDonor.ssn = donorObj.ssn;
                     newBooking.donor = newDonor;
+
+                    const donationForm = new DonationForm();
+                    const donationFormObj = donorObj.donationForm;
+
+                    if(donationFormObj !== null) {
+                        donationForm.generalGoodHealth = donationFormObj.generalGoodHealth;
+                        donationForm.recentLossOfWeight = donationFormObj.recentLossOfWeight;
+                        donationForm.recentInexplicableFever = donationFormObj.recentInexplicableFever;
+                        donationForm.recentStomatoTreatmentOrVaccine = donationFormObj.recentStomatoTreatmentOrVaccine;
+                        donationForm.currentDrugTreatment = donationFormObj.currentDrugTreatment;
+                        donationForm.sexWithHIVOrHepatitisLast12Months = donationFormObj.sexWithHIVOrHepatitisLast12Months;
+                        donationForm.sexWithPersonWhoInjectsDrugsLast12Months = donationFormObj.sexWithPersonWhoInjectsDrugsLast12Months;
+                        donationForm.sexWithProstituteLast12Months = donationFormObj.sexWithProstituteLast12Months;
+                        donationForm.sexWithMultiplePartnersLast12Months = donationFormObj.sexWithMultiplePartnersLast12Months;
+                        donationForm.injectedDrugs = donationFormObj.injectedDrugs;
+                        donationForm.acceptedMoneyOrDrugsForSex = donationFormObj.acceptedMoneyOrDrugsForSex;
+                        donationForm.changedSexPartnerLast6Months = donationFormObj.changedSexPartnerLast6Months;
+                        donationForm.surgeryOrInvestigationsLast12Months = donationFormObj.surgeryOrInvestigationsLast12Months;
+                        donationForm.tattoosOrPiercingsLast12Months = donationFormObj.tattoosOrPiercingsLast12Months;
+                        donationForm.transfusionLast12Months = donationFormObj.transfusionLast12Months;
+                        donationForm.beenPregnant = donationFormObj.beenPregnant;
+                        donationForm.bornLivedTraveledAbroad = donationFormObj.bornLivedTraveledAbroad;
+                        donationForm.prisonLastYear = donationFormObj.prisonLastYear;
+                        donationForm.exposedHepatitis = donationFormObj.exposedHepatitis;
+                        donationForm.sufferFromSet1 = donationFormObj.sufferFromSet1;
+                        donationForm.sufferFromSet2 = donationFormObj.sufferFromSet2;
+                        donationForm.sufferFromSet3 = donationFormObj.sufferFromSet3;
+                        donationForm.sufferFromSet4 = donationFormObj.sufferFromSet4;
+                        donationForm.sufferFromSet5 = donationFormObj.sufferFromSet5;
+                        donationForm.sufferFromSet6 = donationFormObj.sufferFromSet6;
+                        donationForm.sufferFromSet7 = donationFormObj.sufferFromSet7;
+                        donationForm.smoker = donationFormObj.smoker;
+                        donationForm.beenRefused = donationFormObj.beenRefused;
+                        donationForm.requireAttentionPostDonation = donationFormObj.requireAttentionPostDonation;
+    
+                        donationForm.numberOfPartnersLast6Months = donationFormObj.numberOfPartnersLast6Months;
+    
+                        donationForm.birthDate = donationFormObj.birthDate;
+                        donationForm.lastMenstruation = donationFormObj.lastMenstruation;
+                        donationForm.lastAlcoholUse = donationFormObj.lastAlcoholUse;
+                        donationForm.travelWhere = donationFormObj.travelWhere;
+                        donationForm.travelWhen = donationFormObj.travelWhen;
+                        donationForm.alcoholDrank = donationFormObj.alcoholDrank;
+                        donationForm.alcoholQuantity = donationFormObj.alcoholQuantity;
+    
+                        newBooking.donor.donationForm = donationForm;
+                    }
 
                     myList.push(newBooking);
                 }
