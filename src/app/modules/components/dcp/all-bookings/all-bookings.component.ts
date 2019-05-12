@@ -1,3 +1,4 @@
+import { DonationForm } from './../../../../../shared/models/donation/donation-form/donation-form';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BooleanServerResponse } from './../../../../../shared/models/boolean-server-response/boolean-server-response';
 import { AuthService } from './../../../../../core/auth-service/auth.service';
@@ -24,6 +25,7 @@ export class AllBookingsComponent implements OnInit {
     selectedDonor: DonorAccount;
     bloodDetailsForm: FormGroup;
     selectedBooking: DonationBooking;
+    selectedForm: DonationForm;
     submitted = false;
 
     ngOnInit() {
@@ -52,6 +54,15 @@ export class AllBookingsComponent implements OnInit {
             this.bloodDetailsForm.reset();
         }
         this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', centered: true}).result.then((result) => {
+
+        }, (reason) => {
+
+        });
+    }
+
+    openForm(content, donationForm) {
+        this.selectedForm = donationForm;
+        this.modalService.open(content, {ariaLabelledBy: 'modal-form-title', centered: true,  size: 'lg' }).result.then((result) => {
 
         }, (reason) => {
 

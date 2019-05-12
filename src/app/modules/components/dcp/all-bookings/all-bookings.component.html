@@ -6,6 +6,7 @@
       <tr>
         <th scope="col" class="th-name">Donor Name</th>
         <th scope="col" class="th-name">Booking Date</th>
+        <th scope="col" class="th-name">Donation Form</th>
         <th scope="col" class="th-name">Action</th>
       </tr>
     </thead>
@@ -13,6 +14,9 @@
       <tr *ngFor="let booking of bookings ; let i = index" data-="booking">
         <td class="td-name">{{ booking.donor.firstName }} {{ booking.donor.lastName }}</td>
         <td class="td-name">{{ booking.bookingDate.toLocaleString() }}</td>
+        <td class="td-name" *ngIf="booking.donor.donationForm !== undefined; else no_donor_form">
+            <span class="btn btn-success add-button" (click)="openForm(contentForm, booking.donor.donationForm)">View Form</span>
+        </td>
         <td>
             <span class="btn btn-success add-button" (click)="open(content, booking)">Add Donation</span>
             <span class="example-spacer"></span>
@@ -22,8 +26,13 @@
       </tr>
     </tbody>
   </table>
+
   <ng-template #no_bookings>
     <h5>No donation bookings in the upcoming period</h5>
+  </ng-template>
+
+  <ng-template #no_donor_form>
+    <td>No form submitted.</td>
   </ng-template>
   
 
@@ -68,5 +77,64 @@
 
       <button type="button" class="btn btn-success" (click)="markBookingAsDonated(selectedBooking)">Save Donation</button>
 
+    </div>
+  </ng-template>
+
+
+  <ng-template #contentForm let-donationformmodal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-form-title">Donation Form</h4>
+      <button type="button" class="close" aria-label="Close" (click)="donationformmodal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <h6>Do you consider yourself to be healthy?: {{ selectedForm.generalGoodHealth }}</h6>
+        <h6>Have you recently had an unexpected weight loss?: {{ selectedForm.recentLossOfWeight }}</h6>
+        <h6>Have you recently had an unexplainable fever?: {{ selectedForm.recentInexplicableFever }}</h6>
+        <h6>Have you recently had any stomatological treatment or any vaccinations?: {{ selectedForm.recentStomatoTreatmentOrVaccine }}</h6>
+        <h6>Are you following any medical treatment?: {{ selectedForm.currentDrugTreatment }}</h6>
+        <h6>Did you have sexual contact with a partner that had hepatithis or was HIV positive in the last 12 months?: {{ selectedForm.sexWithHIVOrHepatitisLast12Months }}</h6>
+        <h6>Did you have sexual contact with a partner that uses intravenous drugs in the last 12 months?: {{ selectedForm.sexWithPersonWhoInjectsDrugsLast12Months }}</h6>
+        <h6>Did you have sexual contact with a partner that was payed for the act in the last 12 months?: {{ selectedForm.sexWithProstituteLast12Months }}</h6>
+        <h6>Did you have sexual contact with a multiple partners in the last 12 months?: {{ selectedForm.sexWithMultiplePartnersLast12Months }}</h6>
+        <h6>Have you ever used injectable drugs?: {{ selectedForm.injectedDrugs }}</h6>
+        <h6>Have you ever accepted drugs or money in exchange for sexual intercourse?: {{ selectedForm.acceptedMoneyOrDrugsForSex }}</h6>
+        <h6>Have you changed your partner in the last 6 months?: {{ selectedForm.changedSexPartnerLast6Months }}</h6>
+        <h6>Number of parteners in the last 6 months?: {{ selectedForm.numberOfPartnersLast6Months }}</h6>
+        <h6>Since your last donation or in the last 12 months, did you undergo surgery or medical investigations?: {{ selectedForm.surgeryOrInvestigationsLast12Months }}</h6>
+        <h6>Since your last donation or in the last 12 months, did you get a tatoo, piercing or any form of acupuncture?: {{ selectedForm.tattoosOrPiercingsLast12Months }}</h6>
+        <h6>Since your last donation or in the last 12 months, did you undergo a transfusion?: {{ selectedForm.transfusionLast12Months }}</h6>
+        <h6>Have you been pregnant?: {{ selectedForm.beenPregnant }}</h6>
+        <h6>Child birth date?: {{ selectedForm.birthDate }}</h6>
+        <h6>Last menstruation date?: {{ selectedForm.lastMenstruation }}</h6>
+        <h6>Where you born or have you lived or traveled abroad?: {{ selectedForm.bornLivedTraveledAbroad }}</h6>
+        <h6>Where?: {{ selectedForm.travelWhere }}</h6>
+        <h6>When?: {{ selectedForm.travelWhen }}</h6>
+        <h6>Were you in detention last year?: {{ selectedForm.prisonLastYear }}</h6>
+        <h6>Were you exposed to hepatithis? (Sick family members or professional risk): {{ selectedForm.exposedHepatitis }}</h6>
+        <h6>Have you ever suffered from icter, tuberculosis, malaria, reumatic fever?: {{ selectedForm.sufferFromSet1 }}</h6>
+        <h6>Have you ever suffered from heart diseases, abnormal arterial pressure?: {{ selectedForm.sufferFromSet2 }}</h6>
+        <h6>Have you ever suffered from cardiac or cerebral accidents?: {{ selectedForm.sufferFromSet3 }}</h6>
+        <h6>Have you ever suffered from asthma?: {{ selectedForm.sufferFromSet4 }}</h6>
+        <h6>Have you ever suffered from convulsions or neurological diseases?: {{ selectedForm.sufferFromSet5 }}</h6>
+        <h6>Have you ever suffered from chronic diseases (diabetes, ulcer, cancer)?: {{ selectedForm.sufferFromSet6 }}</h6>
+        <h6>Have you ever suffered from sexually transmitted diseases?: {{ selectedForm.sufferFromSet7 }}</h6>
+        <h6>Are you a smoker?: {{ selectedForm.smoker }}</h6>
+
+        <h6>When did you last consume alcohol?: {{ selectedForm.lastAlcoholUse }}</h6>
+
+        <h6>What alcohol did you consume?: {{ selectedForm.alcoholDrank }}</h6>
+        <h6>In what quantity?: {{ selectedForm.alcoholQuantity }}</h6>
+
+        <h6>Were you previously refused or postponed at a donation?: {{ selectedForm.beenRefused }}</h6>
+        <h6>Does your job require special attention 24 hours after the donation? (ex. driver, alpinist, diver): {{ selectedForm.requireAttentionPostDonation }}</h6>
+
+ 
+
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="donationformmodal.close()">Close</button>
     </div>
   </ng-template>
