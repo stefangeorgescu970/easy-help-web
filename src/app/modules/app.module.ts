@@ -79,6 +79,11 @@ import { RequestBloodComponent } from './components/doctor/request-blood/request
 import { AllBookingsComponent } from './components/dcp/all-bookings/all-bookings.component';
 import { PatientsComponent } from './components/doctor/patients/patients.component';
 import { TestPushComponent } from './components/admin/test-push/test-push.component';
+import { TestResultsComponent } from './components/dcp/test-results/test-results.component';
+import { SplitResultsComponent } from './components/dcp/split-results/split-results.component';
+import { AllRequestsComponent } from './components/dcp/all-requests/all-requests.component';
+import { MyCommitmentsComponent } from './components/dcp/my-commitments/my-commitments.component';
+import { MyRequestsComponent } from './components/doctor/my-requests/my-requests.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +106,12 @@ import { TestPushComponent } from './components/admin/test-push/test-push.compon
     RequestBloodComponent,
     AllBookingsComponent,
     PatientsComponent,
-    TestPushComponent
+    TestPushComponent,
+    TestResultsComponent,
+    SplitResultsComponent,
+    AllRequestsComponent,
+    MyCommitmentsComponent,
+    MyRequestsComponent
   ],
   imports: [
     BrowserModule,
