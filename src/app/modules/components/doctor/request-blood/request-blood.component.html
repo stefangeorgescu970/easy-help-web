@@ -55,38 +55,3 @@
     <div *ngIf="error" class="alert alert-danger">{{error}}</div>
 </form>
 
-
-<h2>My Blood Requests</h2>
-
-<table class="table table-hover" *ngIf="requests && requests.length > 0; else no_requests">
-        <thead>
-          <tr>
-            <th scope="col" class="th-name">SSN</th>
-            <th scope="col" class="th-id">Blood Group</th>
-            <th scope="col" class="th-name">Blood RH</th>
-            <th scope="col" class="th-name">Component</th>
-            <th scope="col" class="th-name">Quantity</th>
-            <th scope="col" class="th-name">Urgency</th>
-            <th scope="col" class="th-name">Status</th>
-            <th scope="col" class="th-name">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let request of requests ; let i = index" data-="requests.id">
-            <td class="td-name">{{ request.patient.ssn }}</td>
-            <td class="td-name">{{ request.patient.group }}</td>
-            <td class="td-name">{{ request.patient.rh }}</td>
-            <td class="td-name">{{ request.component }}</td>
-            <td class="td-name">{{ request.quantity }}</td>
-            <td class="td-name">{{ request.urgency }}</td>
-            <td class="td-name">{{ request.status }}</td>
-            <td>
-              <span class="btn btn-danger remove-button" (click)="cancelRequest(requests.id)">Cancel Request</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <ng-template #no_requests>
-        <h5>You have no blood requests.</h5>
-      </ng-template>
-      

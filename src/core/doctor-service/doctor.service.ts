@@ -121,4 +121,16 @@ import { DonationRequestDetails } from 'src/shared/models/donation/request-detai
             }
         }));
     }
+
+    cancelRequest(requestId: number): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/doctor/cancelBloodRequest', JSON.stringify({id: requestId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            const booleanResponse = new BooleanServerResponse(res.status);
+            if (res.status === false) {
+                booleanResponse.exception = res.exception;
+            }
+            return booleanResponse;
+        }));
+    }
 }

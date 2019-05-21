@@ -17,7 +17,6 @@ export class RequestBloodComponent implements OnInit {
 
     requestForm: FormGroup;
     patients: PatientData[];
-    requests: DonationRequestDetails[];
     submitted = false;
     loading = false;
     error = '';
@@ -36,13 +35,6 @@ export class RequestBloodComponent implements OnInit {
         this.currentDoctor = this.authService.getUser();
 
         this.loadPatients();
-        this.loadRequests();
-    }
-
-    loadRequests() {
-        this.doctorService.getBloodRequests(this.currentDoctor.id).subscribe((res: DonationRequestDetails[]) => {
-            this.requests = res;
-        });
     }
 
     loadPatients() {
@@ -77,9 +69,5 @@ export class RequestBloodComponent implements OnInit {
                 this.error = res.exception;
             }
         });
-    }
-
-    cancelRequest(requestId: number) {
-
     }
 }
