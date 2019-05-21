@@ -63,14 +63,20 @@ export class AuthService {
         }));
     }
 
-    logout(): Observable<boolean> {
-        // return this.http.post(environment.apiUrl + '/logout', {headers: {}})
-        // .pipe(map((res: any) => {
-        //     localStorage.removeItem(USER_NAME);
-        //     return res;
-        // }));
+    logout(): Observable<BooleanServerResponse> {
+        return this.http.post(environment.apiUrl + '/users/logout', JSON.stringify({id: this.getUser().id}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            // const booleanResponse = new BooleanServerResponse(res.status);
+            // if (res.status === false) {
+            //     booleanResponse.exception = res.exception;
+            // } else {
+            //     localStorage.removeItem(USER_KEY);
+            // }
+            // return booleanResponse;
 
-        localStorage.removeItem(USER_KEY);
-        return of(true);
+            const br = new BooleanServerResponse(true);
+            localStorage.removeItem(USER_KEY);
+            return br;
+        }));
     }
 }

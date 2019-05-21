@@ -10,6 +10,8 @@ export class DonationRequestDetails {
     component: string;
     status: string;
 
+    distance: string;
+
     constructor() {
         this.patient = new PatientData();
         this.doctor = undefined;

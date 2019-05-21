@@ -1,3 +1,5 @@
+import { PatientData } from './../../shared/models/patient/patient-data';
+import { DonationRequestDetails } from 'src/shared/models/donation/request-details/donation-request-details';
 import { DonationForm } from './../../shared/models/donation/donation-form/donation-form';
 import { DonorAccount } from 'src/shared/models/accounts/donor-account/donor-account';
 import { Injectable } from '@angular/core';
@@ -9,6 +11,8 @@ import { RealLocation } from 'src/shared/models/locations/real-location';
 import { LocationResponse } from 'src/shared/models/locations/location-response';
 import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
 import { DonationBooking } from 'src/shared/models/donation/booking/donation-booking';
+import { DoctorAccount } from 'src/shared/models/accounts/doctor-account/doctor-account';
+import { StoredBlood } from 'src/shared/models/donation/stored-blood/stored-blood';
 
 @Injectable({
   providedIn: 'root'
@@ -193,6 +197,87 @@ export class DonationCenterService {
                 const myList: Array<DonationBooking> = [];
                 return myList;
             }
+        }));
+    }
+
+    getBloodRequests(donationCenterId: number): Observable<DonationRequestDetails[]> {
+        return this.http
+        .post(environment.apiUrl + '/donationCenter/seeAllBloodRequests', JSON.stringify({id: donationCenterId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            if (res.status === true) {
+                const objArray = res.object.objects;
+                const myList: Array<DonationRequestDetails> = [];
+
+                for (const obj of objArray) {
+                    const donReqDetails = new DonationRequestDetails();
+                    donReqDetails.id = obj.id;
+                    donReqDetails.quantity = obj.quantity;
+                    donReqDetails.urgency = obj.urgency;
+                    donReqDetails.status = obj.status;
+
+                    const patient = new PatientData();
+                    patient.id = obj.patient.id;
+                    patient.group = obj.patient.bloodType.groupLetter;
+                    patient.rh = obj.patient.bloodType.rh;
+                    patient.ssn = obj.patient.ssn;
+                    donReqDetails.patient = patient;
+                    donReqDetails.component = obj.separatedBloodTypeDTO.component;
+
+                    const doctorObj = obj.doctor;
+                    const doctor = new DoctorAccount(doctorObj.id, doctorObj.email, doctorObj.userType);
+
+                    donReqDetails.doctor = doctor;
+                    donReqDetails.distance = obj.distance;
+
+                    myList.push(donReqDetails);
+                }
+
+                return myList;
+            } else {
+                const myList: Array<DonationRequestDetails> = [];
+                return myList;
+            }
+        }));
+    }
+
+    getBloodInDonationCenter(donationCenterId: number): Observable<StoredBlood[]> {
+        return this.http
+        .post(environment.apiUrl + '/donationCenter/getAvailableBloodInDC', JSON.stringify({id: donationCenterId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            if (res.status === true) {
+                const objArray = res.object.objects;
+                const myList: Array<StoredBlood> = [];
+
+                for (const obj of objArray) {
+                    const newStoredBlood = new StoredBlood();
+                    newStoredBlood.id = obj.id;
+                    newStoredBlood.quantity = obj.amount;
+                    newStoredBlood.component = obj.separatedBloodTypeDTO.component;
+                    newStoredBlood.rh = obj.separatedBloodTypeDTO.bloodType.rh;
+                    newStoredBlood.group = obj.separatedBloodTypeDTO.bloodType.groupLetter;
+
+                    myList.push(newStoredBlood);
+                }
+
+                return myList;
+            } else {
+                const myList: Array<StoredBlood> = [];
+                return myList;
+            }
+        }));
+    }
+
+    commitBlood(donationCenterId: number, bloodId: number, requestId: number): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/donationCenter/commitToBloodRequest', 
+              JSON.stringify({donationCenterId: donationCenterId, storedBloodId: bloodId, donationRequestId: requestId}), 
+              {headers: this.myheader})
+        .pipe(map((res: any) => {
+            const booleanResponse = new BooleanServerResponse(res.status);
+            if (res.status === false) {
+                booleanResponse.exception = res.exception;
+            }
+            return booleanResponse;
         }));
     }
 }

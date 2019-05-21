@@ -1,3 +1,4 @@
+import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
 import { Router } from '@angular/router';
 import { AuthService } from './../../../../core/auth-service/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -16,10 +17,10 @@ export class DoctorLayoutComponent implements OnInit {
 
 
   logout() {
-      this.authService.logout().subscribe((res: boolean) => {
-        if (res === true) {
-            this.router.navigate(['']);
-        }
-      });
-  }
+    this.authService.logout().subscribe((res: BooleanServerResponse) => {
+      if (res.success === true) {
+          this.router.navigate(['']);
+      }
+    });
+    }
 }
