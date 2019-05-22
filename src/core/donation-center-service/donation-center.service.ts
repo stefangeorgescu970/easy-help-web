@@ -1,3 +1,4 @@
+import { DonationCommitment } from 'src/shared/models/donation/donation-commitment/donation-commitment';
 import { PatientData } from './../../shared/models/patient/patient-data';
 import { DonationRequestDetails } from 'src/shared/models/donation/request-details/donation-request-details';
 import { DonationForm } from './../../shared/models/donation/donation-form/donation-form';
@@ -272,6 +273,45 @@ export class DonationCenterService {
         .post(environment.apiUrl + '/donationCenter/commitToBloodRequest', 
               JSON.stringify({donationCenterId: donationCenterId, storedBloodId: bloodId, donationRequestId: requestId}), 
               {headers: this.myheader})
+        .pipe(map((res: any) => {
+            const booleanResponse = new BooleanServerResponse(res.status);
+            if (res.status === false) {
+                booleanResponse.exception = res.exception;
+            }
+            return booleanResponse;
+        }));
+    }
+
+    getCommitments(locationId: number): Observable<DonationCommitment[]> {
+        return this.http
+        .post(environment.apiUrl + '/donationCenter/getCommitments', JSON.stringify({id: locationId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            if (res.status === true) {
+                const objArray = res.object.objects;
+                const myList: Array<DonationCommitment> = [];
+
+                for (const obj of objArray) {
+                    const newCommitment = new DonationCommitment();
+                    
+                    newCommitment.status = obj.status;
+                    newCommitment.id = obj.id;
+                    newCommitment.urgency = obj.urgency;
+                    newCommitment.storedBloodIdentifier = obj.storedBloodIdentifier;
+
+                    myList.push(newCommitment);
+                }
+
+                return myList;
+            } else {
+                const myList: Array<DonationCommitment> = [];
+                return myList;
+            }
+        }));
+    }
+
+    shipCommitment(commitmentId: number): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/donationCenter/shipCommitment', JSON.stringify({id: commitmentId}), {headers: this.myheader})
         .pipe(map((res: any) => {
             const booleanResponse = new BooleanServerResponse(res.status);
             if (res.status === false) {

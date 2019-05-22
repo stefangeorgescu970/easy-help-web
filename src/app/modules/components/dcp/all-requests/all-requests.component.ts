@@ -21,7 +21,7 @@ export class AllRequestsComponent implements OnInit {
 
     currentDcp: ProfileData;
 
-    constructor( private modalService: NgbModal, private authService: AuthService, private donationCenterService: DonationCenterService) { }
+    constructor(private modalService: NgbModal, private authService: AuthService, private donationCenterService: DonationCenterService) { }
 
     ngOnInit() {
 

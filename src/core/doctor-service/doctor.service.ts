@@ -1,3 +1,4 @@
+import { RealLocation } from './../../shared/models/locations/real-location';
 import { DonationRequest } from './../../shared/models/donation/request/donation-request';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -7,6 +8,7 @@ import { environment } from 'src/environments/environment';
 import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
 import { PatientData } from 'src/shared/models/patient/patient-data';
 import { DonationRequestDetails } from 'src/shared/models/donation/request-details/donation-request-details';
+import { DonationCommitment } from 'src/shared/models/donation/donation-commitment/donation-commitment';
 
 
 @Injectable({
@@ -125,6 +127,69 @@ import { DonationRequestDetails } from 'src/shared/models/donation/request-detai
     cancelRequest(requestId: number): Observable<BooleanServerResponse> {
         return this.http
         .post(environment.apiUrl + '/doctor/cancelBloodRequest', JSON.stringify({id: requestId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            const booleanResponse = new BooleanServerResponse(res.status);
+            if (res.status === false) {
+                booleanResponse.exception = res.exception;
+            }
+            return booleanResponse;
+        }));
+    }
+
+    getCommitments(requestId: number): Observable<DonationCommitment[]> {
+        return this.http
+        .post(environment.apiUrl + '/doctor/requestCommitments', JSON.stringify({id: requestId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            if (res.status === true) {
+                const objArray = res.object.objects;
+                const myList: Array<DonationCommitment> = [];
+
+                for (const obj of objArray) {
+                    const newCommitment = new DonationCommitment();
+                    const dcObj = obj.donationCenter;
+
+                    const dc = new RealLocation(dcObj.id, dcObj.name, dcObj.longitude, dcObj.latitude, dcObj.county, dcObj.address);
+                    newCommitment.donationCenter = dc;
+                    newCommitment.id = obj.id;
+                    newCommitment.status = obj.status;
+
+                    myList.push(newCommitment);
+                }
+
+                return myList;
+            } else {
+                const myList: Array<DonationCommitment> = [];
+                return myList;
+            }
+        }));
+    }
+
+    approveCommitment(commitmentId: number): Observable<string> {
+        return this.http
+        .post(environment.apiUrl + '/doctor/acceptCommitment', JSON.stringify({id: commitmentId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            if (res.status === true) {
+                return res.object;
+            }
+            return undefined;
+        }));
+    }
+
+    declineCommitment(commitmentId: number): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/doctor/declineCommitment', JSON.stringify({id: commitmentId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            const booleanResponse = new BooleanServerResponse(res.status);
+            if (res.status === false) {
+                booleanResponse.exception = res.exception;
+            }
+            return booleanResponse;
+        }));
+    }
+
+    markCommitmentAsArrived(commitmentId: number): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/doctor/commitmentArrived', JSON.stringify({id: commitmentId}), {headers: this.myheader})
         .pipe(map((res: any) => {
             const booleanResponse = new BooleanServerResponse(res.status);
             if (res.status === false) {
