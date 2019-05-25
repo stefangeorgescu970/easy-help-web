@@ -4,7 +4,7 @@
     <div class="form-group col-lg-6">
         <label for="ssn">SSN</label>
         <input type="text" formControlName="ssn" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ssn.errors }" />
-        <div *ngIf="submtted && f.snn.errors" class="invalid-feedback">
+        <div *ngIf="submitted && f.snn.errors" class="invalid-feedback">
             <div *ngIf="f.ssn.errors.required">SSN is required</div>
         </div>
     </div>
