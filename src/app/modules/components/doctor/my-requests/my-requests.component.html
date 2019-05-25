@@ -1,0 +1,190 @@
+
+<h2>Recently Created Blood Requests</h2>
+
+<table class="table table-hover" *ngIf="recentRequests && recentRequests.length > 0; else no_requests">
+    <thead>
+        <tr>
+            <th scope="col" class="th-name">SSN</th>
+            <th scope="col" class="th-id">Blood Group</th>
+            <th scope="col" class="th-name">Blood RH</th>
+            <th scope="col" class="th-name">Component</th>
+            <th scope="col" class="th-name">Quantity</th>
+            <th scope="col" class="th-name">Urgency</th>
+            <th scope="col" class="th-name">Status</th>
+            <th scope="col" class="th-name">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let request of recentRequests ; let i = index" data-="requests.id">
+            <td class="td-name">{{ request.patient.ssn }}</td>
+            <td class="td-name">{{ request.patient.group }}</td>
+            <td class="td-name">{{ request.patient.rh }}</td>
+            <td class="td-name">{{ request.component }}</td>
+            <td class="td-name">{{ request.quantity }}</td>
+            <td class="td-name">{{ request.urgency }}</td>
+            <td class="td-name">{{ request.status }}</td>
+            <td>
+                <span class="btn btn-danger remove-button" (click)="cancelRequest(request)">Cancel Request</span>
+                <span class="btn btn-success add-button" (click)="open(content, request)">View Commitments</span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div *ngIf="partiallyCommittedRequests && partiallyCommittedRequests.length > 0;">
+
+    <h2>Incomplete Blood Requests - waiting for more commitments</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col" class="th-name">SSN</th>
+                <th scope="col" class="th-id">Blood Group</th>
+                <th scope="col" class="th-name">Blood RH</th>
+                <th scope="col" class="th-name">Component</th>
+                <th scope="col" class="th-name">Quantity</th>
+                <th scope="col" class="th-name">Urgency</th>
+                <th scope="col" class="th-name">Status</th>
+                <th scope="col" class="th-name">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let request of partiallyCommittedRequests ; let i = index" data-="requests.id">
+                <td class="td-name">{{ request.patient.ssn }}</td>
+                <td class="td-name">{{ request.patient.group }}</td>
+                <td class="td-name">{{ request.patient.rh }}</td>
+                <td class="td-name">{{ request.component }}</td>
+                <td class="td-name">{{ request.quantity }}</td>
+                <td class="td-name">{{ request.urgency }}</td>
+                <td class="td-name">{{ request.status }}</td>
+                <td>
+                    <span class="btn btn-success add-button" (click)="open(content, request)">View Commitments</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="fullyCommittedRequests && fullyCommittedRequests.length > 0;">
+
+        <h2>Complete Blood Requests - waiting for delivery</h2>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col" class="th-name">SSN</th>
+                    <th scope="col" class="th-id">Blood Group</th>
+                    <th scope="col" class="th-name">Blood RH</th>
+                    <th scope="col" class="th-name">Component</th>
+                    <th scope="col" class="th-name">Quantity</th>
+                    <th scope="col" class="th-name">Urgency</th>
+                    <th scope="col" class="th-name">Status</th>
+                    <th scope="col" class="th-name">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let request of fullyCommittedRequests ; let i = index" data-="requests.id">
+                    <td class="td-name">{{ request.patient.ssn }}</td>
+                    <td class="td-name">{{ request.patient.group }}</td>
+                    <td class="td-name">{{ request.patient.rh }}</td>
+                    <td class="td-name">{{ request.component }}</td>
+                    <td class="td-name">{{ request.quantity }}</td>
+                    <td class="td-name">{{ request.urgency }}</td>
+                    <td class="td-name">{{ request.status }}</td>
+                    <td>
+                        <span class="btn btn-success add-button" (click)="open(content, request)">View Commitments</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+      <ng-template #no_requests>
+        <h6>You have no recently opened blood requests.</h6>
+      </ng-template>
+
+      <ng-template #no_proposedcommitments>
+        <h6>There are no new commitments for this blood request.</h6>
+      </ng-template>
+
+      <ng-template #no_waitingsenddcommitments>
+        <h6>There are no new commitments that donation centers should send for this blood request.</h6>
+      </ng-template>
+
+      <ng-template #no_sentcommitments>
+        <h6>There are no commitments on their way to the hospital for this blood request.</h6>
+      </ng-template>
+
+      <ng-template #content let-commitmentsModal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Commitments for this donation request</h4>
+          <button type="button" class="close" aria-label="Close" (click)="commitmentsModal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <h5>Commitments pending your approval</h5>
+
+            <table class="table table-hover" *ngIf="proposedDonationCommitments && proposedDonationCommitments.length > 0; else no_proposedcommitments">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="th-id">Status</th>
+                            <th scope="col" class="th-name">Donation Center</th>
+                            <th scope="col" class="th-name">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let commitment of proposedDonationCommitments ; let i = index" data-="blood.id">
+                            <td class="td-name">{{ commitment.status }}</td>
+                            <td class="td-name">{{ commitment.donationCenter.county }}</td>
+                            <td>
+                                <span class="btn btn-danger delete-button" (click)="declineCommitment(commitment)">Decline</span>
+                                <span class="btn btn-success add-button" (click)="approveCommitment(commitment)">Approve</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h5>Commitments waiting to be sent by donation center</h5>
+
+                <table class="table table-hover" *ngIf="waitingSendDonationCommitments && waitingSendDonationCommitments.length > 0; else no_proposedcommitments">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="th-id">Status</th>
+                                <th scope="col" class="th-name">Donation Center</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let commitment of waitingSendDonationCommitments ; let i = index" data-="blood.id">
+                                <td class="td-name">{{ commitment.status }}</td>
+                                <td class="td-name">{{ commitment.donationCenter.county }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <h5>Commitments waiting to be confirmed as arrived at your hospital</h5>
+
+                    <table class="table table-hover" *ngIf="sentDonationCommitments && sentDonationCommitments.length > 0; else no_proposedcommitments">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="th-id">Status</th>
+                                    <th scope="col" class="th-name">Donation Center</th>
+                                    <th scope="col" class="th-name">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let commitment of sentDonationCommitments ; let i = index" data-="blood.id">
+                                    <td class="td-name">{{ commitment.status }}</td>
+                                    <td class="td-name">{{ commitment.donationCenter.county }}</td>
+                                    <td>
+                                        <span class="btn btn-success add-button" (click)="markCommitmentAsArrived(commitment)">Commitment Arrived</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" (click)="commitmentsModal.close()">Close</button>
+        </div>
+    </ng-template>
+      

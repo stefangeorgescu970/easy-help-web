@@ -20,7 +20,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
             const cloned = request.clone({
                 setHeaders: {
-                Authorization: `${currentUser.token}`
+                Authorization: `Bearer ${currentUser.token}`
                 }
             });
 

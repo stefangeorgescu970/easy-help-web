@@ -1,0 +1,114 @@
+<h2 class="mt-4">Register New Account</h2>
+
+<form [formGroup]="registerForm" class="mt-4">
+    <div class="form-group col-lg-6">
+        <label>First Name</label>
+        <input class="form-control" type="text" formControlName="firstName" placeholder="Your first name" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
+        <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+            <div *ngIf="f.firstName.errors.required">First name is required</div>
+        </div>
+    </div>
+
+    <div class="form-group col-lg-6">
+        <label>Last Name</label>
+        <input class="form-control" type="text" formControlName="lastName" placeholder="Your last name" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }">
+        <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+            <div *ngIf="f.lastName.errors.required">Last name is required</div>
+        </div>
+    </div>
+
+    <div class="form-group col-lg-6">
+        <label>County</label>
+        <select class="form-control" formControlName="county" (change)="onCountyChanged($event.target.value)" [ngClass]="{ 'is-invalid': submitted && f.county.errors }">
+            <option selected hidden value="">Please select a county</option>
+            <option *ngFor="let county of counties" value="{{ county }}">{{ enumToOption(county) }}</option>
+        </select>
+        <div *ngIf="submitted && f.county.errors" class="invalid-feedback">
+            <div *ngIf="f.county.errors.required">County is required</div>
+        </div>
+    </div>
+    
+    <div class="form-group col-lg-6">
+        <label>Email</label>
+        <input class="form-control" type="text" formControlName="email" placeholder="Email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Email is required</div>
+        </div>
+    </div>
+
+    <div class="form-group col-lg-6">
+        <label>Password</label>
+        <input class="form-control" type="password" formControlName="password" placeholder="Password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+        </div>
+    </div>
+
+    <div class="form-group col-lg-6">
+        <label>Repeat Password</label>
+        <input class="form-control" type="password" formControlName="repeatPassword" placeholder="Repeat password" [ngClass]="{ 'is-invalid': submitted && f.password.value !== f.repeatPassword.value }">
+        <div *ngIf="submitted && f.password.value !== f.repeatPassword.value" class="invalid-feedback">
+            <div *ngIf="submitted && f.password.value !== f.repeatPassword.value">Passwords do not match</div>
+        </div>
+    </div>
+
+    <div class="form-group col-lg-6">
+        <label>Social Security Number</label>
+        <input class="form-control" type="text" formControlName="ssn" placeholder="Your social security number (CNP)"[ngClass]="{ 'is-invalid': submitted && f.ssn.errors }" >
+        <div *ngIf="submitted && f.ssn.errors" class="invalid-feedback">
+            <div *ngIf="f.ssn.errors.required">Social Security Number is required</div>
+        </div>
+    </div>
+
+    <div class="form-group col-lg-6">
+        <label>Date of Birth</label>
+        <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd"
+                   name="dp" formControlName="dateOfBirth" ngbDatepicker #d="ngbDatepicker" [minDate]="{year: 1940, month: 1, day: 1}"
+                   [maxDate]="{year: 2000, month: 12, day: 31}" [ngClass]="{ 'is-invalid': submitted && f.dateOfBirth.errors }">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+            </div>
+          </div>
+        
+          <div *ngIf="submitted && f.dateOfBirth.errors" class="invalid-feedback">
+            <div *ngIf="f.dateOfBirth.errors.required">Birth Date is required</div>
+        </div>
+    </div>
+    
+    <div class="form-group col-lg-6">
+        <label>Registering as</label>
+        <select class="form-control" formControlName="userType" (change)="onUserTypeChanged($event.target.value)"  [ngClass]="{ 'is-invalid': submitted && f.userType.errors }">
+            <option selected hidden value="">Please select a user type</option>
+            <option value=0>Donor</option>
+            <option value=1>Donation Center Personnel</option>
+            <option value=2>Doctor</option>
+        </select>
+
+        <div *ngIf="submitted && f.userType.errors" class="invalid-feedback">
+            <div *ngIf="f.userType.errors.required">Please select your account type</div>
+        </div>
+    </div>
+
+    <div class="form-group col-lg-6" *ngIf="shouldShowLocations">
+        <label>Working at</label>
+        <select class="form-control" formControlName="locationId" [ngClass]="{ 'is-invalid': submitted && f.locationId.errors }">
+            <option selected hidden value="">Please select your workplace</option>
+            <option *ngFor="let location of locations" value="{{ location.id }}">{{ location.name }}</option>
+        </select>
+
+        <div *ngIf="submitted && f.locationId.errors" class="invalid-feedback">
+            <div *ngIf="f.locationId.errors.required">Please select your workplace</div>
+        </div>
+    </div>
+
+    <div *ngIf="noLocationsAvailable">
+        <h6>No Locations Available for Selected County. Contact us at support@easyhelp.com</h6>
+    </div>
+
+</form>
+
+<div class="row mt-5">
+    <span class="btn btn-success mx-auto col-lg-4" *ngIf="!noLocationsAvailable" (click)="registerAccount()">Register</span>
+</div>
+

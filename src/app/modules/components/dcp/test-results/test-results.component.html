@@ -1,0 +1,88 @@
+<h2>Donations Waiting for Control Tests in Your Donation Center</h2>
+
+<table class="table table-hover" *ngIf="donations && donations.length > 0; else no_donations">
+    <thead>
+      <tr>
+        <th scope="col" class="th-name">Donor Name</th>
+        <th scope="col" class="th-name">Donation Date</th>
+        <th scope="col" class="th-name">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let donation of donations ; let i = index" data-="donation">
+        <td class="td-name">{{ donation.donor.firstName }} {{ donation.donor.lastName }}</td>
+        <td class="td-name">{{ donation.date.toLocaleString() }}</td>
+        <td>
+            <span class="btn btn-success add-button" (click)="open(content, donation)">Add Test Results</span>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #no_donations>
+    <h5>No donations awaiting test results</h5>
+  </ng-template>
+
+  <ng-template #content let-donationtestmodal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Donation Test Results</h4>
+      <button type="button" class="close" aria-label="Close" (click)="donationtestmodal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <h6>Name: {{ selectedDonation.donor.firstName }} {{ selectedDonation.donor.lastName }}</h6>
+        
+        <div *ngIf="submitted && invalid">
+            <p>All fields are required</p>
+        </div>
+
+        <form class="form-horizontal" [formGroup]="testResultsForm">
+          
+          <div class="form-group col-md-12">
+              <label>Hepatitis B:</label>
+              <input type="radio" value="false" formControlName="hepatitisB"> Negative
+              <input type="radio" value="true" formControlName="hepatitisB"> Positive
+          </div>
+
+          <div class="form-group col-md-12">
+            <label>Hepatitis C:</label>
+            <input type="radio" value="false" formControlName="hepatitisC" ngModel> Negative
+            <input type="radio" value="true" formControlName="hepatitisC" ngModel> Positive
+        </div>
+      
+        <div class="form-group col-md-12">
+            <label>HIV:</label>
+            <input type="radio" value="false" formControlName="hiv" ngModel> Negative
+            <input type="radio" value="true" formControlName="hiv" ngModel> Positive
+        </div>
+
+        <div class="form-group col-md-12">
+            <label>HTLV:</label>
+            <input type="radio" value="false" formControlName="htlv" ngModel> Negative
+            <input type="radio" value="true" formControlName="htlv" ngModel> Positive
+        </div>
+
+        <div class="form-group col-md-12">
+            <label>VDRL:</label>
+            <input type="radio" value="false" formControlName="vdrl" ngModel> Negative
+            <input type="radio" value="true" formControlName="vdrl" ngModel> Positive
+        </div>
+
+        <div class="form-group col-md-12">
+            <label>ALT:</label>
+            <input type="radio" value="false" formControlName="alt" ngModel> Negative
+            <input type="radio" value="true" formControlName="alt" ngModel> Positive
+        </div>
+
+        </form>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="donationtestmodal.close()">Close</button>
+
+      <button type="button" class="btn btn-success" (click)="submitTestResults()">Submit Test Results</button>
+
+    </div>
+</ng-template>

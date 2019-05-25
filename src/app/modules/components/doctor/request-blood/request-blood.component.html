@@ -1,0 +1,57 @@
+<h2>Request blood for one of your patients</h2>
+
+<form [formGroup]="requestForm" class="mt-4" (ngSubmit)="requestBlood()">
+    <div class="form-group col-lg-6">
+        <label>Select Patient by SSN</label>
+        <select class="form-control" formControlName="patientId" [ngClass]="{ 'is-invalid': submitted && f.patientId.errors }">
+            <option selected hidden value="">Please select one of your patients</option>
+            <option *ngFor="let patient of patients" value="{{ patient.id }}">{{ patient.ssn }}</option>
+        </select>
+        
+        <div *ngIf="submitted && f.patientId.errors" class="invalid-feedback">
+            <div *ngIf="f.patientId.errors.required">Please select one of your patients</div>
+        </div>
+    </div>
+        
+    <div class="form-group col-lg-6">
+            <label>Blood Component</label>
+            <select class="form-control" formControlName="component" [ngClass]="{ 'is-invalid': submitted && f.component.errors }">
+                    <option selected hidden value="">Please select required blood component</option>
+                    <option value=0>Platelets</option>
+                    <option value=1>Red Blood Cells</option>
+                    <option value=2>Plasma</option>
+                </select>
+            <div *ngIf="submitted && f.component.errors" class="invalid-feedback">
+                <div *ngIf="f.component.errors.required">Blood component is required</div>
+            </div>
+    </div>
+
+    <div class="form-group col-lg-6">
+            <label>Quantity</label>
+            <input class="form-control" type="number" formControlName="quantity" placeholder="0" [ngClass]="{ 'is-invalid': submitted && f.quantity.errors }">
+            <div *ngIf="submitted && f.quantity.errors" class="invalid-feedback">
+                <div *ngIf="f.quantity.errors.required">Quantity is required</div>
+            </div>
+        </div>
+
+    <div class="form-group col-lg-6">
+            <label>Urgency</label>
+            <select class="form-control" formControlName="urgency" [ngClass]="{ 'is-invalid': submitted && f.urgency.errors }">
+                    <option selected hidden value="">Please select request urgency</option>
+                    <option value=0>Low</option>
+                    <option value=1>Medium</option>
+                    <option value=2>High</option>
+                </select>
+            <div *ngIf="submitted && f.urgency.errors" class="invalid-feedback">
+                <div *ngIf="f.urgency.errors.required">Urgency is required</div>
+            </div>
+    </div>
+
+    <div class="form-group col-lg-6">
+            <button [disabled]="loading" class="btn btn-primary">Request Blood</button>
+            <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        </div>
+    
+    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+</form>
+

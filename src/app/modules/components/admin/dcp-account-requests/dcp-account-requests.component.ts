@@ -20,5 +20,5 @@ export class DcpAccountRequestsComponent implements OnInit {
             }
         );
     }
-  
+
 }

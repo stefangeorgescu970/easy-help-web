@@ -1,9 +1,14 @@
 export class ProfileData {
-    token: string;
+    id: number;
+    firstName: string;
+    lastName: string;
+    dateOfBirth: Date;
+    county: string;
+    email: string;
     role: string;
+    ssn: string;
+    token: string;
+    locationId: number;
 
-    constructor(token: string, role: string) {
-        this.token = token;
-        this.role = role;
-    }
+    constructor() {}
 }

@@ -1,0 +1,53 @@
+<h2>Donors in {{ currentDCP.county }}</h2>
+
+
+<form [formGroup]="filterForm" class="mt-4">
+
+  <div class="form-group col-lg-4">
+    <label>Can Donate</label>
+    <select class="form-control" formControlName="canDonateForm"  (change) = "filter()">
+      <option *ngFor="let canDonate of canDonateOptions" value="{{ canDonate }}">{{ canDonate }}</option>
+    </select>
+  </div>
+
+  <div class="form-group col-lg-4" >
+    <label>Blood Group</label>
+    <select class="form-control" formControlName="bloodGroupForm" (change) = "filter()">
+      <option *ngFor="let group of bloodGroups" value="{{ group }}">{{ group }}</option>
+    </select>
+  </div>
+
+  <span class="btn btn-danger add-button" (click)="getAllDonors(true)">Remove Filters</span>
+
+</form>
+
+<table class="table table-hover" *ngIf="donors && donors.length > 0; else no_donors">
+        <thead>
+          <tr>
+            <th scope="col" class="th-name">First Name</th>
+            <th scope="col" class="th-name">Last Name</th>
+            <th scope="col" class="th-name">Date of Birth</th>
+            <th scope="col" class="th-long">Email</th>
+            <th scope="col" class="th-lat">RH</th>
+            <th scope="col" class="th-lat">Blood Group</th>
+            <th scope="col" class="th-lat">Can Donate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let donor of donors ; let i = index" data-="donor.id">
+            <td class="td-name">{{ donor.firstName }}</td>
+            <td class="td-name">{{ donor.lastName }}</td>
+            <td class="td-name">{{ donor.dateOfBirth }}</td>
+            <td class="td-long">
+                    <a href="mailto:  {{ donor.email }}">  {{ donor.email }}</a>
+              </td>
+            <td class="td-lat">{{ donor.rh }}</td>
+            <td class="td-lat">{{ donor.group }}</td>
+            <td class="td-lat">{{ donor.canDonate }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <ng-template #no_donors>
+        <h5>No donors account in this county.</h5>
+      </ng-template>
+      

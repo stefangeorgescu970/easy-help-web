@@ -67,7 +67,7 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "easy-help-web:build:production"
+                "browserTarget": "easy-help-web:build:production"
             }
           }
         },

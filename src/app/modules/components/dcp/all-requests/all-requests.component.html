@@ -1,0 +1,76 @@
+<h2>Blood Requests</h2>
+
+<table class="table table-hover" *ngIf="requests && requests.length > 0; else no_requests">
+    <thead>
+        <tr>
+            <th scope="col" class="th-id">Blood Group</th>
+            <th scope="col" class="th-name">Blood RH</th>
+            <th scope="col" class="th-name">Component</th>
+            <th scope="col" class="th-name">Quantity</th>
+            <th scope="col" class="th-name">Urgency</th>
+            <th scope="col" class="th-name">Distance</th>
+            <th scope="col" class="th-name">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let request of requests ; let i = index" data-="requests.id">
+            <td class="td-name">{{ request.patient.group }}</td>
+            <td class="td-name">{{ request.patient.rh }}</td>
+            <td class="td-name">{{ request.component }}</td>
+            <td class="td-name">{{ request.quantity }}</td>
+            <td class="td-name">{{ request.urgency }}</td>
+            <td class="td-name">{{ request.distance }}</td>
+            <td>
+                <span class="btn btn-success add-button" (click)="open(content, request)">Commit to Request</span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<ng-template #no_requests>
+    <h5>There are no open blood requests.</h5>
+</ng-template>
+
+<ng-template #no_blood>
+        <h5>You have no blood in stock that would match this request.</h5>
+    </ng-template>
+
+<ng-template #content let-choosebloodmodal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Commit to this request</h4>
+          <button type="button" class="close" aria-label="Close" (click)="choosebloodmodal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <h6>Choose Blood from Stocks to Commit</h6>
+
+            <table class="table table-hover" *ngIf="filteredStoredBlood && filteredStoredBlood.length > 0; else no_blood">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="th-id">Group</th>
+                            <th scope="col" class="th-name">RH</th>
+                            <th scope="col" class="th-name">Component</th>
+                            <th scope="col" class="th-name">Quantity</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let blood of filteredStoredBlood ; let i = index" data-="blood.id">
+                            <td class="td-name">{{ blood.group }}</td>
+                            <td class="td-name">{{ blood.rh }}</td>
+                            <td class="td-name">{{ blood.component }}</td>
+                            <td class="td-name">{{ blood.quantity }}</td>
+                            <td>
+                                <span class="btn btn-success add-button" (click)="commitBlood(blood)">Commit Blood</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" (click)="choosebloodmodal.close()">Close</button>
+        </div>
+    </ng-template>

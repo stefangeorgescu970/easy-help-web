@@ -1,0 +1,74 @@
+<h2>Add a new patient</h2>
+
+<form [formGroup]="patientForm" (ngSubmit)="addPatient()">
+    <div class="form-group col-lg-6">
+        <label for="ssn">SSN</label>
+        <input type="text" formControlName="ssn" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ssn.errors }" />
+        <div *ngIf="submtted && f.snn.errors" class="invalid-feedback">
+            <div *ngIf="f.ssn.errors.required">SSN is required</div>
+        </div>
+    </div>
+
+    <div class="form-group col-lg-6">
+        <label>Blood Group</label>
+        <select class="form-control" formControlName="group" [ngClass]="{ 'is-invalid': submitted && f.group.errors }">
+            <option selected hidden value="">Please select a blood group</option>
+            <option value=A>A</option>
+            <option value=B>B</option>
+            <option value=AB>AB</option>
+            <option value=0>0</option>
+        </select>
+
+        <div *ngIf="submitted && f.group.errors" class="invalid-feedback">
+            <div *ngIf="f.group.errors.required">Please select a blood group</div>
+        </div>
+    </div>
+
+    <div class="form-group col-lg-6">
+        <label>Blood RH</label>
+        <select class="form-control" formControlName="rh" [ngClass]="{ 'is-invalid': submitted && f.rh.errors }">
+            <option selected hidden value="">Please select rh value</option>
+            <option value=true>Positive</option>
+            <option value=false>Negative</option>
+        </select>
+
+        <div *ngIf="submitted && f.rh.errors" class="invalid-feedback">
+            <div *ngIf="f.rh.errors.required">Please select rh value</div>
+        </div>
+    </div>
+
+    <div class="form-group col-lg-6">
+        <button [disabled]="loading" class="btn btn-primary">Add Patient</button>
+        <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+    </div>
+
+    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+</form>
+
+
+<h2>My Patients</h2>
+
+<table class="table table-hover" *ngIf="patients && patients.length > 0; else no_patients">
+        <thead>
+          <tr>
+            <th scope="col" class="th-name">SSN</th>
+            <th scope="col" class="th-id">Blood Group</th>
+            <th scope="col" class="th-name">Blood RH</th>
+            <th scope="col" class="th-name">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let patient of patients ; let i = index" data-="patient.id">
+            <td class="td-name">{{ patient.ssn }}</td>
+            <td class="td-name">{{ patient.group }}</td>
+            <td class="td-name">{{ patient.rh }}</td>
+            <td>
+              <span class="btn btn-danger remove-button" (click)="removePatient(patient.id)">Remove</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <ng-template #no_patients>
+        <h5>You have no patients.</h5>
+      </ng-template>
+      

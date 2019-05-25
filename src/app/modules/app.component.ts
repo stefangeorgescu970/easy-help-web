@@ -1,3 +1,4 @@
+import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './../../core/auth-service/auth.service';
 import { Router } from '@angular/router';
@@ -14,11 +15,11 @@ export class AppComponent {
   constructor(private authService: AuthService, private router: Router) { }
 
   logout() {
-    this.authService.logout()
-      .subscribe(
-        (res: any) => {
-          this.router.navigate(['login']);
-        });
-  }
+    this.authService.logout().subscribe((res: BooleanServerResponse) => {
+      if (res.success === true) {
+          this.router.navigate(['']);
+      }
+    });
+    }
 
 }

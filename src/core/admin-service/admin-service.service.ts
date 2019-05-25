@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DoctorAccount } from 'src/shared/models/accounts/doctor-account/doctor-account';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { DcpAccount } from 'src/shared/models/accounts/dcp-account/dcp-account';
+import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
 
 @Injectable({
   providedIn: 'root'
@@ -103,5 +104,113 @@ export class AdminService {
                 return myList;
             }
         }));
+    }
+
+    acceptDoctorRequest(requestId: number): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/admin/approveDoctorAccount', JSON.stringify({id: requestId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            let booleanResponse = new BooleanServerResponse(res.status)
+            if(res.status === false){
+                booleanResponse.exception = res.exception
+            }
+            return booleanResponse
+        }));
+    }
+
+    declineDoctorRequest(requestId: number ): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/admin/rejectDoctorAccount', JSON.stringify({id: requestId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            let booleanResponse = new BooleanServerResponse(res.status)
+            if(res.status === false){
+                booleanResponse.exception = res.exception
+            }
+            return booleanResponse
+        }));
+    }
+
+    acceptDCPRequest(requestId: number): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/admin/approveDcpAccount', JSON.stringify({id: requestId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            let booleanResponse = new BooleanServerResponse(res.status)
+            if(res.status === false){
+                booleanResponse.exception = res.exception
+            }
+            return booleanResponse
+        }));
+    }
+
+    declineDCPRequest(requestId: number ): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/admin/rejectDcpAccount', JSON.stringify({id: requestId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            let booleanResponse = new BooleanServerResponse(res.status)
+            if(res.status === false){
+                booleanResponse.exception = res.exception
+            }
+            return booleanResponse
+        }));
+    }
+
+    deactivateDCPAccount(requestId: number ): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/admin/deactivateDcpAccount', JSON.stringify({id: requestId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            let booleanResponse = new BooleanServerResponse(res.status)
+            if(res.status === false){
+                booleanResponse.exception = res.exception
+            }
+            return booleanResponse
+        }));
+    }
+
+    deactivateDoctorAccount(requestId: number ): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/admin/deactivateDoctorAccount', JSON.stringify({id: requestId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            let booleanResponse = new BooleanServerResponse(res.status)
+            if(res.status === false){
+                booleanResponse.exception = res.exception
+            }
+            return booleanResponse
+        }));
+    }
+
+    sendTestPush(email: string): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/admin/sendTestNotification', JSON.stringify({param: email}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            const booleanResponse = new BooleanServerResponse(res.status);
+            if (res.status === false) {
+                booleanResponse.exception = res.exception;
+            }
+            return booleanResponse;
+        }));
+    }
+
+    populateTables() {
+        this.http
+        .get(environment.apiUrl + '/mocks/populateTables', {headers: this.myheader})
+        .pipe(map((res: any) => {
+            if (res.status === false) {
+                alert(res.exception);
+            } else {
+                this.http
+                .get(environment.apiUrl + '/mocks/populateTables2', {headers: this.myheader})
+                .pipe(map((res: any) => {
+                    if (res.status === false) {
+                        alert(res.exception);
+                    } else {
+                        alert('tables populated');
+                    }
+                })).subscribe((internalRes: any) => {
+
+                });
+            }
+        })).subscribe((internalRes: any) => {
+
+        });
     }
 }

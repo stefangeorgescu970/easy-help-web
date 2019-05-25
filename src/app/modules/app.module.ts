@@ -1,3 +1,4 @@
+import { DonationBooking } from 'src/shared/models/donation/booking/donation-booking';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AlertModule } from 'ngx-bootstrap';
@@ -13,6 +14,7 @@ import { IntroComponent } from './components/intro/intro.component';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AppComponent } from './app.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {
     MatAutocompleteModule,
@@ -68,6 +70,21 @@ import { DoctorAccountsComponent } from './components/admin/doctor-accounts/doct
 import { DcpAccountsComponent } from './components/admin/dcp-accounts/dcp-accounts.component';
 import { HospitalsComponent } from './components/admin/hospitals/hospitals.component';
 import { DonationCentersComponent } from './components/admin/donation-centers/donation-centers.component';
+import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
+import { RegisterComponent } from './components/register/register.component';
+import { DcpLayoutComponent } from './layouts/dcp-layout/dcp-layout.component';
+import { AllDonorsComponent } from './components/dcp/all-donors/all-donors.component';
+import { DoctorLayoutComponent } from './layouts/doctor-layout/doctor-layout.component';
+import { RequestBloodComponent } from './components/doctor/request-blood/request-blood.component';
+import { AllBookingsComponent } from './components/dcp/all-bookings/all-bookings.component';
+import { PatientsComponent } from './components/doctor/patients/patients.component';
+import { TestPushComponent } from './components/admin/test-push/test-push.component';
+import { TestResultsComponent } from './components/dcp/test-results/test-results.component';
+import { SplitResultsComponent } from './components/dcp/split-results/split-results.component';
+import { AllRequestsComponent } from './components/dcp/all-requests/all-requests.component';
+import { MyCommitmentsComponent } from './components/dcp/my-commitments/my-commitments.component';
+import { MyRequestsComponent } from './components/doctor/my-requests/my-requests.component';
+import { CreateMockComponent } from './components/admin/create-mock/create-mock.component';
 
 @NgModule({
   declarations: [
@@ -81,10 +98,26 @@ import { DonationCentersComponent } from './components/admin/donation-centers/do
     DoctorAccountsComponent,
     DcpAccountsComponent,
     HospitalsComponent,
-    DonationCentersComponent
+    DonationCentersComponent,
+    LoginLayoutComponent,
+    RegisterComponent,
+    DcpLayoutComponent,
+    AllDonorsComponent,
+    DoctorLayoutComponent,
+    RequestBloodComponent,
+    AllBookingsComponent,
+    PatientsComponent,
+    TestPushComponent,
+    TestResultsComponent,
+    SplitResultsComponent,
+    AllRequestsComponent,
+    MyCommitmentsComponent,
+    MyRequestsComponent,
+    CreateMockComponent
   ],
   imports: [
     BrowserModule,
+    NgbModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,

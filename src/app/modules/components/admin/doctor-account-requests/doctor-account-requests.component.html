@@ -8,10 +8,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let accountReq of doctorAccounts" data-="accountReq.id">
+          <tr *ngFor="let accountReq of doctorAccounts ; let i = index" data-="accountReq.id">
             <td class="td-id">{{ accountReq.id }}</td>
             <td class="td-email">{{ accountReq.email }}</td>
+            <td>
+              <span class="btn btn-success add-button" (click)="approveDoctorRequest(accountReq.id, i)" >Approve</span>
+              <span class="btn btn-danger remove-button" (click)="declineDoctorRequest(accountReq.id, i)">Decline</span>
+            </td>
           </tr>
+          
         </tbody>
       </table>
       <ng-template #no_account_requests>

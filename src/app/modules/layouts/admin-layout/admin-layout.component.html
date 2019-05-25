@@ -10,11 +10,15 @@
             <a routerLink="dcps" class="error-message" mat-button>DCP Accounts</a>
             <a routerLink="hospitals" class="error-message" mat-button>Hospitals</a> 
             <a routerLink="donation-centers" class="error-message" mat-button>Donation Centers</a>
+            <a routerLink="test-push" class="error-message" mat-button>Test Push</a>
+            <a routerLink="create-mock" class="error-message" mat-button>Create Mock</a>
+            <span class="example-fill-remaining-space"></span>
+            <a class="error-message" mat-button (click)="logout()">Logout</a> 
     </mat-toolbar>
 </div>  
     
     <div class="content">
-        <div class="card col-lg-8 mx-auto mt-3 p-5">
+        <div class="card col-lg-10 mx-auto mt-3 p-5">
             <router-outlet></router-outlet>
         </div>
     </div>

@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
     constructor(private formBuilder: FormBuilder, private route: ActivatedRoute,
                 private router: Router, private authenticationService: AuthService) {
         // redirect to home if already logged in
+
         const user = this.authenticationService.getUser();
 
         if (user) {
@@ -51,11 +52,12 @@ export class LoginComponent implements OnInit {
         this.loading = true;
         this.authenticationService.login(this.f.username.value, this.f.password.value)
         .subscribe((res: LoginResult) => {
+            this.loading = false;
             if (res.success === false) {
-                this.error = 'Some error';
+                this.error = res.error;
                 return;
             } else {
-
+                this.error = undefined;
                 const profileData = res.profileData;
 
                 if (profileData !== undefined) {
@@ -69,6 +71,12 @@ export class LoginComponent implements OnInit {
         switch (profileData.role) {
             case 'SYSADMIN':
             this.router.navigate(['admin']);
+            break;
+            case 'DOCTOR':
+            this.router.navigate(['doctor']);
+            break;
+            case 'DONATION_CENTER_PERSONNEL':
+            this.router.navigate(['dcp']);
             break;
         }
     }
