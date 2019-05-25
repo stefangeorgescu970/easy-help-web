@@ -84,6 +84,7 @@ import { SplitResultsComponent } from './components/dcp/split-results/split-resu
 import { AllRequestsComponent } from './components/dcp/all-requests/all-requests.component';
 import { MyCommitmentsComponent } from './components/dcp/my-commitments/my-commitments.component';
 import { MyRequestsComponent } from './components/doctor/my-requests/my-requests.component';
+import { CreateMockComponent } from './components/admin/create-mock/create-mock.component';
 
 @NgModule({
   declarations: [
@@ -111,7 +112,8 @@ import { MyRequestsComponent } from './components/doctor/my-requests/my-requests
     SplitResultsComponent,
     AllRequestsComponent,
     MyCommitmentsComponent,
-    MyRequestsComponent
+    MyRequestsComponent,
+    CreateMockComponent
   ],
   imports: [
     BrowserModule,

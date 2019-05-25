@@ -26,6 +26,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { PatientsComponent } from './components/doctor/patients/patients.component';
 import { TestPushComponent } from './components/admin/test-push/test-push.component';
 import { TestResultsComponent } from './components/dcp/test-results/test-results.component';
+import { CreateMockComponent } from './components/admin/create-mock/create-mock.component';
 
 const routes: Routes = [
     { path: '', component: HomeLayoutComponent, children: [
@@ -43,7 +44,8 @@ const routes: Routes = [
         { path: 'dcps', component: DcpAccountsComponent },
         { path: 'hospitals', component: HospitalsComponent },
         { path: 'donation-centers', component: DonationCentersComponent },
-        { path: 'test-push', component: TestPushComponent }
+        { path: 'test-push', component: TestPushComponent },
+        { path: 'create-mock', component: CreateMockComponent }
     ] },
 
     { path: 'dcp', component: DcpLayoutComponent, canActivate: [AuthGuard], data: {roles: [UserRole.Dcp]}, children: [
