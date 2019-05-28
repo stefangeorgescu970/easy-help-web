@@ -1,4 +1,4 @@
-import { UserRole } from 'src/shared/enums/user-role/user-role.enum';
+import { UserRole } from 'src/shared/enums/user-role.enum';
 
 export class BaseAccount {
     id: number;

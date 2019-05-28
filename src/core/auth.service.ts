@@ -1,4 +1,4 @@
-import { UserRole } from '../shared/enums/user-role/user-role.enum';
+import { UserRole } from '../shared/enums/user-role.enum';
 import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
 import { RegisterDto } from '../shared/models/accounts/register-dto/register-dto';
 import { Injectable } from '@angular/core';

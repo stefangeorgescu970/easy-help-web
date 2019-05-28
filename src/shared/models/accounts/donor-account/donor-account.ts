@@ -1,6 +1,6 @@
 import { DonationForm } from './../../donation/donation-form/donation-form';
 import { BaseAccount } from '../base-account';
-import { UserRole } from 'src/shared/enums/user-role/user-role.enum';
+import { UserRole } from 'src/shared/enums/user-role.enum';
 
 export class DonorAccount extends BaseAccount {
     rh: boolean;
