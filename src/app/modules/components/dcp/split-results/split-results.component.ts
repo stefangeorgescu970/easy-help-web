@@ -1,10 +1,10 @@
+import { DonationCenterPersonnelService } from './../../../../../core/donation-center-personnel.service';
 import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Donation } from './../../../../../shared/models/donation/donation/donation';
-import { AuthService } from './../../../../../core/auth-service/auth.service';
+import { AuthService } from '../../../../../core/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DonationService } from 'src/core/donation-service/donation.service';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';
 
 @Component({
@@ -14,7 +14,7 @@ import { ProfileData } from 'src/shared/models/profile-data/profile-data';
 })
 export class SplitResultsComponent implements OnInit {
 
-    constructor(private authService: AuthService, private donationService: DonationService,
+    constructor(private authService: AuthService, private dcpService: DonationCenterPersonnelService,
         private modalService: NgbModal, private formBuilder: FormBuilder) { }
 
     currentDCP: ProfileData;
@@ -35,7 +35,7 @@ export class SplitResultsComponent implements OnInit {
         plasmaUnits: [null, Validators.required]
     });
 
-    this.donationService.getDonationsAwaitingSplitResult(this.currentDCP.locationId).subscribe(
+    this.dcpService.getDonationsAwaitingSplitResult(this.currentDCP.locationId).subscribe(
         (res: Donation[]) => {
             this.donations = res;
     });
@@ -52,7 +52,7 @@ export class SplitResultsComponent implements OnInit {
         this.invalid = false;
         const splitData = this.splitResultsForm.value;
         splitData.donationId = this.selectedDonation.id;
-        this.donationService.addSplitResults(splitData).subscribe(
+        this.dcpService.addSplitResults(splitData).subscribe(
             (res: BooleanServerResponse) => {
                 if (res.success === true) {
                     this.donations = this.donations.filter(obj => obj.id != this.selectedDonation.id);

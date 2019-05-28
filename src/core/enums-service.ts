@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment';
 
     myheader = new HttpHeaders().set('Content-Type', 'application/json');
   
-    getEnums(): Observable<any> {  
+    getEnums(): Observable<any> {
       return this.http
         .get(environment.apiUrl + '/enums',{headers: this.myheader})
         .pipe(map((res: any) => {

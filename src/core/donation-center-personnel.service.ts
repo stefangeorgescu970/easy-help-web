@@ -1,7 +1,10 @@
+import { DonationSplitResultsDto } from '../shared/models/donation/donation-split-results-dto/donation-split-results-dto';
+import { DonationTestResultsDto } from '../shared/models/donation/donation-test-results-dto/donation-test-results-dto';
+import { Donation } from 'src/shared/models/donation/donation/donation';
 import { DonationCommitment } from 'src/shared/models/donation/donation-commitment/donation-commitment';
-import { PatientData } from './../../shared/models/patient/patient-data';
+import { PatientData } from '../shared/models/patient/patient-data';
 import { DonationRequestDetails } from 'src/shared/models/donation/request-details/donation-request-details';
-import { DonationForm } from './../../shared/models/donation/donation-form/donation-form';
+import { DonationForm } from '../shared/models/donation/donation-form/donation-form';
 import { DonorAccount } from 'src/shared/models/accounts/donor-account/donor-account';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -18,83 +21,15 @@ import { StoredBlood } from 'src/shared/models/donation/stored-blood/stored-bloo
 @Injectable({
   providedIn: 'root'
 })
-export class DonationCenterService {
+export class DonationCenterPersonnelService {
 
     constructor(private http: HttpClient) { }
 
     myheader = new HttpHeaders().set('Content-Type', 'application/json');
 
-    getDonationCenters(): Observable<RealLocation[]> {
-        return this.http
-        .post(environment.apiUrl + '/donationCenter/getAll', {}, {headers: this.myheader})
-        .pipe(map((res: any) => {
-            if (res.status === true) {
-                const objArray = res.object.objects;
-                const myList: Array<RealLocation> = [];
-
-                for (const obj of objArray) {
-                    const newHospital = new RealLocation(obj.id, obj.name, obj.longitude, obj.latitude, obj.county, obj.address);
-                    myList.push(newHospital);
-                }
-
-                return myList;
-            } else {
-                const myList: Array<RealLocation> = [];
-                return myList;
-            }
-        }));
-    }
-
-    addDonationCenter(hospital : RealLocation): Observable<LocationResponse> {
-        return this.http
-        .post(environment.apiUrl + '/donationCenter/add',hospital, {headers: this.myheader})
-        .pipe(map((res: any) => {
-            let response = new LocationResponse(res.status)
-            if(res.status === true){
-                response.model = res.object
-            }else{
-                response.exception = res.exception
-            }
-            return response
-        }));
-    }
-
-    removeDonationCenter(requestId: number ): Observable<BooleanServerResponse> {
-        return this.http
-        .post(environment.apiUrl + '/donationCenter/remove', JSON.stringify({id: requestId}), {headers: this.myheader})
-        .pipe(map((res: any) => {
-            let booleanResponse = new BooleanServerResponse(res.status)
-            if(res.status === false){
-                booleanResponse.exception = res.exception
-            }
-            return booleanResponse
-        }));
-    }
-
-    getDonationCentersInCounty(county: string): Observable<RealLocation[]> {
-        return this.http
-        .post(environment.apiUrl + '/donationCenter/getInCounty', JSON.stringify({county: county}), {headers: this.myheader})
-        .pipe(map((res: any) => {
-            if (res.status === true) {
-                const objArray = res.object.objects;
-                const myList: Array<RealLocation> = [];
-
-                for (const obj of objArray) {
-                    const newHospital = new RealLocation(obj.id, obj.name, obj.longitude, obj.latitude, obj.county, obj.address);
-                    myList.push(newHospital);
-                }
-
-                return myList;
-            } else {
-                const myList: Array<RealLocation> = [];
-                return myList;
-            }
-        }));
-    }
-
     cancelBooking(booking: DonationBooking): Observable<BooleanServerResponse> {
         return this.http
-        .post(environment.apiUrl + '/donationCenter/cancelBooking', JSON.stringify({id: booking.id}), {headers: this.myheader})
+        .post(environment.apiUrl + '/dcp/cancelBooking', JSON.stringify({id: booking.id}), {headers: this.myheader})
         .pipe(map((res: any) => {
             const booleanResponse = new BooleanServerResponse(res.status);
             if (res.status === false) {
@@ -106,7 +41,7 @@ export class DonationCenterService {
 
     createDonationFromBooking(booking: DonationBooking, groupLetter: string, rh: boolean): Observable<BooleanServerResponse> {
         return this.http
-        .post(environment.apiUrl + '/donationCenter/createDonation',
+        .post(environment.apiUrl + '/dcp/createDonation',
         JSON.stringify({bookingId: booking.id, groupLetter: groupLetter, rh: rh}), {headers: this.myheader})
         .pipe(map((res: any) => {
             const booleanResponse = new BooleanServerResponse(res.status);
@@ -120,7 +55,7 @@ export class DonationCenterService {
 
     getBookingsAtDonationCenter(donationCenterId: number): Observable<DonationBooking[]> {
         return this.http
-        .post(environment.apiUrl + '/donationCenter/getDCBookings', JSON.stringify({id: donationCenterId}), {headers: this.myheader})
+        .post(environment.apiUrl + '/dcp/getDCBookings', JSON.stringify({id: donationCenterId}), {headers: this.myheader})
         .pipe(map((res: any) => {
             if (res.status === true) {
                 const objArray = res.object.objects;
@@ -203,7 +138,7 @@ export class DonationCenterService {
 
     getBloodRequests(donationCenterId: number): Observable<DonationRequestDetails[]> {
         return this.http
-        .post(environment.apiUrl + '/donationCenter/seeAllBloodRequests', JSON.stringify({id: donationCenterId}), {headers: this.myheader})
+        .post(environment.apiUrl + '/dcp/seeAllBloodRequests', JSON.stringify({id: donationCenterId}), {headers: this.myheader})
         .pipe(map((res: any) => {
             if (res.status === true) {
                 const objArray = res.object.objects;
@@ -216,18 +151,8 @@ export class DonationCenterService {
                     donReqDetails.urgency = obj.urgency;
                     donReqDetails.status = obj.status;
 
-                    const patient = new PatientData();
-                    patient.id = obj.patient.id;
-                    patient.group = obj.patient.bloodType.groupLetter;
-                    patient.rh = obj.patient.bloodType.rh;
-                    patient.ssn = obj.patient.ssn;
-                    donReqDetails.patient = patient;
-                    donReqDetails.component = obj.separatedBloodTypeDTO.component;
-
-                    const doctorObj = obj.doctor;
-                    const doctor = new DoctorAccount(doctorObj.id, doctorObj.email, doctorObj.userType);
-
-                    donReqDetails.doctor = doctor;
+                    donReqDetails.component = obj.separatedBloodType.component;
+                    
                     donReqDetails.distance = obj.distance;
 
                     myList.push(donReqDetails);
@@ -243,7 +168,7 @@ export class DonationCenterService {
 
     getBloodInDonationCenter(donationCenterId: number): Observable<StoredBlood[]> {
         return this.http
-        .post(environment.apiUrl + '/donationCenter/getAvailableBloodInDC', JSON.stringify({id: donationCenterId}), {headers: this.myheader})
+        .post(environment.apiUrl + '/dcp/getAvailableBloodInDC', JSON.stringify({id: donationCenterId}), {headers: this.myheader})
         .pipe(map((res: any) => {
             if (res.status === true) {
                 const objArray = res.object.objects;
@@ -253,9 +178,9 @@ export class DonationCenterService {
                     const newStoredBlood = new StoredBlood();
                     newStoredBlood.id = obj.id;
                     newStoredBlood.quantity = obj.amount;
-                    newStoredBlood.component = obj.separatedBloodTypeDTO.component;
-                    newStoredBlood.rh = obj.separatedBloodTypeDTO.bloodType.rh;
-                    newStoredBlood.group = obj.separatedBloodTypeDTO.bloodType.groupLetter;
+                    newStoredBlood.component = obj.separatedBloodType.component;
+                    newStoredBlood.rh = obj.separatedBloodType.bloodType.rh;
+                    newStoredBlood.group = obj.separatedBloodType.bloodType.groupLetter;
 
                     myList.push(newStoredBlood);
                 }
@@ -270,7 +195,7 @@ export class DonationCenterService {
 
     commitBlood(donationCenterId: number, bloodId: number, requestId: number): Observable<BooleanServerResponse> {
         return this.http
-        .post(environment.apiUrl + '/donationCenter/commitToBloodRequest', 
+        .post(environment.apiUrl + '/dcp/commitToBloodRequest', 
               JSON.stringify({donationCenterId: donationCenterId, storedBloodId: bloodId, donationRequestId: requestId}), 
               {headers: this.myheader})
         .pipe(map((res: any) => {
@@ -284,7 +209,7 @@ export class DonationCenterService {
 
     getCommitments(locationId: number): Observable<DonationCommitment[]> {
         return this.http
-        .post(environment.apiUrl + '/donationCenter/getCommitments', JSON.stringify({id: locationId}), {headers: this.myheader})
+        .post(environment.apiUrl + '/dcp/getCommitments', JSON.stringify({id: locationId}), {headers: this.myheader})
         .pipe(map((res: any) => {
             if (res.status === true) {
                 const objArray = res.object.objects;
@@ -311,7 +236,7 @@ export class DonationCenterService {
 
     shipCommitment(commitmentId: number): Observable<BooleanServerResponse> {
         return this.http
-        .post(environment.apiUrl + '/donationCenter/shipCommitment', JSON.stringify({id: commitmentId}), {headers: this.myheader})
+        .post(environment.apiUrl + '/dcp/shipCommitment', JSON.stringify({id: commitmentId}), {headers: this.myheader})
         .pipe(map((res: any) => {
             const booleanResponse = new BooleanServerResponse(res.status);
             if (res.status === false) {
@@ -320,4 +245,158 @@ export class DonationCenterService {
             return booleanResponse;
         }));
     }
+
+    getDonationsAwaitingTestResult(donationCenterId: number): Observable<Donation[]> {
+        return this.http
+        .post(environment.apiUrl + '/dcp/getWaitingForTestResults', JSON.stringify({id: donationCenterId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            if (res.status === true) {
+                const objArray = res.object.objects;
+                const myList: Array<Donation> = [];
+
+                for (const obj of objArray) {
+                    const newDonation = new Donation();
+                    newDonation.date = new Date(obj.date);
+
+                    const donorObj = obj.donor;
+                    const newDonor = new DonorAccount(donorObj.id, donorObj.email, donorObj.userType);
+                    newDonor.canDonate = donorObj.canDonate;
+                    newDonor.dateOfBirth = donorObj.dateOfBirth;
+                    newDonor.firstName = donorObj.firstName;
+                    newDonor.lastName = donorObj.lastName;
+                    newDonor.group = donorObj.bloodGroupLetter;
+                    newDonor.county = donorObj.county;
+                    newDonor.rh = donorObj.rh;
+                    newDonor.ssn = donorObj.ssn;
+                    newDonation.donor = newDonor;
+
+                    newDonation.id = obj.id;
+
+                    myList.push(newDonation);
+                }
+
+                return myList;
+            } else {
+                const myList: Array<Donation> = [];
+
+                return myList;
+            }
+        }));
+    }
+
+    getDonationsAwaitingSplitResult(donationCenterId: number): Observable<Donation[]> {
+        return this.http
+        .post(environment.apiUrl + '/dcp/getWaitingForSplitResults', JSON.stringify({id: donationCenterId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            if (res.status === true) {
+                const objArray = res.object.objects;
+                const myList: Array<Donation> = [];
+
+                for (const obj of objArray) {
+                    const newDonation = new Donation();
+                    newDonation.date = new Date(obj.date);
+
+                    const donorObj = obj.donor;
+                    const newDonor = new DonorAccount(donorObj.id, donorObj.email, donorObj.userType);
+                    newDonor.canDonate = donorObj.canDonate;
+                    newDonor.dateOfBirth = donorObj.dateOfBirth;
+                    newDonor.firstName = donorObj.firstName;
+                    newDonor.lastName = donorObj.lastName;
+                    newDonor.group = donorObj.bloodGroupLetter;
+                    newDonor.county = donorObj.county;
+                    newDonor.rh = donorObj.rh;
+                    newDonor.ssn = donorObj.ssn;
+                    newDonation.donor = newDonor;
+
+                    newDonation.id = obj.id;
+
+                    myList.push(newDonation);
+                }
+
+                return myList;
+            } else {
+                const myList: Array<Donation> = [];
+
+                return myList;
+            }
+        }));
+    }
+
+    addTestResults(data: DonationTestResultsDto): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/dcp/addTestResult', data,  {headers: this.myheader})
+        .pipe(map((res: any) => {
+            const booleanResponse = new BooleanServerResponse(res.status);
+            if (res.status === false) {
+                booleanResponse.exception = res.exception;
+            }
+            return booleanResponse;
+        }));
+    }
+
+    addSplitResults(data: DonationSplitResultsDto): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/dcp/addSplitResults', data,  {headers: this.myheader})
+        .pipe(map((res: any) => {
+            const booleanResponse = new BooleanServerResponse(res.status);
+            if (res.status === false) {
+                booleanResponse.exception = res.exception;
+            }
+            return booleanResponse;
+        }));
+    }
+
+    getDonorsByCounty(county: string): Observable<DonorAccount[]> {
+        return this.http
+        .post(environment.apiUrl + '/dcp/getDonorsInCounty', JSON.stringify({county: county}), 
+        {headers: this.myheader})
+        .pipe(map((res: any) => {
+              if (res.status === true) {
+                  const objArray = res.object.objects;
+                  const myList: Array<DonorAccount> = [];
+  
+                  for (const obj of objArray) {
+                      const newDonor = new DonorAccount(obj.id, obj.email, obj.userType);
+                      newDonor.canDonate = obj.canDonate;
+                      newDonor.dateOfBirth = obj.dateOfBirth;
+                      newDonor.firstName = obj.firstName;
+                      newDonor.lastName = obj.lastName;
+                      newDonor.group = obj.group;
+                      newDonor.rh = obj.rh;
+                      myList.push(newDonor);
+                  }
+                  return myList;
+              } else {
+                  const myList: Array<DonorAccount> = [];
+                  return myList;
+              }
+          }));
+      }
+  
+      filterDonors(county: string, canDonate: boolean, bloodGroup: string): Observable<DonorAccount[]> {
+          return this.http
+          .post(environment.apiUrl + '/dcp/filterDonors', JSON.stringify({county: county , canDonate: canDonate, groupLetter: bloodGroup}), 
+          {headers: this.myheader})
+          .pipe(map((res: any) => {
+                if (res.status === true) {
+                    const objArray = res.object.objects;
+                    const myList: Array<DonorAccount> = [];
+    
+                    for (const obj of objArray) {
+                        const newDonor = new DonorAccount(obj.id, obj.email, obj.userType);
+                        newDonor.canDonate = obj.canDonate;
+                        newDonor.dateOfBirth = obj.dateOfBirth;
+                        newDonor.firstName = obj.firstName;
+                        newDonor.lastName = obj.lastName;
+                        newDonor.group = obj.group;
+                        newDonor.rh = obj.rh;
+                        myList.push(newDonor);
+                    }
+                    return myList;
+                } else {
+                    const myList: Array<DonorAccount> = [];
+                    return myList;
+                }
+            }));
+        }
 }

@@ -1,11 +1,11 @@
 import { BooleanServerResponse } from './../../../../../shared/models/boolean-server-response/boolean-server-response';
-import { AuthService } from './../../../../../core/auth-service/auth.service';
+import { AuthService } from '../../../../../core/auth.service';
 import { DonationRequestDetails } from './../../../../../shared/models/donation/request-details/donation-request-details';
 import { Component, OnInit } from '@angular/core';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';
-import { DonationCenterService } from 'src/core/donation-center-service/donation-center.service';
 import { StoredBlood } from 'src/shared/models/donation/stored-blood/stored-blood';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DonationCenterPersonnelService } from 'src/core/donation-center-personnel.service';
 
 @Component({
   selector: 'app-all-requests',
@@ -21,7 +21,7 @@ export class AllRequestsComponent implements OnInit {
 
     currentDcp: ProfileData;
 
-    constructor(private modalService: NgbModal, private authService: AuthService, private donationCenterService: DonationCenterService) { }
+    constructor(private modalService: NgbModal, private authService: AuthService, private donationCenterService: DonationCenterPersonnelService) { }
 
     ngOnInit() {
 

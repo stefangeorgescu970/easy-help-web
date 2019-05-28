@@ -1,4 +1,4 @@
-import { AdminService } from './../../../../../core/admin-service/admin-service.service';
+import { AdminService } from '../../../../../core/admin-service.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

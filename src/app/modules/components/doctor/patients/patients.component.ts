@@ -1,9 +1,9 @@
 import { BooleanServerResponse } from '../../../../../shared/models/boolean-server-response/boolean-server-response';
-import { AuthService } from '../../../../../core/auth-service/auth.service';
+import { AuthService } from '../../../../../core/auth.service';
 import { PatientData } from '../../../../../shared/models/patient/patient-data';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { DoctorService } from 'src/core/doctor-service/doctor.service';
+import { DoctorService } from 'src/core/doctor.service';
 
 @Component({
   selector: 'app-patients',

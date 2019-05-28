@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminService } from 'src/core/admin-service/admin-service.service';
+import { AdminService } from 'src/core/admin-service.service';
 import { DoctorAccount } from 'src/shared/models/accounts/doctor-account/doctor-account';
 import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
 

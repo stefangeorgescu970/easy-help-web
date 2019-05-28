@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminService } from 'src/core/admin-service/admin-service.service';
+import { AdminService } from 'src/core/admin-service.service';
 import { DcpAccount } from 'src/shared/models/accounts/dcp-account/dcp-account';
 
 @Component({

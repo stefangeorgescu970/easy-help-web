@@ -1,6 +1,6 @@
+import { DonationCenterPersonnelService } from 'src/core/donation-center-personnel.service';
 import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
-import { DonationCenterService } from './../../../../../core/donation-center-service/donation-center.service';
-import { AuthService } from './../../../../../core/auth-service/auth.service';
+import { AuthService } from '../../../../../core/auth.service';
 import { DonationCommitment } from './../../../../../shared/models/donation/donation-commitment/donation-commitment';
 import { Component, OnInit } from '@angular/core';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';
@@ -16,7 +16,7 @@ export class MyCommitmentsComponent implements OnInit {
     proposedDonationCommitments: Array<DonationCommitment> = [];
     waitingSendDonationCommitments: Array<DonationCommitment> = [];
 
-    constructor(private authService: AuthService, private dcService: DonationCenterService) { }
+    constructor(private authService: AuthService, private dcService: DonationCenterPersonnelService) { }
 
     ngOnInit() {
         this.currentDC = this.authService.getUser();

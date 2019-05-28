@@ -1,10 +1,9 @@
-import { DonationCenterService } from 'src/core/donation-center-service/donation-center.service';
-import { HospitalService } from './../../../../core/hospital-service/hospital.service';
+import { LocationService } from './../../../../core/location.service';
 import { Component, OnInit } from '@angular/core';
-import { EnumsService } from 'src/core/enums-service/enums-service';
+import { EnumsService } from 'src/core/enums-service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../../../core/auth-service/auth.service';
+import { AuthService } from '../../../../core/auth.service';
 import { RealLocation } from 'src/shared/models/locations/real-location';
 import { RegisterDto } from 'src/shared/models/accounts/register-dto/register-dto';
 
@@ -29,8 +28,7 @@ export class RegisterComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder, private route: ActivatedRoute,
                 private router: Router, private authenticationService: AuthService,
-                private enumService: EnumsService, private hospService: HospitalService,
-                private dcService: DonationCenterService) { }
+                private enumService: EnumsService, private locationService: LocationService) { }
 
     ngOnInit() {
 
@@ -94,7 +92,7 @@ export class RegisterComponent implements OnInit {
                 break;
             case '1':
                 if (this.selectedCounty) {
-                    this.dcService.getDonationCentersInCounty(this.selectedCounty).subscribe(res => {
+                    this.locationService.getDonationCentersInCounty(this.selectedCounty).subscribe(res => {
                         if (res.length === 0) {
                             this.shouldShowLocations = false;
                             this.noLocationsAvailable = true;
@@ -108,7 +106,7 @@ export class RegisterComponent implements OnInit {
                 break;
             case '2':
                 if (this.selectedCounty) {
-                    this.hospService.getHospitalsInCounty(this.selectedCounty).subscribe(res => {
+                    this.locationService.getHospitalsInCounty(this.selectedCounty).subscribe(res => {
                         if (res.length === 0) {
                             this.shouldShowLocations = false;
                             this.noLocationsAvailable = true;

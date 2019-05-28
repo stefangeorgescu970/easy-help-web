@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { DonationCenterService } from 'src/core/donation-center-service/donation-center.service';
-import { RealLocation } from 'src/shared/models/locations/real-location';
-import { EnumsService } from 'src/core/enums-service/enums-service';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { LocationResponse } from 'src/shared/models/locations/location-response';
+import { AdminService } from 'src/core/admin-service.service';
+import { Component, OnInit } from '@angular/core';
+import { RealLocation } from 'src/shared/models/locations/real-location';
+import { EnumsService } from 'src/core/enums-service';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
 
 @Component({
@@ -13,7 +13,7 @@ import { BooleanServerResponse } from 'src/shared/models/boolean-server-response
 })
 export class DonationCentersComponent implements OnInit {
 
-    constructor(private donationCenterService: DonationCenterService, private enumService : EnumsService) { }
+    constructor(private adminService: AdminService, private enumService : EnumsService) { }
 
     donationCenters: RealLocation[];
     donationCenterForm: FormGroup;
@@ -22,7 +22,7 @@ export class DonationCentersComponent implements OnInit {
     ngOnInit() {
       const formBuilder = new FormBuilder();
       
-      this.donationCenterService.getDonationCenters().subscribe(
+      this.adminService.getDonationCenters().subscribe(
             (res: RealLocation[]) => {
               this.donationCenters = res;
             }
@@ -49,7 +49,7 @@ export class DonationCentersComponent implements OnInit {
 
  addDonationCenter() {
    const donationCenter = this.donationCenterForm.value;
-   this.donationCenterService.addDonationCenter(donationCenter).subscribe(
+   this.adminService.addDonationCenter(donationCenter).subscribe(
      (res: LocationResponse) => {
        if(res.success){
          this.donationCenters.push(res.model);
@@ -60,7 +60,7 @@ export class DonationCentersComponent implements OnInit {
    }
 
    removeDonationCenter(centerId: number, index : number) {
-     this.donationCenterService.removeDonationCenter(centerId)
+     this.adminService.removeDonationCenter(centerId)
        .subscribe((res: BooleanServerResponse) => {
          if (res.success === true){
            this.donationCenters.splice(index, 1);

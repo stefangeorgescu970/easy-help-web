@@ -1,8 +1,8 @@
 import { DonationRequestDetails } from './../../../../../shared/models/donation/request-details/donation-request-details';
 import { BooleanServerResponse } from './../../../../../shared/models/boolean-server-response/boolean-server-response';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';
-import { DoctorService } from 'src/core/doctor-service/doctor.service';
-import { AuthService } from './../../../../../core/auth-service/auth.service';
+import { DoctorService } from 'src/core/doctor.service';
+import { AuthService } from '../../../../../core/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { PatientData } from 'src/shared/models/patient/patient-data';

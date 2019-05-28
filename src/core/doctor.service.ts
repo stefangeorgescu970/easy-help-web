@@ -1,5 +1,5 @@
-import { RealLocation } from './../../shared/models/locations/real-location';
-import { DonationRequest } from './../../shared/models/donation/request/donation-request';
+import { RealLocation } from '../shared/models/locations/real-location';
+import { DonationRequest } from '../shared/models/donation/request/donation-request';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -107,11 +107,9 @@ import { DonationCommitment } from 'src/shared/models/donation/donation-commitme
 
                     const patient = new PatientData();
                     patient.id = obj.patient.id;
-                    patient.group = obj.patient.bloodType.groupLetter;
-                    patient.rh = obj.patient.bloodType.rh;
                     patient.ssn = obj.patient.ssn;
                     donReqDetails.patient = patient;
-                    donReqDetails.component = obj.separatedBloodTypeDTO.component;
+                    donReqDetails.component = obj.separatedBloodType.component;
 
                     myList.push(donReqDetails);
                 }

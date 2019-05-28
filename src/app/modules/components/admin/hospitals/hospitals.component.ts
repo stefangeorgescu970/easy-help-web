@@ -1,7 +1,7 @@
+import { AdminService } from './../../../../../core/admin-service.service';
 import { Component, OnInit } from '@angular/core';
-import { HospitalService } from 'src/core/hospital-service/hospital.service';
 import { RealLocation } from 'src/shared/models/locations/real-location';
-import { EnumsService } from 'src/core/enums-service/enums-service';
+import { EnumsService } from 'src/core/enums-service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
 import { LocationResponse } from 'src/shared/models/locations/location-response';
@@ -14,7 +14,7 @@ import { LocationResponse } from 'src/shared/models/locations/location-response'
 })
 export class HospitalsComponent implements OnInit {
 
-    constructor(private hospitalService: HospitalService, private enumService: EnumsService) { }
+    constructor(private adminService: AdminService, private enumService: EnumsService) { }
 
     hospitalForm: FormGroup;
     counties: string[];
@@ -23,7 +23,7 @@ export class HospitalsComponent implements OnInit {
     ngOnInit() {
         const formBuilder = new FormBuilder();
 
-        this.hospitalService.getHospitals().subscribe(
+        this.adminService.getHospitals().subscribe(
             (res: RealLocation[]) => {
               this.hospitals = res;
             }
@@ -50,7 +50,7 @@ export class HospitalsComponent implements OnInit {
 
     addHospital() {
       const hospital = this.hospitalForm.value;
-      this.hospitalService.addHospital(hospital).subscribe(
+      this.adminService.addHospital(hospital).subscribe(
         (res: LocationResponse) => {
           if(res.success){
             this.hospitals.push(res.model);
@@ -61,7 +61,7 @@ export class HospitalsComponent implements OnInit {
       }
 
       removeHospital(hospitalId: number, index : number) {
-        this.hospitalService.removeHospital(hospitalId)
+        this.adminService.removeHospital(hospitalId)
           .subscribe((res: BooleanServerResponse) => {
             if (res.success === true){
               this.hospitals.splice(index, 1);

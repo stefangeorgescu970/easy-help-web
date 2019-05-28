@@ -1,9 +1,9 @@
+import { DonationCenterPersonnelService } from './../../../../../core/donation-center-personnel.service';
 import { DonationForm } from './../../../../../shared/models/donation/donation-form/donation-form';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BooleanServerResponse } from './../../../../../shared/models/boolean-server-response/boolean-server-response';
-import { AuthService } from './../../../../../core/auth-service/auth.service';
+import { AuthService } from '../../../../../core/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { DonationCenterService } from 'src/core/donation-center-service/donation-center.service';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';
 import { DonationBooking } from 'src/shared/models/donation/booking/donation-booking';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
@@ -16,7 +16,7 @@ import { DonorAccount } from 'src/shared/models/accounts/donor-account/donor-acc
 })
 export class AllBookingsComponent implements OnInit {
 
-    constructor(private authService: AuthService, private dcService: DonationCenterService,
+    constructor(private authService: AuthService, private dcService: DonationCenterPersonnelService,
                 private modalService: NgbModal, private formBuilder: FormBuilder) { }
 
     currentDCP: ProfileData;
