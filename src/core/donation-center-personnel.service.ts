@@ -1,9 +1,8 @@
+import { DcpDonationRequestDetails } from './../shared/models/dcp/incoming/dcp-donation-request-details';
 import { DonationSplitResultsDto } from '../shared/models/donation/donation-split-results-dto/donation-split-results-dto';
 import { DonationTestResultsDto } from '../shared/models/donation/donation-test-results-dto/donation-test-results-dto';
 import { Donation } from 'src/shared/models/donation/donation/donation';
 import { DonationCommitment } from 'src/shared/models/donation/donation-commitment/donation-commitment';
-import { PatientData } from '../shared/models/patient/patient-data';
-import { DonationRequestDetails } from 'src/shared/models/donation/request-details/donation-request-details';
 import { DonationForm } from '../shared/models/donation/donation-form/donation-form';
 import { DonorAccount } from 'src/shared/models/accounts/donor-account/donor-account';
 import { Injectable } from '@angular/core';
@@ -11,11 +10,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
-import { RealLocation } from 'src/shared/models/locations/real-location';
-import { LocationResponse } from 'src/shared/models/locations/location-response';
 import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
 import { DonationBooking } from 'src/shared/models/donation/booking/donation-booking';
-import { DoctorAccount } from 'src/shared/models/accounts/doctor-account/doctor-account';
 import { StoredBlood } from 'src/shared/models/donation/stored-blood/stored-blood';
 
 @Injectable({
@@ -136,22 +132,22 @@ export class DonationCenterPersonnelService {
         }));
     }
 
-    getBloodRequests(donationCenterId: number): Observable<DonationRequestDetails[]> {
+    getBloodRequests(donationCenterId: number): Observable<DcpDonationRequestDetails[]> {
         return this.http
         .post(environment.apiUrl + '/dcp/seeAllBloodRequests', JSON.stringify({id: donationCenterId}), {headers: this.myheader})
         .pipe(map((res: any) => {
             if (res.status === true) {
                 const objArray = res.object.objects;
-                const myList: Array<DonationRequestDetails> = [];
+                const myList: Array<DcpDonationRequestDetails> = [];
 
                 for (const obj of objArray) {
-                    const donReqDetails = new DonationRequestDetails();
+                    const donReqDetails = new DcpDonationRequestDetails();
                     donReqDetails.id = obj.id;
                     donReqDetails.quantity = obj.quantity;
                     donReqDetails.urgency = obj.urgency;
                     donReqDetails.status = obj.status;
 
-                    donReqDetails.component = obj.separatedBloodType.component;
+                    
                     
                     donReqDetails.distance = obj.distance;
 
@@ -160,7 +156,7 @@ export class DonationCenterPersonnelService {
 
                 return myList;
             } else {
-                const myList: Array<DonationRequestDetails> = [];
+                const myList: Array<DcpDonationRequestDetails> = [];
                 return myList;
             }
         }));

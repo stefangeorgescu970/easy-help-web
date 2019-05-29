@@ -17,9 +17,9 @@
     <tbody>
         <tr *ngFor="let request of recentRequests ; let i = index" data-="requests.id">
             <td class="td-name">{{ request.patient.ssn }}</td>
-            <td class="td-name">{{ request.patient.group }}</td>
-            <td class="td-name">{{ request.patient.rh }}</td>
-            <td class="td-name">{{ request.component }}</td>
+            <td class="td-name">{{ request.separatedBloodType.bloodType.groupLetter }}</td>
+            <td class="td-name">{{ request.separatedBloodType.bloodType.rh }}</td>
+            <td class="td-name">{{ request.separatedBloodType.component }}</td>
             <td class="td-name">{{ request.quantity }}</td>
             <td class="td-name">{{ request.urgency }}</td>
             <td class="td-name">{{ request.status }}</td>
@@ -50,9 +50,9 @@
         <tbody>
             <tr *ngFor="let request of partiallyCommittedRequests ; let i = index" data-="requests.id">
                 <td class="td-name">{{ request.patient.ssn }}</td>
-                <td class="td-name">{{ request.patient.group }}</td>
-                <td class="td-name">{{ request.patient.rh }}</td>
-                <td class="td-name">{{ request.component }}</td>
+                <td class="td-name">{{ request.separatedBloodType.bloodType.groupLetter }}</td>
+                <td class="td-name">{{ request.separatedBloodType.bloodType.rh }}</td>
+                <td class="td-name">{{ request.separatedBloodType.component }}</td>
                 <td class="td-name">{{ request.quantity }}</td>
                 <td class="td-name">{{ request.urgency }}</td>
                 <td class="td-name">{{ request.status }}</td>
@@ -83,9 +83,9 @@
             <tbody>
                 <tr *ngFor="let request of fullyCommittedRequests ; let i = index" data-="requests.id">
                     <td class="td-name">{{ request.patient.ssn }}</td>
-                    <td class="td-name">{{ request.patient.group }}</td>
-                    <td class="td-name">{{ request.patient.rh }}</td>
-                    <td class="td-name">{{ request.component }}</td>
+                    <td class="td-name">{{ request.separatedBloodType.bloodType.groupLetter }}</td>
+                    <td class="td-name">{{ request.separatedBloodType.bloodType.rh }}</td>
+                    <td class="td-name">{{ request.separatedBloodType.component }}</td>
                     <td class="td-name">{{ request.quantity }}</td>
                     <td class="td-name">{{ request.urgency }}</td>
                     <td class="td-name">{{ request.status }}</td>
@@ -128,6 +128,8 @@
                         <tr>
                             <th scope="col" class="th-id">Status</th>
                             <th scope="col" class="th-name">Donation Center</th>
+                            <th scope="col" class="th-name">Blood Group</th>
+                            <th scope="col" class="th-name">RH</th>
                             <th scope="col" class="th-name">Actions</th>
                         </tr>
                     </thead>
@@ -135,6 +137,8 @@
                         <tr *ngFor="let commitment of proposedDonationCommitments ; let i = index" data-="blood.id">
                             <td class="td-name">{{ commitment.status }}</td>
                             <td class="td-name">{{ commitment.donationCenter.county }}</td>
+                            <td class="td-name">{{ commitment.separatedBloodType.bloodType.groupLetter }}</td>
+                            <td class="td-name">{{ commitment.separatedBloodType.bloodType.rh }}</td>
                             <td>
                                 <span class="btn btn-danger delete-button" (click)="declineCommitment(commitment)">Decline</span>
                                 <span class="btn btn-success add-button" (click)="approveCommitment(commitment)">Approve</span>
@@ -150,12 +154,16 @@
                             <tr>
                                 <th scope="col" class="th-id">Status</th>
                                 <th scope="col" class="th-name">Donation Center</th>
+                                <th scope="col" class="th-name">Blood Group</th>
+                                <th scope="col" class="th-name">RH</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let commitment of waitingSendDonationCommitments ; let i = index" data-="blood.id">
                                 <td class="td-name">{{ commitment.status }}</td>
                                 <td class="td-name">{{ commitment.donationCenter.county }}</td>
+                                <td class="td-name">{{ commitment.separatedBloodType.bloodType.groupLetter }}</td>
+                                <td class="td-name">{{ commitment.separatedBloodType.bloodType.rh }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -168,6 +176,8 @@
                                 <tr>
                                     <th scope="col" class="th-id">Status</th>
                                     <th scope="col" class="th-name">Donation Center</th>
+                                    <th scope="col" class="th-name">Blood Group</th>
+                                    <th scope="col" class="th-name">RH</th>
                                     <th scope="col" class="th-name">Actions</th>
                                 </tr>
                             </thead>
@@ -175,6 +185,8 @@
                                 <tr *ngFor="let commitment of sentDonationCommitments ; let i = index" data-="blood.id">
                                     <td class="td-name">{{ commitment.status }}</td>
                                     <td class="td-name">{{ commitment.donationCenter.county }}</td>
+                                    <td class="td-name">{{ commitment.separatedBloodType.bloodType.groupLetter }}</td>
+                                    <td class="td-name">{{ commitment.separatedBloodType.bloodType.rh }}</td>
                                     <td>
                                         <span class="btn btn-success add-button" (click)="markCommitmentAsArrived(commitment)">Commitment Arrived</span>
                                     </td>

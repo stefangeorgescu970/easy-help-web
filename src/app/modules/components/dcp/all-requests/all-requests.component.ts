@@ -1,11 +1,11 @@
 import { BooleanServerResponse } from './../../../../../shared/models/boolean-server-response/boolean-server-response';
 import { AuthService } from '../../../../../core/auth.service';
-import { DonationRequestDetails } from './../../../../../shared/models/donation/request-details/donation-request-details';
 import { Component, OnInit } from '@angular/core';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';
 import { StoredBlood } from 'src/shared/models/donation/stored-blood/stored-blood';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DonationCenterPersonnelService } from 'src/core/donation-center-personnel.service';
+import { DcpDonationRequestDetails } from 'src/shared/models/dcp/incoming/dcp-donation-request-details';
 
 @Component({
   selector: 'app-all-requests',
@@ -14,10 +14,10 @@ import { DonationCenterPersonnelService } from 'src/core/donation-center-personn
 })
 export class AllRequestsComponent implements OnInit {
 
-    requests: Array<DonationRequestDetails> = [];
+    requests: Array<DcpDonationRequestDetails> = [];
     storedBlood: Array<StoredBlood> = [];
     filteredStoredBlood: Array<StoredBlood> = [];
-    selectedRequest: DonationRequestDetails;
+    selectedRequest: DcpDonationRequestDetails;
 
     currentDcp: ProfileData;
 
@@ -32,7 +32,7 @@ export class AllRequestsComponent implements OnInit {
     }
 
     loadRequests() {
-        this.donationCenterService.getBloodRequests(this.currentDcp.locationId).subscribe((res: DonationRequestDetails[]) => {
+        this.donationCenterService.getBloodRequests(this.currentDcp.locationId).subscribe((res: DcpDonationRequestDetails[]) => {
             this.requests = res;
         });
     }

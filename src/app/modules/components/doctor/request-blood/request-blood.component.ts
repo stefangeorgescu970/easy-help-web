@@ -1,4 +1,4 @@
-import { DonationRequestDetails } from './../../../../../shared/models/donation/request-details/donation-request-details';
+import { DonationRequestCreate } from './../../../../../shared/models/doctor/outgoing/donation-request-create';
 import { BooleanServerResponse } from './../../../../../shared/models/boolean-server-response/boolean-server-response';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';
 import { DoctorService } from 'src/core/doctor.service';
@@ -6,7 +6,7 @@ import { AuthService } from '../../../../../core/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { PatientData } from 'src/shared/models/patient/patient-data';
-import { DonationRequest } from 'src/shared/models/donation/request/donation-request';
+import { PatientLevel2 } from 'src/shared/models/doctor/incoming/patient-level-2';
 
 @Component({
   selector: 'app-request-blood',
@@ -16,7 +16,7 @@ import { DonationRequest } from 'src/shared/models/donation/request/donation-req
 export class RequestBloodComponent implements OnInit {
 
     requestForm: FormGroup;
-    patients: PatientData[];
+    patients: PatientLevel2[];
     submitted = false;
     loading = false;
     error = '';
@@ -38,7 +38,7 @@ export class RequestBloodComponent implements OnInit {
     }
 
     loadPatients() {
-        this.doctorService.getPatients(this.currentDoctor.id).subscribe((res: PatientData[]) => {
+        this.doctorService.getPatients(this.currentDoctor.id).subscribe((res: PatientLevel2[]) => {
             this.patients = res;
         });
     }
@@ -54,7 +54,7 @@ export class RequestBloodComponent implements OnInit {
         }
 
         this.loading = true;
-        const request = new DonationRequest();
+        const request = new DonationRequestCreate();
         request.doctorId = this.currentDoctor.id;
         request.patientId = this.f.patientId.value;
         request.bloodComponent = this.f.component.value;
