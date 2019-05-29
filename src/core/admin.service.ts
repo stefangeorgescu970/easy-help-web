@@ -1,3 +1,7 @@
+import { CreateHospital } from './../shared/models/admin/outgoing/create-hospital';
+import { CreateDonationCenter } from './../shared/models/admin/outgoing/create-donation-center';
+import { AdminDCPAccount } from '../shared/models/admin/incoming/admin-dcp-account';
+import { AdminDoctorAccount } from '../shared/models/admin/incoming/admin-doctor-account';
 import { LocationResponse } from '../shared/models/locations/location-response';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -8,6 +12,8 @@ import { map } from 'rxjs/operators';
 import { DcpAccount } from 'src/shared/models/accounts/dcp-account/dcp-account';
 import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
 import { RealLocation } from 'src/shared/models/locations/real-location';
+import { ExtendedLocation } from 'src/shared/models/shared/extended-location';
+import { IdResponse } from 'src/shared/models/shared/id-response';
 
 @Injectable({
   providedIn: 'root'
@@ -18,91 +24,121 @@ export class AdminService {
 
     myheader = new HttpHeaders().set('Content-Type', 'application/json');
 
-    getDoctorAccountRequests(): Observable<DoctorAccount[]> {
+    getDoctorAccountRequests(): Observable<AdminDoctorAccount[]> {
         return this.http
         .post(environment.apiUrl + '/admin/doctorAccountRequests', {}, {headers: this.myheader})
         .pipe(map((res: any) => {
             if (res.status === true) {
                 const objArray = res.object.objects;
-                const myList: Array<DoctorAccount> = [];
-
+                const myList: Array<AdminDoctorAccount> = [];
 
                 for (const obj of objArray) {
-                    const newDoctor = new DoctorAccount(obj.id, obj.email, obj.userType);
+                    const newDoctor = new AdminDoctorAccount();
+                    newDoctor.id = obj.id;
+                    newDoctor.firstName = obj.firstName;
+                    newDoctor.lastName = obj.lastName;
+                    newDoctor.email = obj.email;
+                    newDoctor.county = obj.county;
+                    newDoctor.dateOfBirth = new Date(obj.dateOfBirth);
+                    newDoctor.locationName = obj.locationName;
+                    newDoctor.locationPhone = obj.locationPhone;
                     myList.push(newDoctor);
                 }
 
                 return myList;
-
             } else {
-                const myList: Array<DoctorAccount> = [];
+                const myList: Array<AdminDoctorAccount> = [];
                 return myList;
             }
         }));
     }
 
-    getDcpAccountRequests(): Observable<DcpAccount[]> {
+    getDcpAccountRequests(): Observable<AdminDCPAccount[]> {
         return this.http
         .post(environment.apiUrl + '/admin/dcpAccountRequests', {}, {headers: this.myheader})
         .pipe(map((res: any) => {
             if (res.status === true) {
                 const objArray = res.object.objects;
-                const myList: Array<DoctorAccount> = [];
+                const myList: Array<AdminDCPAccount> = [];
 
 
                 for (const obj of objArray) {
-                    const newDcp = new DcpAccount(obj.id, obj.email, obj.userType);
+                    const newDcp = new AdminDCPAccount();
+                    newDcp.id = obj.id;
+                    newDcp.firstName = obj.firstName;
+                    newDcp.lastName = obj.lastName;
+                    newDcp.email = obj.email;
+                    newDcp.county = obj.county;
+                    newDcp.dateOfBirth = new Date(obj.dateOfBirth);
+                    newDcp.locationName = obj.locationName;
+                    newDcp.locationPhone = obj.locationPhone;
                     myList.push(newDcp);
                 }
 
                 return myList;
 
             } else {
-                const myList: Array<DcpAccount> = [];
+                const myList: Array<AdminDCPAccount> = [];
                 return myList;
             }
         }));
     }
 
-    getDoctorAccounts(active: boolean): Observable<DoctorAccount[]> {
+    getDoctorAccounts(active: boolean): Observable<AdminDoctorAccount[]> {
         return this.http
         .post(environment.apiUrl + '/admin/doctorAccounts', JSON.stringify({param: active}), {headers: this.myheader})
         .pipe(map((res: any) => {
             if (res.status === true) {
                 const objArray = res.object.objects;
-                const myList: Array<DoctorAccount> = [];
+                const myList: Array<AdminDoctorAccount> = [];
 
                 for (const obj of objArray) {
-                    const newDoctor = new DoctorAccount(obj.id, obj.email, obj.userType);
+                    const newDoctor = new AdminDoctorAccount();
+                    newDoctor.id = obj.id;
+                    newDoctor.firstName = obj.firstName;
+                    newDoctor.lastName = obj.lastName;
+                    newDoctor.email = obj.email;
+                    newDoctor.county = obj.county;
+                    newDoctor.dateOfBirth = new Date(obj.dateOfBirth);
+                    newDoctor.locationName = obj.locationName;
+                    newDoctor.locationPhone = obj.locationPhone;
                     myList.push(newDoctor);
                 }
 
                 return myList;
 
             } else {
-                const myList: Array<DoctorAccount> = [];
+                const myList: Array<AdminDoctorAccount> = [];
                 return myList;
             }
         }));
     }
 
-    getDcpAccounts(active: boolean): Observable<DcpAccount[]> {
+    getDcpAccounts(active: boolean): Observable<AdminDCPAccount[]> {
         return this.http
         .post(environment.apiUrl + '/admin/dcpAccounts', JSON.stringify({param: active}), {headers: this.myheader})
         .pipe(map((res: any) => {
             if (res.status === true) {
                 const objArray = res.object.objects;
-                const myList: Array<DcpAccount> = [];
+                const myList: Array<AdminDCPAccount> = [];
 
                 for (const obj of objArray) {
-                    const newDcp = new DcpAccount(obj.id, obj.email, obj.userType);
+                    const newDcp = new AdminDCPAccount();
+                    newDcp.id = obj.id;
+                    newDcp.firstName = obj.firstName;
+                    newDcp.lastName = obj.lastName;
+                    newDcp.email = obj.email;
+                    newDcp.county = obj.county;
+                    newDcp.dateOfBirth = new Date(obj.dateOfBirth);
+                    newDcp.locationName = obj.locationName;
+                    newDcp.locationPhone = obj.locationPhone;
                     myList.push(newDcp);
                 }
 
                 return myList;
 
             } else {
-                const myList: Array<DcpAccount> = [];
+                const myList: Array<AdminDCPAccount> = [];
                 return myList;
             }
         }));
@@ -193,38 +229,47 @@ export class AdminService {
     }
 
 
-    getDonationCenters(): Observable<RealLocation[]> {
+    getDonationCenters(): Observable<ExtendedLocation[]> {
         return this.http
         .post(environment.apiUrl + '/admin/getAllDonationCenters', {}, {headers: this.myheader})
         .pipe(map((res: any) => {
             if (res.status === true) {
                 const objArray = res.object.objects;
-                const myList: Array<RealLocation> = [];
+                const myList: Array<ExtendedLocation> = [];
 
                 for (const obj of objArray) {
-                    const newDc = new RealLocation(obj.id, obj.name, obj.longitude, obj.latitude, obj.county, obj.address);
+                    const newDc = new ExtendedLocation();
+                    newDc.id = obj.id;
+                    newDc.name = obj.name;
+                    newDc.longitude = obj.longitude;
+                    newDc.latitude = obj.latitude;
+                    newDc.address = obj.address;
+                    newDc.county = obj.county;
+                    newDc.phone = obj.phone;
+
                     myList.push(newDc);
                 }
 
                 return myList;
             } else {
-                const myList: Array<RealLocation> = [];
+                const myList: Array<ExtendedLocation> = [];
                 return myList;
             }
         }));
     }
 
-    addDonationCenter(dc : RealLocation): Observable<LocationResponse> {
+    addDonationCenter(dc: CreateDonationCenter): Observable<IdResponse> {
         return this.http
-        .post(environment.apiUrl + '/admin/addDonationCenter',dc, {headers: this.myheader})
+        .post(environment.apiUrl + '/admin/addDonationCenter', dc, {headers: this.myheader})
         .pipe(map((res: any) => {
-            let response = new LocationResponse(res.status)
-            if(res.status === true){
-                response.model = res.object
-            }else{
-                response.exception = res.exception
+            const response = new IdResponse();
+            response.success = res.status;
+            if (res.status === true) {
+                response.newId = res.object.newId;
+            } else {
+                response.exception = res.exception;
             }
-            return response
+            return response;
         }));
     }
 
@@ -264,17 +309,18 @@ export class AdminService {
         });
     }
 
-    addHospital(hospital : RealLocation): Observable<LocationResponse> {
+    addHospital(hospital : CreateHospital): Observable<LocationResponse> {
         return this.http
         .post(environment.apiUrl + '/admin/addHospital',hospital, {headers: this.myheader})
         .pipe(map((res: any) => {
-            let response = new LocationResponse(res.status)
-            if(res.status === true){
-                response.model = res.object
-            }else{
-                response.exception = res.exception
+            const response = new IdResponse();
+            response.success = res.status;
+            if (res.status === true) {
+                response.newId = res.object.newId;
+            } else {
+                response.exception = res.exception;
             }
-            return response
+            return response;
         }));
     }
 
@@ -290,22 +336,30 @@ export class AdminService {
         }));
     }
 
-    getHospitals(): Observable<RealLocation[]> {
+    getHospitals(): Observable<ExtendedLocation[]> {
         return this.http
         .post(environment.apiUrl + '/admin/getAllHospitals', {}, {headers: this.myheader})
         .pipe(map((res: any) => {
             if (res.status === true) {
                 const objArray = res.object.objects;
-                const myList: Array<RealLocation> = [];
+                const myList: Array<ExtendedLocation> = [];
 
                 for (const obj of objArray) {
-                    const newHospital = new RealLocation(obj.id, obj.name, obj.longitude, obj.latitude, obj.county, obj.address);
+                    const newHospital = new ExtendedLocation();
+                    newHospital.id = obj.id;
+                    newHospital.name = obj.name;
+                    newHospital.longitude = obj.longitude;
+                    newHospital.latitude = obj.latitude;
+                    newHospital.address = obj.address;
+                    newHospital.county = obj.county;
+                    newHospital.phone = obj.phone;
+
                     myList.push(newHospital);
                 }
 
                 return myList;
             } else {
-                const myList: Array<RealLocation> = [];
+                const myList: Array<ExtendedLocation> = [];
                 return myList;
             }
         }));

@@ -1,11 +1,10 @@
+import { BaseLocation } from './../../../../shared/models/shared/base-location';
 import { LocationService } from './../../../../core/location.service';
 import { Component, OnInit } from '@angular/core';
 import { EnumsService } from 'src/core/enums-service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../core/auth.service';
-import { RealLocation } from 'src/shared/models/locations/real-location';
-import { RegisterDto } from 'src/shared/models/accounts/register-dto/register-dto';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +20,7 @@ export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
 
     selectedCounty: string;
-    locations: RealLocation[];
+    locations: BaseLocation[];
 
     shouldShowLocations: boolean;
     noLocationsAvailable: boolean;
@@ -73,6 +72,7 @@ export class RegisterComponent implements OnInit {
 
         this.loading = true;
         const registerData = this.registerForm.value;
+        registerData.skipSsnValidation = true;
         registerData.dateOfBirth = String(registerData.dateOfBirth.year) + '-' +
                                    String(registerData.dateOfBirth.month) + '-' +
                                    String(registerData.dateOfBirth.day);

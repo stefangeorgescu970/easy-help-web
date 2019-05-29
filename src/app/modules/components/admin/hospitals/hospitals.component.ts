@@ -1,6 +1,7 @@
-import { AdminService } from './../../../../../core/admin-service.service';
-import { Component, OnInit } from '@angular/core';
-import { RealLocation } from 'src/shared/models/locations/real-location';
+import { IdResponse } from './../../../../../shared/models/shared/id-response';
+import { ExtendedLocation } from 'src/shared/models/shared/extended-location';
+import { AdminService } from '../../../../../core/admin.service';
+import { Component, OnInit } from '@angular/core';;
 import { EnumsService } from 'src/core/enums-service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
@@ -18,13 +19,13 @@ export class HospitalsComponent implements OnInit {
 
     hospitalForm: FormGroup;
     counties: string[];
-    hospitals: RealLocation[];
+    hospitals: ExtendedLocation[];
 
     ngOnInit() {
         const formBuilder = new FormBuilder();
 
         this.adminService.getHospitals().subscribe(
-            (res: RealLocation[]) => {
+            (res: ExtendedLocation[]) => {
               this.hospitals = res;
             }
         );
@@ -38,7 +39,8 @@ export class HospitalsComponent implements OnInit {
           address: ['', Validators.required],
           latitude: ['', Validators.required],
           longitude: ['', Validators.required],
-          county: ['', Validators.required]
+          county: ['', Validators.required],
+          phone: ['', Validators.required]
         });
     }
 
@@ -51,12 +53,20 @@ export class HospitalsComponent implements OnInit {
     addHospital() {
       const hospital = this.hospitalForm.value;
       this.adminService.addHospital(hospital).subscribe(
-        (res: LocationResponse) => {
-          if(res.success){
-            this.hospitals.push(res.model);
-          }else{
-            alert(res.exception)
-          } 
+        (res: IdResponse) => {
+            if (res.success) {
+                 const newHospital = new ExtendedLocation();
+                 newHospital.id = res.newId;
+                 newHospital.address = hospital.address;
+                 newHospital.county = hospital.county;
+                 newHospital.latitude = hospital.latitude;
+                 newHospital.longitude = hospital.longitude;
+                 newHospital.name = hospital.name;
+                 newHospital.phone = hospital.phone;
+                 this.hospitals.push(newHospital);
+            } else {
+              alert(res.exception);
+            }
         } );
       }
 

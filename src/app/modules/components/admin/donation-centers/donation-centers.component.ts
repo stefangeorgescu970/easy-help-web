@@ -1,5 +1,7 @@
+import { IdResponse } from './../../../../../shared/models/shared/id-response';
+import { ExtendedLocation } from './../../../../../shared/models/shared/extended-location';
 import { LocationResponse } from 'src/shared/models/locations/location-response';
-import { AdminService } from 'src/core/admin-service.service';
+import { AdminService } from 'src/core/admin.service';
 import { Component, OnInit } from '@angular/core';
 import { RealLocation } from 'src/shared/models/locations/real-location';
 import { EnumsService } from 'src/core/enums-service';
@@ -15,15 +17,15 @@ export class DonationCentersComponent implements OnInit {
 
     constructor(private adminService: AdminService, private enumService : EnumsService) { }
 
-    donationCenters: RealLocation[];
+    donationCenters: ExtendedLocation[];
     donationCenterForm: FormGroup;
     counties: string[];
 
     ngOnInit() {
       const formBuilder = new FormBuilder();
-      
+
       this.adminService.getDonationCenters().subscribe(
-            (res: RealLocation[]) => {
+            (res: ExtendedLocation[]) => {
               this.donationCenters = res;
             }
         );
@@ -37,7 +39,9 @@ export class DonationCentersComponent implements OnInit {
           address: ['', Validators.required],
           latitude: ['', Validators.required],
           longitude: ['', Validators.required],
-          county: ['', Validators.required]
+          county: ['', Validators.required],
+          phone: ['', Validators.required],
+          numberOfConcurrentDonors: ['', Validators.required]
         });
     }
 
@@ -50,12 +54,20 @@ export class DonationCentersComponent implements OnInit {
  addDonationCenter() {
    const donationCenter = this.donationCenterForm.value;
    this.adminService.addDonationCenter(donationCenter).subscribe(
-     (res: LocationResponse) => {
-       if(res.success){
-         this.donationCenters.push(res.model);
-       }else{
-         alert(res.exception)
-       } 
+     (res: IdResponse) => {
+       if (res.success) {
+            const newDC = new ExtendedLocation();
+            newDC.id = res.newId;
+            newDC.address = donationCenter.address;
+            newDC.county = donationCenter.county;
+            newDC.latitude = donationCenter.latitude;
+            newDC.longitude = donationCenter.longitude;
+            newDC.name = donationCenter.name;
+            newDC.phone = donationCenter.phone;
+            this.donationCenters.push(newDC);
+       } else {
+         alert(res.exception);
+       }
      } );
    }
 
