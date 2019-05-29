@@ -1,6 +1,3 @@
-import { ExtendedLocation } from 'src/shared/models/shared/extended-location';
-import { SeparatedBloodType } from './../shared/models/shared/separated-blood-type';
-import { StoredBlood } from 'src/shared/models/donation/stored-blood/stored-blood';
 import { DcpDonorAccount } from './../shared/models/dcp/incoming/dcp-donor-account';
 import { DcpDonationRequestDetails } from './../shared/models/dcp/incoming/dcp-donation-request-details';
 import { DonationSplitResultsDto } from '../shared/models/dcp/outgoing/donation-split-results-dto/donation-split-results-dto';
