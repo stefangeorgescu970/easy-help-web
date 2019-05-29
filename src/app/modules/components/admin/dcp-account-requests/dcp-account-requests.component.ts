@@ -1,8 +1,7 @@
-import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
+import { BooleanServerResponse } from 'src/shared/models/shared/boolean-server-response';
 import { AdminDCPAccount } from '../../../../../shared/models/admin/incoming/admin-dcp-account';
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from 'src/core/admin.service';
-import { DcpAccount } from 'src/shared/models/accounts/dcp-account/dcp-account';
 
 @Component({
   selector: 'app-dcp-account-requests',

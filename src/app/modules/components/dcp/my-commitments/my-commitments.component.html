@@ -5,12 +5,16 @@
             <tr>
                 <th scope="col" class="th-id">Urgency</th>
                 <th scope="col" class="th-name">Stored Blood Identifier</th>          
+                <th scope="col" class="th-id">Hospital</th>
+                <th scope="col" class="th-name">Hospital Phone</th>        
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let commitment of proposedDonationCommitments ; let i = index" data-="blood.id">
                 <td class="td-name">{{ commitment.urgency }}</td>
-                <td class="td-name">{{ commitment.storedBloodIdentifier }}</td>
+                <td class="td-name">{{ commitment.storedBlood.bagIdentifier }}</td>
+                <td class="td-name">{{ commitment.destinationHospital.name }}</td>
+                <td class="td-name">{{ commitment.destinationHospital.phone }}</td>
             </tr>
         </tbody>
     </table>
@@ -22,13 +26,17 @@
                 <tr>
                     <th scope="col" class="th-id">Urgency</th>
                     <th scope="col" class="th-name">Stored Blood Identifier</th>   
+                    <th scope="col" class="th-id">Hospital</th>
+                    <th scope="col" class="th-name">Hospital Phone</th>     
                     <th scope="col" class="th-name">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let commitment of waitingSendDonationCommitments ; let i = index" data-="blood.id">
                     <td class="td-name">{{ commitment.urgency }}</td>
-                    <td class="td-name">{{ commitment.storedBloodIdentifier }}</td>
+                    <td class="td-name">{{ commitment.storedBlood.bagIdentifier }}</td>
+                    <td class="td-name">{{ commitment.destinationHospital.name }}</td>
+                    <td class="td-name">{{ commitment.destinationHospital.phone }}</td>
                     <td>
                         <span class="btn btn-success add-button" (click)="markCommitmentAsDeparted(commitment)">Mark as Shipped</span>
                     </td>

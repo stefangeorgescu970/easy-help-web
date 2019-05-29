@@ -2,16 +2,12 @@ import { CreateHospital } from './../shared/models/admin/outgoing/create-hospita
 import { CreateDonationCenter } from './../shared/models/admin/outgoing/create-donation-center';
 import { AdminDCPAccount } from '../shared/models/admin/incoming/admin-dcp-account';
 import { AdminDoctorAccount } from '../shared/models/admin/incoming/admin-doctor-account';
-import { LocationResponse } from '../shared/models/locations/location-response';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { DoctorAccount } from 'src/shared/models/accounts/doctor-account/doctor-account';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
-import { DcpAccount } from 'src/shared/models/accounts/dcp-account/dcp-account';
-import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
-import { RealLocation } from 'src/shared/models/locations/real-location';
+import { BooleanServerResponse } from 'src/shared/models/shared/boolean-server-response';
 import { ExtendedLocation } from 'src/shared/models/shared/extended-location';
 import { IdResponse } from 'src/shared/models/shared/id-response';
 
@@ -309,7 +305,7 @@ export class AdminService {
         });
     }
 
-    addHospital(hospital : CreateHospital): Observable<LocationResponse> {
+    addHospital(hospital : CreateHospital): Observable<IdResponse> {
         return this.http
         .post(environment.apiUrl + '/admin/addHospital',hospital, {headers: this.myheader})
         .pipe(map((res: any) => {

@@ -1,11 +1,10 @@
 import { DonationRequestCreate } from './../../../../../shared/models/doctor/outgoing/donation-request-create';
-import { BooleanServerResponse } from './../../../../../shared/models/boolean-server-response/boolean-server-response';
+import { BooleanServerResponse } from '../../../../../shared/models/shared/boolean-server-response';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';
 import { DoctorService } from 'src/core/doctor.service';
 import { AuthService } from '../../../../../core/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { PatientData } from 'src/shared/models/patient/patient-data';
 import { PatientLevel2 } from 'src/shared/models/doctor/incoming/patient-level-2';
 
 @Component({

@@ -4,8 +4,7 @@ import { AdminService } from '../../../../../core/admin.service';
 import { Component, OnInit } from '@angular/core';;
 import { EnumsService } from 'src/core/enums-service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
-import { LocationResponse } from 'src/shared/models/locations/location-response';
+import { BooleanServerResponse } from 'src/shared/models/shared/boolean-server-response';
 
 
 @Component({

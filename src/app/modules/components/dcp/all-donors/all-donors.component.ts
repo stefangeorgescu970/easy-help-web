@@ -1,11 +1,10 @@
+import { DcpDonorAccount } from './../../../../../shared/models/dcp/incoming/dcp-donor-account';
 import { DonationCenterPersonnelService } from './../../../../../core/donation-center-personnel.service';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';
 import { AuthService } from '../../../../../core/auth.service';
-import { BaseAccount } from './../../../../../shared/models/accounts/base-account';
 import { Component, OnInit } from '@angular/core';
 import { EnumsService } from 'src/core/enums-service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DonorAccount } from 'src/shared/models/accounts/donor-account/donor-account';
 
 @Component({
   selector: 'app-all-donors',
@@ -17,7 +16,7 @@ export class AllDonorsComponent implements OnInit {
   constructor(private dcpService: DonationCenterPersonnelService , private enumService: EnumsService,
               private authService: AuthService) { }
 
-  donors: BaseAccount[];
+  donors: DcpDonorAccount[];
   canDonateOptions = [true, false];
   bloodGroups = ['0', 'A', 'B', 'AB'];
   currentDCP: ProfileData;
@@ -46,7 +45,7 @@ export class AllDonorsComponent implements OnInit {
       group = null;
     }
     this.dcpService.filterDonors(this.currentDCP.county, canDonate, group).subscribe(
-      (res: DonorAccount[]) => {
+      (res: DcpDonorAccount[]) => {
       this.donors = res;
     });
 
@@ -54,7 +53,7 @@ export class AllDonorsComponent implements OnInit {
 
   getAllDonors(clearForm: boolean) {
       this.dcpService.getDonorsByCounty(this.currentDCP.county).subscribe(
-          (res: DonorAccount[]) => {
+          (res: DcpDonorAccount[]) => {
            this.donors = res;
           });
       if (clearForm === true) {

@@ -1,11 +1,11 @@
 import { DonationCenterPersonnelService } from './../../../../../core/donation-center-personnel.service';
-import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
+import { BooleanServerResponse } from 'src/shared/models/shared/boolean-server-response';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Donation } from './../../../../../shared/models/donation/donation/donation';
 import { AuthService } from '../../../../../core/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';
+import { DcpDonation } from 'src/shared/models/dcp/incoming/dcp-donation';
 
 @Component({
   selector: 'app-split-results',
@@ -18,9 +18,9 @@ export class SplitResultsComponent implements OnInit {
         private modalService: NgbModal, private formBuilder: FormBuilder) { }
 
     currentDCP: ProfileData;
-    donations: Donation[];
+    donations: DcpDonation[];
 
-    selectedDonation: Donation;
+    selectedDonation: DcpDonation;
     splitResultsForm: FormGroup;
 
     submitted = false;
@@ -36,7 +36,7 @@ export class SplitResultsComponent implements OnInit {
     });
 
     this.dcpService.getDonationsAwaitingSplitResult(this.currentDCP.locationId).subscribe(
-        (res: Donation[]) => {
+        (res: DcpDonation[]) => {
             this.donations = res;
     });
     }

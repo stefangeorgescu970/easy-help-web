@@ -1,19 +1,16 @@
 import { ExtendedLocation } from './../shared/models/shared/extended-location';
 import { DoctorDonationCommitment } from 'src/shared/models/doctor/incoming/doctor-donation-commitment';
-import { SeparatedBloodType } from './../shared/models/shared/separated-blood-type';
 import { DoctorDonationRequestDetails } from './../shared/models/doctor/incoming/doctor-donation-request-details';
 import { DonationRequestCreate } from './../shared/models/doctor/outgoing/donation-request-create';
 import { IdResponse } from './../shared/models/shared/id-response';
 import { CreatePatient } from './../shared/models/doctor/outgoing/create-patient';
 import { BloodType } from './../shared/models/shared/blood-type';
-import { RealLocation } from '../shared/models/locations/real-location';
-import { Injectable, Component } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
-import { DonationCommitment } from 'src/shared/models/donation/donation-commitment/donation-commitment';
+import { BooleanServerResponse } from 'src/shared/models/shared/boolean-server-response';
 import { PatientLevel2 } from 'src/shared/models/doctor/incoming/patient-level-2';
 
 

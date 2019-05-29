@@ -1,9 +1,7 @@
-import { UserRole } from '../shared/enums/user-role.enum';
-import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
-import { RegisterDto } from '../shared/models/accounts/register-dto/register-dto';
+import { BooleanServerResponse } from 'src/shared/models/shared/boolean-server-response';
+import { RegisterDto } from '../shared/models/shared/register-dto';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import * as jwt from 'jwt-decode';
 import { environment } from 'src/environments/environment';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';

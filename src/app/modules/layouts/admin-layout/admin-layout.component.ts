@@ -1,4 +1,4 @@
-import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
+import { BooleanServerResponse } from 'src/shared/models/shared/boolean-server-response';
 import { AuthService } from '../../../../core/auth.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';

@@ -1,7 +1,7 @@
+import { DcpDonationCommitment } from './../../../../../shared/models/dcp/incoming/dcp-donation-commitment';
 import { DonationCenterPersonnelService } from 'src/core/donation-center-personnel.service';
-import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
+import { BooleanServerResponse } from 'src/shared/models/shared/boolean-server-response';
 import { AuthService } from '../../../../../core/auth.service';
-import { DonationCommitment } from './../../../../../shared/models/donation/donation-commitment/donation-commitment';
 import { Component, OnInit } from '@angular/core';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';
 
@@ -13,8 +13,8 @@ import { ProfileData } from 'src/shared/models/profile-data/profile-data';
 export class MyCommitmentsComponent implements OnInit {
 
     currentDC: ProfileData;
-    proposedDonationCommitments: Array<DonationCommitment> = [];
-    waitingSendDonationCommitments: Array<DonationCommitment> = [];
+    proposedDonationCommitments: Array<DcpDonationCommitment> = [];
+    waitingSendDonationCommitments: Array<DcpDonationCommitment> = [];
 
     constructor(private authService: AuthService, private dcService: DonationCenterPersonnelService) { }
 
@@ -22,7 +22,7 @@ export class MyCommitmentsComponent implements OnInit {
         this.currentDC = this.authService.getUser();
 
         this.dcService.getCommitments(this.currentDC.locationId).subscribe(
-            (res: DonationCommitment[]) => {
+            (res: DcpDonationCommitment[]) => {
                 res.forEach(commitment => {
                     switch (commitment.status) {
                         case 'COMMITTED_BY_DONATION_CENTER':

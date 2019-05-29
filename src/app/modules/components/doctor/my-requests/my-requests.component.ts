@@ -1,11 +1,10 @@
 import { DoctorDonationRequestDetails } from './../../../../../shared/models/doctor/incoming/doctor-donation-request-details';
-import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
+import { BooleanServerResponse } from 'src/shared/models/shared/boolean-server-response';
 import { DoctorService } from '../../../../../core/doctor.service';
 import { AuthService } from '../../../../../core/auth.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';
-import { DonationCommitment } from 'src/shared/models/donation/donation-commitment/donation-commitment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DoctorDonationCommitment } from 'src/shared/models/doctor/incoming/doctor-donation-commitment';
 

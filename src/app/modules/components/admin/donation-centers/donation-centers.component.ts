@@ -1,12 +1,10 @@
 import { IdResponse } from './../../../../../shared/models/shared/id-response';
 import { ExtendedLocation } from './../../../../../shared/models/shared/extended-location';
-import { LocationResponse } from 'src/shared/models/locations/location-response';
 import { AdminService } from 'src/core/admin.service';
 import { Component, OnInit } from '@angular/core';
-import { RealLocation } from 'src/shared/models/locations/real-location';
 import { EnumsService } from 'src/core/enums-service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
+import { BooleanServerResponse } from 'src/shared/models/shared/boolean-server-response';
 
 @Component({
   selector: 'app-donation-centers',

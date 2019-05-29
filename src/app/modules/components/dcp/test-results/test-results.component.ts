@@ -1,7 +1,7 @@
+import { DcpDonation } from './../../../../../shared/models/dcp/incoming/dcp-donation';
 import { DonationCenterPersonnelService } from './../../../../../core/donation-center-personnel.service';
-import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
+import { BooleanServerResponse } from 'src/shared/models/shared/boolean-server-response';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Donation } from './../../../../../shared/models/donation/donation/donation';
 import { AuthService } from '../../../../../core/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -19,9 +19,9 @@ export class TestResultsComponent implements OnInit {
 
 
     currentDCP: ProfileData;
-    donations: Donation[];
+    donations: DcpDonation[];
 
-    selectedDonation: Donation;
+    selectedDonation: DcpDonation;
     testResultsForm: FormGroup;
 
     submitted = false;
@@ -40,7 +40,7 @@ export class TestResultsComponent implements OnInit {
         });
 
         this.dcpService.getDonationsAwaitingTestResult(this.currentDCP.locationId).subscribe(
-            (res: Donation[]) => {
+            (res: DcpDonation[]) => {
                 this.donations = res;
         });
     }

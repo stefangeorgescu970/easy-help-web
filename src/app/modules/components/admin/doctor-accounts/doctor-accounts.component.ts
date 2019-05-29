@@ -1,8 +1,7 @@
 import { AdminDoctorAccount } from '../../../../../shared/models/admin/incoming/admin-doctor-account';
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from 'src/core/admin.service';
-import { DoctorAccount } from 'src/shared/models/accounts/doctor-account/doctor-account';
-import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
+import { BooleanServerResponse } from 'src/shared/models/shared/boolean-server-response';
 
 @Component({
   selector: 'app-doctor-accounts',

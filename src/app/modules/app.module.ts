@@ -1,4 +1,3 @@
-import { DonationBooking } from 'src/shared/models/donation/booking/donation-booking';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AlertModule } from 'ngx-bootstrap';

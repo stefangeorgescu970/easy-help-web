@@ -1,8 +1,7 @@
-import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
+import { BooleanServerResponse } from 'src/shared/models/shared/boolean-server-response';
 import { AdminService } from 'src/core/admin.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { loadInternal } from '@angular/core/src/render3/util';
 
 @Component({
   selector: 'app-test-push',

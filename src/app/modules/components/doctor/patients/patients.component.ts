@@ -1,9 +1,8 @@
 import { IdResponse } from './../../../../../shared/models/shared/id-response';
 import { BloodType } from './../../../../../shared/models/shared/blood-type';
 import { CreatePatient } from './../../../../../shared/models/doctor/outgoing/create-patient';
-import { BooleanServerResponse } from '../../../../../shared/models/boolean-server-response/boolean-server-response';
+import { BooleanServerResponse } from '../../../../../shared/models/shared/boolean-server-response';
 import { AuthService } from '../../../../../core/auth.service';
-import { PatientData } from '../../../../../shared/models/patient/patient-data';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { DoctorService } from 'src/core/doctor.service';

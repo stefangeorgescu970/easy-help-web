@@ -14,9 +14,9 @@
     </thead>
     <tbody>
         <tr *ngFor="let request of requests ; let i = index" data-="requests.id">
-            <td class="td-name">{{ request.patient.group }}</td>
-            <td class="td-name">{{ request.patient.rh }}</td>
-            <td class="td-name">{{ request.component }}</td>
+            <td class="td-name">{{ request.separatedBloodType.bloodType.groupLetter }}</td>
+            <td class="td-name">{{ request.separatedBloodType.bloodType.rh }}</td>
+            <td class="td-name">{{ request.separatedBloodType.component }}</td>
             <td class="td-name">{{ request.quantity }}</td>
             <td class="td-name">{{ request.urgency }}</td>
             <td class="td-name">{{ request.distance }}</td>
@@ -53,15 +53,17 @@
                             <th scope="col" class="th-name">RH</th>
                             <th scope="col" class="th-name">Component</th>
                             <th scope="col" class="th-name">Quantity</th>
-
+                            <th scope="col" class="th-name">Bag ID</th>
+                            <th scope="col" class="th-name">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let blood of filteredStoredBlood ; let i = index" data-="blood.id">
-                            <td class="td-name">{{ blood.group }}</td>
-                            <td class="td-name">{{ blood.rh }}</td>
-                            <td class="td-name">{{ blood.component }}</td>
-                            <td class="td-name">{{ blood.quantity }}</td>
+                            <td class="td-name">{{ blood.separatedBloodType.bloodType.groupLetter }}</td>
+                            <td class="td-name">{{ blood.separatedBloodType.bloodType.rh }}</td>
+                            <td class="td-name">{{ blood.separatedBloodType.component }}</td>
+                            <td class="td-name">{{ blood.amount }}</td>
+                            <td class="td-name">{{ blood.bagIdentifier }}</td>
                             <td>
                                 <span class="btn btn-success add-button" (click)="commitBlood(blood)">Commit Blood</span>
                             </td>
