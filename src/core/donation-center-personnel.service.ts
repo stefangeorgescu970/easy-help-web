@@ -1,3 +1,4 @@
+import { BloodStock } from './../shared/models/shared/blood-stock';
 import { DcpDonorAccount } from './../shared/models/dcp/incoming/dcp-donor-account';
 import { DcpDonationRequestDetails } from './../shared/models/dcp/incoming/dcp-donation-request-details';
 import { DonationSplitResultsDto } from '../shared/models/dcp/outgoing/donation-split-results-dto/donation-split-results-dto';
@@ -428,5 +429,93 @@ export class DonationCenterPersonnelService {
                     return myList;
                 }
             }));
-        }
+    }
+
+    getExpiredBlood(donationCenterId: number): Observable<StoredBloodLevel1[]> {
+        return this.http
+        .post(environment.apiUrl + '/dcp/expiredBloodInDC', JSON.stringify({id: donationCenterId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            if (res.status === true) {
+                const objArray = res.object.objects;
+                const myList: Array<StoredBloodLevel1> = [];
+
+                for (const obj of objArray) {
+                    const newStoredBlood = new StoredBloodLevel1();
+                    newStoredBlood.id = obj.id;
+                    newStoredBlood.amount = obj.amount;
+                    newStoredBlood.bagIdentifier = obj.bagIdentifier;
+                    newStoredBlood.separatedBloodType.component = obj.separatedBloodType.component;
+                    newStoredBlood.separatedBloodType.bloodType.rh = obj.separatedBloodType.bloodType.rh;
+                    newStoredBlood.separatedBloodType.bloodType.groupLetter = obj.separatedBloodType.bloodType.groupLetter;
+
+                    myList.push(newStoredBlood);
+                }
+
+                return myList;
+            } else {
+                const myList: Array<StoredBloodLevel1> = [];
+                return myList;
+            }
+        }));
+    }
+
+    getCountryBloodStock(): Observable<BloodStock[]> {
+        return this.http
+        .get(environment.apiUrl + '/dcp/countryBloodStock', {headers: this.myheader})
+        .pipe(map((res: any) => {
+            if (res.status === true) {
+                const objArray = res.object.objects;
+                const myList: Array<BloodStock> = [];
+
+                for (const obj of objArray) {
+                    const bloodStock = new BloodStock();
+                    bloodStock.amount = obj.amount;
+                    bloodStock.component = obj.component;
+
+                    myList.push(bloodStock);
+                }
+
+                return myList;
+            } else {
+                const myList: Array<BloodStock> = [];
+                return myList;
+            }
+        }));
+    }
+
+    getBloodStockInDC(donationCenterId: number): Observable<BloodStock[]> {
+        return this.http
+        .post(environment.apiUrl + '/dcp/dcBloodStock', JSON.stringify({id: donationCenterId}), {headers: this.myheader})
+        .pipe(map((res: any) => {
+            if (res.status === true) {
+                const objArray = res.object.objects;
+                const myList: Array<BloodStock> = [];
+
+                for (const obj of objArray) {
+                    const bloodStock = new BloodStock();
+                    bloodStock.amount = obj.amount;
+                    bloodStock.component = obj.component;
+
+                    myList.push(bloodStock);
+                }
+
+                return myList;
+            } else {
+                const myList: Array<BloodStock> = [];
+                return myList;
+            }
+        }));
+    }
+
+    discardBlood(storedBloodId: number): Observable<BooleanServerResponse> {
+        return this.http
+        .post(environment.apiUrl + '/dcp/discardBlood', JSON.stringify({id: storedBloodId}),  {headers: this.myheader})
+        .pipe(map((res: any) => {
+            const booleanResponse = new BooleanServerResponse(res.status);
+            if (res.status === false) {
+                booleanResponse.exception = res.exception;
+            }
+            return booleanResponse;
+        }));
+    }
 }

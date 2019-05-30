@@ -84,6 +84,7 @@ import { AllRequestsComponent } from './components/dcp/all-requests/all-requests
 import { MyCommitmentsComponent } from './components/dcp/my-commitments/my-commitments.component';
 import { MyRequestsComponent } from './components/doctor/my-requests/my-requests.component';
 import { CreateMockComponent } from './components/admin/create-mock/create-mock.component';
+import { BloodStocksComponent } from './components/dcp/blood-stocks/blood-stocks.component';
 
 @NgModule({
   declarations: [
@@ -112,7 +113,8 @@ import { CreateMockComponent } from './components/admin/create-mock/create-mock.
     AllRequestsComponent,
     MyCommitmentsComponent,
     MyRequestsComponent,
-    CreateMockComponent
+    CreateMockComponent,
+    BloodStocksComponent
   ],
   imports: [
     BrowserModule,

@@ -1,3 +1,4 @@
+import { BloodStocksComponent } from './components/dcp/blood-stocks/blood-stocks.component';
 import { MyRequestsComponent } from './components/doctor/my-requests/my-requests.component';
 import { MyCommitmentsComponent } from './components/dcp/my-commitments/my-commitments.component';
 import { AllRequestsComponent } from './components/dcp/all-requests/all-requests.component';
@@ -55,7 +56,8 @@ const routes: Routes = [
         { path: 'test-results', component: TestResultsComponent },
         { path: 'split-results', component: SplitResultsComponent },
         { path: 'all-requests', component: AllRequestsComponent },
-        { path: 'my-commitments', component: MyCommitmentsComponent }
+        { path: 'my-commitments', component: MyCommitmentsComponent },
+        { path: 'blood-stocks', component: BloodStocksComponent }
     ] },
 
     { path: 'doctor', component: DoctorLayoutComponent, canActivate: [AuthGuard], data: {roles: [UserRole.Doctor]}, children: [
