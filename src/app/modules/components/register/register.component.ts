@@ -1,3 +1,4 @@
+import { BooleanServerResponse } from 'src/shared/models/shared/boolean-server-response';
 import { BaseLocation } from './../../../../shared/models/shared/base-location';
 import { LocationService } from './../../../../core/location.service';
 import { Component, OnInit } from '@angular/core';
@@ -77,8 +78,13 @@ export class RegisterComponent implements OnInit {
                                    String(registerData.dateOfBirth.month) + '-' +
                                    String(registerData.dateOfBirth.day);
 
-        this.authenticationService.register(registerData).subscribe(res => {
-            alert(res);
+        this.authenticationService.register(registerData).subscribe(
+            (res: BooleanServerResponse) => {
+            if (res.success === true) {
+                this.router.navigate(['login/success']);
+            } else {
+                alert(res.exception);
+            }
         });
 
     }

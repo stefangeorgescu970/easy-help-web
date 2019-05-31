@@ -28,6 +28,7 @@ import { PatientsComponent } from './components/doctor/patients/patients.compone
 import { TestPushComponent } from './components/admin/test-push/test-push.component';
 import { TestResultsComponent } from './components/dcp/test-results/test-results.component';
 import { CreateMockComponent } from './components/admin/create-mock/create-mock.component';
+import { RegisterSuccessComponent } from './components/register-success/register-success.component';
 
 const routes: Routes = [
     { path: '', component: HomeLayoutComponent, children: [
@@ -35,7 +36,8 @@ const routes: Routes = [
     ] },
     { path: 'login', component: LoginLayoutComponent, children: [
         { path: '', component: LoginComponent },
-        { path: 'register', component: RegisterComponent}
+        { path: 'register', component: RegisterComponent},
+        { path: 'success', component: RegisterSuccessComponent }
     ] },
     { path: 'admin', component: AdminLayoutComponent, canActivate: [AuthGuard], data: {roles: [UserRole.Admin]}, children: [
         { path: '', redirectTo: 'doctor-reqs', pathMatch: 'full' },

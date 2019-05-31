@@ -85,6 +85,7 @@ import { MyCommitmentsComponent } from './components/dcp/my-commitments/my-commi
 import { MyRequestsComponent } from './components/doctor/my-requests/my-requests.component';
 import { CreateMockComponent } from './components/admin/create-mock/create-mock.component';
 import { BloodStocksComponent } from './components/dcp/blood-stocks/blood-stocks.component';
+import { RegisterSuccessComponent } from './components/register-success/register-success.component';
 
 @NgModule({
   declarations: [
@@ -114,7 +115,8 @@ import { BloodStocksComponent } from './components/dcp/blood-stocks/blood-stocks
     MyCommitmentsComponent,
     MyRequestsComponent,
     CreateMockComponent,
-    BloodStocksComponent
+    BloodStocksComponent,
+    RegisterSuccessComponent
   ],
   imports: [
     BrowserModule,
