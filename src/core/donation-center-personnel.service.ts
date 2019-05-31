@@ -1,3 +1,4 @@
+import { AuthService } from 'src/core/auth.service';
 import { BloodStock } from './../shared/models/shared/blood-stock';
 import { DcpDonorAccount } from './../shared/models/dcp/incoming/dcp-donor-account';
 import { DcpDonationRequestDetails } from './../shared/models/dcp/incoming/dcp-donation-request-details';
@@ -20,13 +21,15 @@ import { DcpDonationCommitment } from 'src/shared/models/dcp/incoming/dcp-donati
 })
 export class DonationCenterPersonnelService {
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private authService: AuthService) { }
 
     myheader = new HttpHeaders().set('Content-Type', 'application/json');
 
     cancelBooking(booking: DcpDonationBooking): Observable<BooleanServerResponse> {
         return this.http
-        .post(environment.apiUrl + '/dcp/cancelBooking', JSON.stringify({id: booking.id}), {headers: this.myheader})
+        .post(environment.apiUrl + '/dcp/cancelBooking',
+            JSON.stringify({id: booking.id, userId: this.authService.getUser().id}),
+            {headers: this.myheader})
         .pipe(map((res: any) => {
             const booleanResponse = new BooleanServerResponse(res.status);
             if (res.status === false) {
@@ -263,7 +266,9 @@ export class DonationCenterPersonnelService {
 
     shipCommitment(commitmentId: number): Observable<BooleanServerResponse> {
         return this.http
-        .post(environment.apiUrl + '/dcp/shipCommitment', JSON.stringify({id: commitmentId}), {headers: this.myheader})
+        .post(environment.apiUrl + '/dcp/shipCommitment',
+            JSON.stringify({id: commitmentId, userId: this.authService.getUser().id}),
+            {headers: this.myheader})
         .pipe(map((res: any) => {
             const booleanResponse = new BooleanServerResponse(res.status);
             if (res.status === false) {
@@ -345,7 +350,18 @@ export class DonationCenterPersonnelService {
 
     addTestResults(data: DonationTestResultsDto): Observable<BooleanServerResponse> {
         return this.http
-        .post(environment.apiUrl + '/dcp/addTestResult', data,  {headers: this.myheader})
+        .post(environment.apiUrl + '/dcp/addTestResult',
+            JSON.stringify({
+                userId: this.authService.getUser().id,
+                donationId: data.donationId,
+                hepatitisB: data.hepatitisB,
+                hepatitisC: data.hepatitisC,
+                hiv: data.hiv,
+                htlv: data.htlv,
+                alt: data.alt,
+                vdrl: data.vdrl
+            }),
+            {headers: this.myheader})
         .pipe(map((res: any) => {
             const booleanResponse = new BooleanServerResponse(res.status);
             if (res.status === false) {
@@ -357,7 +373,15 @@ export class DonationCenterPersonnelService {
 
     addSplitResults(data: DonationSplitResultsDto): Observable<BooleanServerResponse> {
         return this.http
-        .post(environment.apiUrl + '/dcp/addSplitResults', data,  {headers: this.myheader})
+        .post(environment.apiUrl + '/dcp/addSplitResults',
+            JSON.stringify({
+                userId: this.authService.getUser().id,
+                donationId: data.donationId,
+                plateletsUnits: data.plateletsUnits,
+                redBloodCellsUnits: data.redBloodCellsUnits,
+                plasmaUnits: data.plasmaUnits
+            }),
+            {headers: this.myheader})
         .pipe(map((res: any) => {
             const booleanResponse = new BooleanServerResponse(res.status);
             if (res.status === false) {
