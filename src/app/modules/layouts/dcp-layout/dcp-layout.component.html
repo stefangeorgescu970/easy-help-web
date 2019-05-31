@@ -1,20 +1,22 @@
-<div class="row nav-bar">
-    <mat-toolbar color="primary">
-                <span>
-                    <img class="faculty-logo" src="../../../assets/images/bloodDrop.jpg">
-                    Donation Center Personnel
-                </span> <span class="example-spacer"></span>
-                <a routerLink="all-donors" class="error-message" mat-button>All Donors</a> 
-                <a routerLink="bookings" class="error-message" mat-button>Bookings</a> 
-                <a routerLink="test-results" class="error-message" mat-button>Test Results</a> 
-                <a routerLink="split-results" class="error-message" mat-button>Split Results</a> 
-                <a routerLink="all-requests" class="error-message" mat-button>All Blood Requests</a> 
-                <a routerLink="my-commitments" class="error-message" mat-button>My Commitments</a> 
-                <a routerLink="blood-stocks" class="error-message" mat-button>Blood Stocks</a> 
-                <span class="example-fill-remaining-space"></span>
-                <a class="error-message" mat-button (click)="logout()">Logout</a> 
-        </mat-toolbar>
-    </div>  
+<nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" style="background-color: #C21E24;">
+    <div class="container">
+        <a class="navbar-brand" style="color: white;">DCP App</a>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" routerLink="all-donors" routerLinkActive="routerLinkActive">All Donors</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="bookings" routerLinkActive="routerLinkActive">Bookings</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="test-results" routerLinkActive="routerLinkActive">Test Results</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="split-results" routerLinkActive="routerLinkActive">Split Results</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="all-requests" routerLinkActive="routerLinkActive">All Blood Requests</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="my-commitments" routerLinkActive="routerLinkActive">My Commitments</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="blood-stocks" routerLinkActive="routerLinkActive">Blood Stocks</a></li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" (click)="logout()">Logout</a> 
+            </li>
+          </ul>
+    </div>
+</nav>
         
         <div class="content">
             <div class="card col-lg-10 mx-auto mt-3 p-5">
