@@ -126,7 +126,6 @@
             <table class="table table-hover" *ngIf="proposedDonationCommitments && proposedDonationCommitments.length > 0; else no_proposedcommitments">
                     <thead>
                         <tr>
-                            <th scope="col" class="th-id">Status</th>
                             <th scope="col" class="th-name">Donation Center</th>
                             <th scope="col" class="th-name">Blood Group</th>
                             <th scope="col" class="th-name">RH</th>
@@ -135,7 +134,6 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let commitment of proposedDonationCommitments ; let i = index" data-="blood.id">
-                            <td class="td-name">{{ commitment.status }}</td>
                             <td class="td-name">{{ commitment.donationCenter.county }}</td>
                             <td class="td-name">{{ commitment.separatedBloodType.bloodType.groupLetter }}</td>
                             <td class="td-name">{{ commitment.separatedBloodType.bloodType.rh }}</td>
@@ -152,7 +150,6 @@
                 <table class="table table-hover" *ngIf="waitingSendDonationCommitments && waitingSendDonationCommitments.length > 0; else no_proposedcommitments">
                         <thead>
                             <tr>
-                                <th scope="col" class="th-id">Status</th>
                                 <th scope="col" class="th-name">Donation Center</th>
                                 <th scope="col" class="th-name">Blood Group</th>
                                 <th scope="col" class="th-name">RH</th>
@@ -160,7 +157,6 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let commitment of waitingSendDonationCommitments ; let i = index" data-="blood.id">
-                                <td class="td-name">{{ commitment.status }}</td>
                                 <td class="td-name">{{ commitment.donationCenter.county }}</td>
                                 <td class="td-name">{{ commitment.separatedBloodType.bloodType.groupLetter }}</td>
                                 <td class="td-name">{{ commitment.separatedBloodType.bloodType.rh }}</td>
@@ -174,7 +170,6 @@
                     <table class="table table-hover" *ngIf="sentDonationCommitments && sentDonationCommitments.length > 0; else no_proposedcommitments">
                             <thead>
                                 <tr>
-                                    <th scope="col" class="th-id">Status</th>
                                     <th scope="col" class="th-name">Donation Center</th>
                                     <th scope="col" class="th-name">Blood Group</th>
                                     <th scope="col" class="th-name">RH</th>
@@ -183,7 +178,6 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let commitment of sentDonationCommitments ; let i = index" data-="blood.id">
-                                    <td class="td-name">{{ commitment.status }}</td>
                                     <td class="td-name">{{ commitment.donationCenter.county }}</td>
                                     <td class="td-name">{{ commitment.separatedBloodType.bloodType.groupLetter }}</td>
                                     <td class="td-name">{{ commitment.separatedBloodType.bloodType.rh }}</td>

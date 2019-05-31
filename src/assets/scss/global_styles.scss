@@ -2,6 +2,7 @@
 
 $easy-black: #120309;
 $easy-red: #C21E24;
+$easy-green: #198715;
 
 $white: #fff;
 $black: #120309;
@@ -15,6 +16,21 @@ $red: #7f0e24;
 $emergency: #7f0e24;
 $dark: #120309;
 $grey: #dddddd;
+
+.btn {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.btn-success {
+    background-color: $easy-green;
+    border-color: $easy-green;
+}
+
+.btn-danger {
+    background-color: $easy-red;
+    border-color: $easy-red;
+}
 
 body {
     background-color: $light-gray;
@@ -116,4 +132,8 @@ body {
     /* This fills the remaining space, by using flexbox. 
        Every toolbar row uses a flexbox row layout. */
     flex: 1 1 auto;
-  }
+}
+
+.fixed-heigth-spacer {
+    min-height: 30px;
+}

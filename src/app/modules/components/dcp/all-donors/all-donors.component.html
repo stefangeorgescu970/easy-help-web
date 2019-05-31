@@ -21,7 +21,7 @@
 
 </form>
 
-<table class="table table-hover" *ngIf="donors && donors.length > 0; else no_donors">
+<table class="table table-hover mt-4" *ngIf="donors && donors.length > 0; else no_donors">
         <thead>
           <tr>
             <th scope="col" class="th-name">First Name</th>
@@ -39,10 +39,10 @@
             <td class="td-name">{{ donor.lastName }}</td>
             <td class="td-name">{{ donor.dateOfBirth }}</td>
             <td class="td-long">
-                    <a href="mailto:  {{ donor.email }}">  {{ donor.email }}</a>
+                    <a class="email" href="mailto:  {{ donor.email }}">  {{ donor.email }}</a>
               </td>
-            <td class="td-lat">{{ donor.rh }}</td>
-            <td class="td-lat">{{ donor.group }}</td>
+            <td class="td-lat">{{ donor.bloodType.rh == undefined ? "?" : donor.bloodType.rh }}</td>
+            <td class="td-lat">{{ donor.bloodType.groupLetter === undefined ? "?" : donor.bloodType.groupLetter }}</td>
             <td class="td-lat">{{ donor.canDonate }}</td>
           </tr>
         </tbody>
