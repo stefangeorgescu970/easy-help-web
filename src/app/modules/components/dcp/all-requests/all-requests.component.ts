@@ -14,7 +14,8 @@ import { DcpDonationRequestDetails } from 'src/shared/models/dcp/incoming/dcp-do
 })
 export class AllRequestsComponent implements OnInit {
 
-    requests: Array<DcpDonationRequestDetails> = [];
+    requestsUncommitted: Array<DcpDonationRequestDetails> = [];
+    requestsCommitted: Array<DcpDonationRequestDetails> = [];
     storedBlood: Array<StoredBloodLevel1> = [];
     filteredStoredBlood: Array<StoredBloodLevel1> = [];
     selectedRequest: DcpDonationRequestDetails;
@@ -33,7 +34,13 @@ export class AllRequestsComponent implements OnInit {
 
     loadRequests() {
         this.donationCenterService.getBloodRequests(this.currentDcp.locationId).subscribe((res: DcpDonationRequestDetails[]) => {
-            this.requests = res;
+            res.forEach(request => {
+                if (request.hasCommitted) {
+                    this.requestsCommitted.push(request);
+                } else {
+                    this.requestsUncommitted.push(request);
+                }
+            });
         });
     }
 

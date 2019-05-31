@@ -1,6 +1,6 @@
-<h2>Blood Requests</h2>
+<h2>Blood Requests You Haven't Committed To</h2>
 
-<table class="table table-hover" *ngIf="requests && requests.length > 0; else no_requests">
+<table class="table table-hover" *ngIf="requestsUncommitted && requestsUncommitted.length > 0; else no_requests">
     <thead>
         <tr>
             <th scope="col" class="th-id">Blood Group</th>
@@ -13,7 +13,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let request of requests ; let i = index" data-="requests.id">
+        <tr *ngFor="let request of requestsUncommitted ; let i = index" data-="requests.id">
             <td class="td-name">{{ request.separatedBloodType.bloodType.groupLetter }}</td>
             <td class="td-name">{{ request.separatedBloodType.bloodType.rh }}</td>
             <td class="td-name">{{ request.separatedBloodType.component }}</td>
@@ -27,10 +27,43 @@
     </tbody>
 </table>
 
+<h2>Blood Requests You Committed To</h2>
+
+<table class="table table-hover" *ngIf="requestsCommitted && requestsCommitted.length > 0; else no_requests_com">
+    <thead>
+        <tr>
+            <th scope="col" class="th-id">Blood Group</th>
+            <th scope="col" class="th-name">Blood RH</th>
+            <th scope="col" class="th-name">Component</th>
+            <th scope="col" class="th-name">Quantity</th>
+            <th scope="col" class="th-name">Urgency</th>
+            <th scope="col" class="th-name">Distance</th>
+            <th scope="col" class="th-name">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let request of requestsCommitted ; let i = index" data-="requests.id">
+            <td class="td-name">{{ request.separatedBloodType.bloodType.groupLetter }}</td>
+            <td class="td-name">{{ request.separatedBloodType.bloodType.rh }}</td>
+            <td class="td-name">{{ request.separatedBloodType.component }}</td>
+            <td class="td-name">{{ request.quantity }}</td>
+            <td class="td-name">{{ request.urgency }}</td>
+            <td class="td-name">{{ request.distance }}</td>
+            <td>
+                <span class="btn btn-success add-button" (click)="open(content, request)">Commit More Blood</span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 
 <ng-template #no_requests>
     <h5>There are no open blood requests.</h5>
 </ng-template>
+
+<ng-template #no_requests_com>
+        <h5>There are no blood requests you have committed to.</h5>
+    </ng-template>
 
 <ng-template #no_blood>
         <h5>You have no blood in stock that would match this request.</h5>
