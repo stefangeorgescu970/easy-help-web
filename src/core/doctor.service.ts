@@ -12,6 +12,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { BooleanServerResponse } from 'src/shared/models/shared/boolean-server-response';
 import { PatientLevel2 } from 'src/shared/models/doctor/incoming/patient-level-2';
+import { AuthService } from './auth.service';
 
 
 @Injectable({
@@ -19,7 +20,7 @@ import { PatientLevel2 } from 'src/shared/models/doctor/incoming/patient-level-2
   })
   export class DoctorService {
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private authService: AuthService) { }
 
     myheader = new HttpHeaders().set('Content-Type', 'application/json');
 
@@ -69,7 +70,9 @@ import { PatientLevel2 } from 'src/shared/models/doctor/incoming/patient-level-2
 
     deletePatient(patientId: number): Observable<BooleanServerResponse> {
         return this.http
-        .post(environment.apiUrl + '/doctor/deletePatient', JSON.stringify({id: patientId}), {headers: this.myheader})
+        .post(environment.apiUrl + '/doctor/deletePatient',
+            JSON.stringify({id: patientId, userId: this.authService.getUser().id}),
+            {headers: this.myheader})
         .pipe(map((res: any) => {
             const booleanResponse = new BooleanServerResponse(res.status);
             if (res.status === false) {
@@ -124,7 +127,9 @@ import { PatientLevel2 } from 'src/shared/models/doctor/incoming/patient-level-2
 
     cancelRequest(requestId: number): Observable<BooleanServerResponse> {
         return this.http
-        .post(environment.apiUrl + '/doctor/cancelBloodRequest', JSON.stringify({id: requestId}), {headers: this.myheader})
+        .post(environment.apiUrl + '/doctor/cancelBloodRequest',
+            JSON.stringify({id: requestId, userId: this.authService.getUser().id}),
+            {headers: this.myheader})
         .pipe(map((res: any) => {
             const booleanResponse = new BooleanServerResponse(res.status);
             if (res.status === false) {
@@ -177,7 +182,9 @@ import { PatientLevel2 } from 'src/shared/models/doctor/incoming/patient-level-2
 
     approveCommitment(commitmentId: number): Observable<string> {
         return this.http
-        .post(environment.apiUrl + '/doctor/acceptCommitment', JSON.stringify({id: commitmentId}), {headers: this.myheader})
+        .post(environment.apiUrl + '/doctor/acceptCommitment',
+            JSON.stringify({id: commitmentId, userId: this.authService.getUser().id}),
+            {headers: this.myheader})
         .pipe(map((res: any) => {
             if (res.status === true) {
                 return res.object;
@@ -188,7 +195,9 @@ import { PatientLevel2 } from 'src/shared/models/doctor/incoming/patient-level-2
 
     declineCommitment(commitmentId: number): Observable<BooleanServerResponse> {
         return this.http
-        .post(environment.apiUrl + '/doctor/declineCommitment', JSON.stringify({id: commitmentId}), {headers: this.myheader})
+        .post(environment.apiUrl + '/doctor/declineCommitment',
+            JSON.stringify({id: commitmentId, userId: this.authService.getUser().id}),
+            {headers: this.myheader})
         .pipe(map((res: any) => {
             const booleanResponse = new BooleanServerResponse(res.status);
             if (res.status === false) {
@@ -200,7 +209,9 @@ import { PatientLevel2 } from 'src/shared/models/doctor/incoming/patient-level-2
 
     markCommitmentAsArrived(commitmentId: number): Observable<BooleanServerResponse> {
         return this.http
-        .post(environment.apiUrl + '/doctor/commitmentArrived', JSON.stringify({id: commitmentId}), {headers: this.myheader})
+        .post(environment.apiUrl + '/doctor/commitmentArrived',
+            JSON.stringify({id: commitmentId, userId: this.authService.getUser().id}),
+            {headers: this.myheader})
         .pipe(map((res: any) => {
             const booleanResponse = new BooleanServerResponse(res.status);
             if (res.status === false) {
