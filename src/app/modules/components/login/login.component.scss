@@ -5,4 +5,16 @@
 
 .register-message {
     text-align: center;
+
+    a {
+        color: $easy-red;
+        text-decoration: underline;
+    }
+}
+
+.form-group {
+    .btn-primary {
+        background-color: $easy-red;
+        border-color: $easy-red;
+    }
 }

@@ -38,7 +38,7 @@ const routes: Routes = [
         { path: 'register', component: RegisterComponent}
     ] },
     { path: 'admin', component: AdminLayoutComponent, canActivate: [AuthGuard], data: {roles: [UserRole.Admin]}, children: [
-        { path: '', component: DoctorAccountRequestsComponent },
+        { path: '', redirectTo: 'doctor-reqs', pathMatch: 'full' },
         { path: 'doctor-reqs', component: DoctorAccountRequestsComponent },
         { path: 'dcp-reqs', component: DcpAccountRequestsComponent },
         { path: 'doctors', component: DoctorAccountsComponent },
@@ -50,7 +50,7 @@ const routes: Routes = [
     ] },
 
     { path: 'dcp', component: DcpLayoutComponent, canActivate: [AuthGuard], data: {roles: [UserRole.Dcp]}, children: [
-        { path: '', component: AllDonorsComponent },
+        { path: '', redirectTo: 'all-donors', pathMatch: 'full' },
         { path: 'all-donors', component: AllDonorsComponent },
         { path: 'bookings', component: AllBookingsComponent },
         { path: 'test-results', component: TestResultsComponent },
@@ -61,7 +61,7 @@ const routes: Routes = [
     ] },
 
     { path: 'doctor', component: DoctorLayoutComponent, canActivate: [AuthGuard], data: {roles: [UserRole.Doctor]}, children: [
-        { path: '', component: RequestBloodComponent },
+        { path: '', redirectTo: 'request', pathMatch: 'full' },
         { path: 'request', component: RequestBloodComponent },
         { path: 'patients', component: PatientsComponent },
         { path: 'my-requests', component: MyRequestsComponent }
