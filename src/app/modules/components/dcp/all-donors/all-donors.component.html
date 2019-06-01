@@ -37,7 +37,7 @@
           <tr *ngFor="let donor of donors ; let i = index" data-="donor.id">
             <td class="td-name">{{ donor.firstName }}</td>
             <td class="td-name">{{ donor.lastName }}</td>
-            <td class="td-name">{{ donor.dateOfBirth }}</td>
+            <td class="td-name">{{ donor.dateOfBirth | date : "dd-MM-yyyy"}}</td>
             <td class="td-long">
                     <a class="email" href="mailto:  {{ donor.email }}">  {{ donor.email }}</a>
               </td>

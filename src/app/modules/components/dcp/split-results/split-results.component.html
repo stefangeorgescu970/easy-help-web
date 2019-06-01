@@ -11,7 +11,7 @@
     <tbody>
       <tr *ngFor="let donation of donations ; let i = index" data-="donation">
         <td class="td-name">{{ donation.donor.firstName }} {{ donation.donor.lastName }}</td>
-        <td class="td-name">{{ donation.date.toLocaleString() }}</td>
+        <td class="td-name">{{ donation.date | date: "dd-MM-yyy" }}</td>
         <td>
             <span class="btn btn-success add-button" (click)="open(content, donation)">Add Split Results</span>
         </td>
