@@ -52,6 +52,7 @@ export class AllRequestsComponent implements OnInit {
 
     open(content, request) {
         this.filteredStoredBlood = this.storedBlood.filter(blood => blood.separatedBloodType.component === request.separatedBloodType.component);
+        this.filteredStoredBlood = this.filteredStoredBlood.filter(blood => blood.separatedBloodType.bloodType.canDonateTo(request.separatedBloodType.bloodType, request.separatedBloodType.component));
         this.selectedRequest = request;
 
         this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', centered: true, size: 'lg'}).result.then((result) => {
