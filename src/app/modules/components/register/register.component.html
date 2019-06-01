@@ -59,22 +59,6 @@
             <div *ngIf="f.ssn.errors.required">Social Security Number is required</div>
         </div>
     </div>
-
-    <div class="form-group col-lg-6">
-        <label>Date of Birth</label>
-        <div class="input-group">
-            <input class="form-control" placeholder="yyyy-mm-dd"
-                   name="dp" formControlName="dateOfBirth" ngbDatepicker #d="ngbDatepicker" [minDate]="{year: 1940, month: 1, day: 1}"
-                   [maxDate]="{year: 2000, month: 12, day: 31}" [ngClass]="{ 'is-invalid': submitted && f.dateOfBirth.errors }">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-            </div>
-          </div>
-        
-          <div *ngIf="submitted && f.dateOfBirth.errors" class="invalid-feedback">
-            <div *ngIf="f.dateOfBirth.errors.required">Birth Date is required</div>
-        </div>
-    </div>
     
     <div class="form-group col-lg-6">
         <label>Registering as</label>

@@ -46,7 +46,6 @@ export class RegisterComponent implements OnInit {
             password: ['', Validators.required],
             repeatPassword: ['', Validators.required],
             ssn: ['', Validators.required],
-            dateOfBirth: ['', Validators.required],
             userType: ['', Validators.required],
             locationId: ['']
         });
@@ -73,10 +72,6 @@ export class RegisterComponent implements OnInit {
 
         this.loading = true;
         const registerData = this.registerForm.value;
-        registerData.skipSsnValidation = true;
-        registerData.dateOfBirth = String(registerData.dateOfBirth.year) + '-' +
-                                   String(registerData.dateOfBirth.month) + '-' +
-                                   String(registerData.dateOfBirth.day);
 
         this.authenticationService.register(registerData).subscribe(
             (res: BooleanServerResponse) => {

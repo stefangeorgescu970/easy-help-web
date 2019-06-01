@@ -57,24 +57,28 @@ export class AuthService {
     register(data: RegisterDto): Observable<BooleanServerResponse> {
         return this.http.post(environment.apiUrl + '/users/register', data, {headers: this.myheader})
         .pipe(map((res: any) => {
-            return new BooleanServerResponse(res.status);
+            const booleanResponse = new BooleanServerResponse(res.status);
+            if (res.status === false) {
+                booleanResponse.exception = res.exception;
+            }
+            return booleanResponse;
         }));
     }
 
     logout(): Observable<BooleanServerResponse> {
         return this.http.post(environment.apiUrl + '/users/logout', JSON.stringify({id: this.getUser().id}), {headers: this.myheader})
         .pipe(map((res: any) => {
-            // const booleanResponse = new BooleanServerResponse(res.status);
-            // if (res.status === false) {
-            //     booleanResponse.exception = res.exception;
-            // } else {
-            //     localStorage.removeItem(USER_KEY);
-            // }
-            // return booleanResponse;
+            const booleanResponse = new BooleanServerResponse(res.status);
+            if (res.status === false) {
+                booleanResponse.exception = res.exception;
+            } else {
+                localStorage.removeItem(USER_KEY);
+            }
+            return booleanResponse;
 
-            const br = new BooleanServerResponse(true);
-            localStorage.removeItem(USER_KEY);
-            return br;
+            // const br = new BooleanServerResponse(true);
+            // localStorage.removeItem(USER_KEY);
+            // return br;
         }));
     }
 }
