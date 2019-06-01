@@ -64,6 +64,9 @@ export class RequestBloodComponent implements OnInit {
             this.loading = false;
             if (res.success === true) {
                 this.error = null;
+                alert('Blood Request successfully forwarded to Donation Centers.');
+                this.requestForm.reset();
+                this.submitted = false;
             } else {
                 this.error = res.exception;
             }

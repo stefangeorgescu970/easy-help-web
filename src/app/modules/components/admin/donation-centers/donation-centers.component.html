@@ -53,6 +53,7 @@
           <tr>
             <th scope="col" class="th-name">Name</th>
             <th scope="col" class="th-id">County</th>
+            <th scope="col" class="th-id"># of Seats</th>
             <th scope="col" class="th-name">Address</th>
             <th scope="col" class="th-long">Longitude</th>
             <th scope="col" class="th-lat">Latitude</th>
@@ -64,6 +65,7 @@
           <tr *ngFor="let dc of donationCenters ; let i = index" data-="dc.id">
             <td class="td-name">{{ dc.name }}</td>
             <td class="td-name">{{ dc.county }}</td>
+            <td class="td-name">{{ dc.numberOfConcurrentDonors }}</td>
             <td class="td-name">{{ dc.address }}</td>
             <td class="td-long">{{ dc.longitude }}</td>
             <td class="td-lat">{{ dc.latitude }}</td>

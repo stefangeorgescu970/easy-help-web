@@ -1,3 +1,4 @@
+import { AdminDonationCenter } from './../shared/models/admin/incoming/admin-donation-center';
 import { CreateHospital } from './../shared/models/admin/outgoing/create-hospital';
 import { CreateDonationCenter } from './../shared/models/admin/outgoing/create-donation-center';
 import { AdminDCPAccount } from '../shared/models/admin/incoming/admin-dcp-account';
@@ -225,16 +226,16 @@ export class AdminService {
     }
 
 
-    getDonationCenters(): Observable<ExtendedLocation[]> {
+    getDonationCenters(): Observable<AdminDonationCenter[]> {
         return this.http
         .post(environment.apiUrl + '/admin/getAllDonationCenters', {}, {headers: this.myheader})
         .pipe(map((res: any) => {
             if (res.status === true) {
                 const objArray = res.object.objects;
-                const myList: Array<ExtendedLocation> = [];
+                const myList: Array<AdminDonationCenter> = [];
 
                 for (const obj of objArray) {
-                    const newDc = new ExtendedLocation();
+                    const newDc = new AdminDonationCenter();
                     newDc.id = obj.id;
                     newDc.name = obj.name;
                     newDc.longitude = obj.longitude;
@@ -242,13 +243,14 @@ export class AdminService {
                     newDc.address = obj.address;
                     newDc.county = obj.county;
                     newDc.phone = obj.phone;
+                    newDc.numberOfConcurrentDonors = obj.numberOfConcurrentDonors;
 
                     myList.push(newDc);
                 }
 
                 return myList;
             } else {
-                const myList: Array<ExtendedLocation> = [];
+                const myList: Array<AdminDonationCenter> = [];
                 return myList;
             }
         }));

@@ -1,3 +1,4 @@
+import { AdminDonationCenter } from './../../../../../shared/models/admin/incoming/admin-donation-center';
 import { IdResponse } from './../../../../../shared/models/shared/id-response';
 import { ExtendedLocation } from './../../../../../shared/models/shared/extended-location';
 import { AdminService } from 'src/core/admin.service';
@@ -13,9 +14,9 @@ import { BooleanServerResponse } from 'src/shared/models/shared/boolean-server-r
 })
 export class DonationCentersComponent implements OnInit {
 
-    constructor(private adminService: AdminService, private enumService : EnumsService) { }
+    constructor(private adminService: AdminService, private enumService: EnumsService) { }
 
-    donationCenters: ExtendedLocation[];
+    donationCenters: AdminDonationCenter[];
     donationCenterForm: FormGroup;
     counties: string[];
 
@@ -23,7 +24,7 @@ export class DonationCentersComponent implements OnInit {
       const formBuilder = new FormBuilder();
 
       this.adminService.getDonationCenters().subscribe(
-            (res: ExtendedLocation[]) => {
+            (res: AdminDonationCenter[]) => {
               this.donationCenters = res;
             }
         );
@@ -54,7 +55,7 @@ export class DonationCentersComponent implements OnInit {
    this.adminService.addDonationCenter(donationCenter).subscribe(
      (res: IdResponse) => {
        if (res.success) {
-            const newDC = new ExtendedLocation();
+            const newDC = new AdminDonationCenter();
             newDC.id = res.newId;
             newDC.address = donationCenter.address;
             newDC.county = donationCenter.county;
@@ -62,6 +63,7 @@ export class DonationCentersComponent implements OnInit {
             newDC.longitude = donationCenter.longitude;
             newDC.name = donationCenter.name;
             newDC.phone = donationCenter.phone;
+            newDC.numberOfConcurrentDonors = donationCenter.numberOfConcurrentDonors;
             this.donationCenters.push(newDC);
        } else {
          alert(res.exception);

@@ -3,7 +3,7 @@ export class SeparatedBloodType {
     component: string;
     bloodType: BloodType;
 
-    constructor () {
+    constructor() {
         this.bloodType = new BloodType();
     }
 }
