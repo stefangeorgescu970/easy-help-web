@@ -1,10 +1,11 @@
 <h2>Add a new patient</h2>
 
 <form [formGroup]="patientForm" (ngSubmit)="addPatient()">
+
     <div class="form-group col-lg-6">
         <label for="ssn">SSN</label>
-        <input type="text" formControlName="ssn" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ssn.errors }" />
-        <div *ngIf="submitted && f.snn.errors" class="invalid-feedback">
+        <input class="form-control" type="number" formControlName="ssn" [ngClass]="{ 'is-invalid': submitted && f.ssn.errors }">
+        <div *ngIf="submitted && f.ssn.errors" class="invalid-feedback">
             <div *ngIf="f.ssn.errors.required">SSN is required</div>
         </div>
     </div>
