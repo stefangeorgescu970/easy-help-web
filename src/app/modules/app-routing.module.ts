@@ -62,7 +62,10 @@ const routes: Routes = [
         { path: 'blood-stocks', component: BloodStocksComponent }
     ] },
 
-    { path: 'doctor', component: DoctorLayoutComponent, canActivate: [AuthGuard], data: {roles: [UserRole.Doctor]}, children: [
+    { path: 'doctor', component: DoctorLayoutComponent,
+                canActivate: [AuthGuard],
+                data: {roles: [UserRole.Doctor]},
+                children: [
         { path: '', redirectTo: 'request', pathMatch: 'full' },
         { path: 'request', component: RequestBloodComponent },
         { path: 'patients', component: PatientsComponent },

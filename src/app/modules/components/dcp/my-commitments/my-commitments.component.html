@@ -21,7 +21,8 @@
 
     <h5>Commitments waiting to be sent</h5>
 
-    <table class="table table-hover" *ngIf="waitingSendDonationCommitments && waitingSendDonationCommitments.length > 0; else no_proposedcommitments">
+        <table class="table table-hover" 
+        *ngIf="waitingSendDonationCommitments && waitingSendDonationCommitments.length > 0; else no_proposedcommitments">
             <thead>
                 <tr>
                     <th scope="col" class="th-id">Urgency</th>
@@ -47,7 +48,7 @@
 
         <ng-template #no_proposedcommitments>
             <h6>You have not forwarded any commitments</h6>
-          </ng-template>
+        </ng-template>
     
           <ng-template #no_waitingsenddcommitments>
             <h6>There are no commitments waiting to be sent from your donation center.</h6>

@@ -13,21 +13,11 @@ export const USER_KEY = 'current-user';
 @Injectable({
     providedIn: 'root'
 })
-
 export class AuthService {
 
     constructor(private http: HttpClient) { }
 
     myheader = new HttpHeaders().set('Content-Type', 'application/json');
-
-    setUser(user: ProfileData): void {
-        localStorage.setItem(USER_KEY, JSON.stringify(user));
-    }
-
-    getUser(): ProfileData {
-        const userString = localStorage.getItem(USER_KEY);
-        return JSON.parse(userString) as ProfileData;
-    }
 
     login(email: string, password: string): Observable<LoginResult> {
         return this.http.post(environment.apiUrl + '/users/login',
@@ -54,6 +44,17 @@ export class AuthService {
         }));
     }
 
+
+    setUser(user: ProfileData): void {
+        localStorage.setItem(USER_KEY, JSON.stringify(user));
+    }
+
+    getUser(): ProfileData {
+        const userString = localStorage.getItem(USER_KEY);
+        return JSON.parse(userString) as ProfileData;
+    }
+
+
     register(data: RegisterDto): Observable<BooleanServerResponse> {
         return this.http.post(environment.apiUrl + '/users/register', data, {headers: this.myheader})
         .pipe(map((res: any) => {
@@ -63,6 +64,10 @@ export class AuthService {
             }
             return booleanResponse;
         }));
+    }
+
+    logoutOnExpire() {
+        localStorage.removeItem(USER_KEY);
     }
 
     logout(): Observable<BooleanServerResponse> {
