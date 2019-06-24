@@ -283,6 +283,34 @@ export class AdminService {
         }));
     }
 
+    createMockAdi() {
+        this.http
+        .get(environment.apiUrl + '/mocks/populateTablesAdi', {headers: this.myheader})
+        .pipe(map((res: any) => {
+            if (res.status === false) {
+                alert(res.exception);
+            } else {
+                alert('tables populated');
+            }
+        })).subscribe((internalRes: any) => {
+
+        });
+    }
+
+    createMockStefan() {
+        this.http
+        .get(environment.apiUrl + '/mocks/populateTablesStefan', {headers: this.myheader})
+        .pipe(map((res: any) => {
+            if (res.status === false) {
+                alert(res.exception);
+            } else {
+                alert('tables populated');
+            }
+        })).subscribe((internalRes: any) => {
+
+        });
+    }
+
     populateTables() {
         this.http
         .get(environment.apiUrl + '/mocks/populateTables', {headers: this.myheader})

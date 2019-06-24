@@ -17,4 +17,12 @@ export class CreateMockComponent implements OnInit {
     this.adminService.populateTables();
   }
 
+  createMockAdi() {
+    this.adminService.createMockAdi();
+  }
+
+  createMockStefan() {
+    this.adminService.createMockStefan();
+  }
+
 }
