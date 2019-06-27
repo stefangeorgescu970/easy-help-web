@@ -9,6 +9,6 @@ export class DcpDonationBooking {
 
     constructor() {
         this.donor = new DcpDonorAccount();
-        this.donationForm = new DonationForm();
+        this.donationForm = undefined;
     }
 }

@@ -4,6 +4,7 @@ export class StoredBloodLevel1 {
     separatedBloodType: SeparatedBloodType;
     amount: number;
     bagIdentifier: string;
+    daysUntilExpired: number;
 
     constructor() {
         this.separatedBloodType = new SeparatedBloodType();

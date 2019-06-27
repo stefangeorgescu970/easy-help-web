@@ -47,9 +47,9 @@ export class AllBookingsComponent implements OnInit {
     open(content, booking) {
         this.selectedDonor = booking.donor;
         this.selectedBooking = booking;
-        if (booking.donor.group != null){
-            this.bloodDetailsForm.controls['group'].setValue(booking.donor.group);
-            this.bloodDetailsForm.controls['rh'].setValue(booking.donor.rh);
+        if (booking.donor.bloodType != null){
+            this.bloodDetailsForm.controls['group'].setValue(booking.donor.bloodType.groupLetter);
+            this.bloodDetailsForm.controls['rh'].setValue(booking.donor.bloodType.rh);
         } else {
             this.bloodDetailsForm.reset();
         }

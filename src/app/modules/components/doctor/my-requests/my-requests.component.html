@@ -129,14 +129,16 @@
                             <th scope="col" class="th-name">Donation Center</th>
                             <th scope="col" class="th-name">Blood Group</th>
                             <th scope="col" class="th-name">RH</th>
+                            <th scope="col" class="th-name">Days Until Expires</th>
                             <th scope="col" class="th-name">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let commitment of proposedDonationCommitments ; let i = index" data-="blood.id">
                             <td class="td-name">{{ commitment.donationCenter.county }}</td>
-                            <td class="td-name">{{ commitment.separatedBloodType.bloodType.groupLetter }}</td>
-                            <td class="td-name">{{ commitment.separatedBloodType.bloodType.rh }}</td>
+                            <td class="td-name">{{ commitment.storedBlood.separatedBloodType.bloodType.groupLetter }}</td>
+                            <td class="td-name">{{ commitment.storedBlood.separatedBloodType.bloodType.rh }}</td>
+                            <td class="td-name">{{ commitment.storedBlood.daysUntilExpired }}</td>
                             <td>
                                 <span class="btn btn-danger delete-button" (click)="declineCommitment(commitment)">Decline</span>
                                 <span class="btn btn-success add-button" (click)="approveCommitment(commitment)">Approve</span>
@@ -153,13 +155,15 @@
                                 <th scope="col" class="th-name">Donation Center</th>
                                 <th scope="col" class="th-name">Blood Group</th>
                                 <th scope="col" class="th-name">RH</th>
+                                <th scope="col" class="th-name">Days Until Expires</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let commitment of waitingSendDonationCommitments ; let i = index" data-="blood.id">
                                 <td class="td-name">{{ commitment.donationCenter.county }}</td>
-                                <td class="td-name">{{ commitment.separatedBloodType.bloodType.groupLetter }}</td>
-                                <td class="td-name">{{ commitment.separatedBloodType.bloodType.rh }}</td>
+                                <td class="td-name">{{ commitment.storedBlood.separatedBloodType.bloodType.groupLetter }}</td>
+                                <td class="td-name">{{ commitment.storedBlood.separatedBloodType.bloodType.rh }}</td>
+                                <td class="td-name">{{ commitment.storedBlood.daysUntilExpired }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -173,14 +177,16 @@
                                     <th scope="col" class="th-name">Donation Center</th>
                                     <th scope="col" class="th-name">Blood Group</th>
                                     <th scope="col" class="th-name">RH</th>
+                                    <th scope="col" class="th-name">Days Until Expires</th>
                                     <th scope="col" class="th-name">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let commitment of sentDonationCommitments ; let i = index" data-="blood.id">
                                     <td class="td-name">{{ commitment.donationCenter.county }}</td>
-                                    <td class="td-name">{{ commitment.separatedBloodType.bloodType.groupLetter }}</td>
-                                    <td class="td-name">{{ commitment.separatedBloodType.bloodType.rh }}</td>
+                                    <td class="td-name">{{ commitment.storedBlood.separatedBloodType.bloodType.groupLetter }}</td>
+                                    <td class="td-name">{{ commitment.storedBlood.separatedBloodType.bloodType.rh }}</td>
+                                    <td class="td-name">{{ commitment.storedBlood.daysUntilExpired }}</td>
                                     <td>
                                         <span class="btn btn-success add-button" (click)="markCommitmentAsArrived(commitment)">Commitment Arrived</span>
                                     </td>

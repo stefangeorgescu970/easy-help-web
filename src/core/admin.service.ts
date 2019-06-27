@@ -304,7 +304,17 @@ export class AdminService {
             if (res.status === false) {
                 alert(res.exception);
             } else {
-                alert('tables populated');
+                this.http
+                .get(environment.apiUrl + '/mocks/populateTablesStefan2', {headers: this.myheader})
+                .pipe(map((res: any) => {
+                    if (res.status === false) {
+                        alert(res.exception);
+                    } else {
+                        alert('tables populated');
+                    }
+                })).subscribe((internalRes: any) => {
+
+                });
             }
         })).subscribe((internalRes: any) => {
 

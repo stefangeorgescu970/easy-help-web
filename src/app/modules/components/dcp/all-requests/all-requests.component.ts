@@ -33,6 +33,8 @@ export class AllRequestsComponent implements OnInit {
     }
 
     loadRequests() {
+        this.requestsCommitted = [];
+        this.requestsUncommitted = [];
         this.donationCenterService.getBloodRequests(this.currentDcp.locationId).subscribe((res: DcpDonationRequestDetails[]) => {
             res.forEach(request => {
                 if (request.hasCommitted) {
@@ -60,6 +62,7 @@ export class AllRequestsComponent implements OnInit {
         }, (reason) => {
             this.filteredStoredBlood = [];
             this.selectedRequest = undefined;
+            this.loadRequests();
         });
     }
 

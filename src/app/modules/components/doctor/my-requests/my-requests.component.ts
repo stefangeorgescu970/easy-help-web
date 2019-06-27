@@ -37,6 +37,9 @@ export class MyRequestsComponent implements OnInit {
     }
 
     loadRequests() {
+        this.recentRequests = [];
+        this.partiallyCommittedRequests = [];
+        this.fullyCommittedRequests = [];
         this.doctorService.getBloodRequests(this.currentDoctor.id).subscribe((res: DoctorDonationRequestDetails[]) => {
             res.forEach(element => {
                 switch (element.status) {
@@ -103,7 +106,8 @@ export class MyRequestsComponent implements OnInit {
     markCommitmentAsArrived(commitment: DoctorDonationCommitment) {
         this.doctorService.markCommitmentAsArrived(commitment.id).subscribe((res: BooleanServerResponse) => {
             if (res.success === true) {
-                this.waitingSendDonationCommitments = this.waitingSendDonationCommitments.filter(cmt => cmt.id !== commitment.id);
+                this.sentDonationCommitments = this.sentDonationCommitments.filter(cmt => cmt.id !== commitment.id);
+                this.loadRequests();
             } else {
                 alert(res.exception);
             }

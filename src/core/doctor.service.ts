@@ -165,9 +165,10 @@ import { AuthService } from './auth.service';
                     newCommitment.id = obj.id;
                     newCommitment.status = obj.status;
 
-                    newCommitment.separatedBloodType.bloodType.groupLetter = obj.separatedBloodType.bloodType.groupLetter;
-                    newCommitment.separatedBloodType.bloodType.rh = obj.separatedBloodType.bloodType.rh;
-                    newCommitment.separatedBloodType.component = obj.separatedBloodType.component;
+                    newCommitment.storedBlood.separatedBloodType.bloodType.groupLetter = obj.storedBlood.separatedBloodType.bloodType.groupLetter;
+                    newCommitment.storedBlood.separatedBloodType.bloodType.rh = obj.storedBlood.separatedBloodType.bloodType.rh;
+                    newCommitment.storedBlood.separatedBloodType.component = obj.storedBlood.separatedBloodType.component;
+                    newCommitment.storedBlood.daysUntilExpired = obj.storedBlood.daysUntilExpired;
 
                     myList.push(newCommitment);
                 }
