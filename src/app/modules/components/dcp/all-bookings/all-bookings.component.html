@@ -14,8 +14,8 @@
       <tr *ngFor="let booking of bookings ; let i = index" data-="booking">
         <td class="td-name">{{ booking.donor.firstName }} {{ booking.donor.lastName }}</td>
         <td class="td-name">{{ booking.bookingDate.toLocaleString() }}</td>
-        <td class="td-name" *ngIf="booking.donor.donationForm !== undefined; else no_donor_form">
-            <span class="btn btn-success add-button" (click)="openForm(contentForm, booking.donor.donationForm)">View Form</span>
+        <td class="td-name" *ngIf="booking.donationForm !== undefined; else no_donor_form">
+            <span class="btn btn-success add-button" (click)="openForm(contentForm, booking.donationForm)">View Form</span>
         </td>
         <td>
             <span class="btn btn-success add-button" (click)="open(content, booking)">Add Donation</span>
@@ -44,8 +44,8 @@
       </button>
     </div>
     <div class="modal-body">
-        <h6>Name: {{ selectedDonor.firstName }} {{ selectedDonor.lastName }}</h6>
-        <h6>Email: {{ selectedDonor.email }}</h6>
+        <h5>Name: {{ selectedDonor.firstName }} {{ selectedDonor.lastName }}</h5>
+        <h5>Email: {{ selectedDonor.email }}</h5>
 
         <form class="form-horizontal" [formGroup]="bloodDetailsForm">
           
@@ -89,46 +89,80 @@
       </button>
     </div>
     <div class="modal-body">
-        <h6>Do you consider yourself to be healthy?: {{ selectedForm.generalGoodHealth }}</h6>
-        <h6>Have you recently had an unexpected weight loss?: {{ selectedForm.recentLossOfWeight }}</h6>
-        <h6>Have you recently had an unexplainable fever?: {{ selectedForm.recentInexplicableFever }}</h6>
-        <h6>Have you recently had any stomatological treatment or any vaccinations?: {{ selectedForm.recentStomatoTreatmentOrVaccine }}</h6>
-        <h6>Are you following any medical treatment?: {{ selectedForm.currentDrugTreatment }}</h6>
-        <h6>Did you have sexual contact with a partner that had hepatithis or was HIV positive in the last 12 months?: {{ selectedForm.sexWithHIVOrHepatitisLast12Months }}</h6>
-        <h6>Did you have sexual contact with a partner that uses intravenous drugs in the last 12 months?: {{ selectedForm.sexWithPersonWhoInjectsDrugsLast12Months }}</h6>
-        <h6>Did you have sexual contact with a partner that was payed for the act in the last 12 months?: {{ selectedForm.sexWithProstituteLast12Months }}</h6>
-        <h6>Did you have sexual contact with a multiple partners in the last 12 months?: {{ selectedForm.sexWithMultiplePartnersLast12Months }}</h6>
-        <h6>Have you ever used injectable drugs?: {{ selectedForm.injectedDrugs }}</h6>
-        <h6>Have you ever accepted drugs or money in exchange for sexual intercourse?: {{ selectedForm.acceptedMoneyOrDrugsForSex }}</h6>
-        <h6>Have you changed your partner in the last 6 months?: {{ selectedForm.changedSexPartnerLast6Months }}</h6>
-        <h6>Number of parteners in the last 6 months?: {{ selectedForm.numberOfPartnersLast6Months }}</h6>
-        <h6>Since your last donation or in the last 12 months, did you undergo surgery or medical investigations?: {{ selectedForm.surgeryOrInvestigationsLast12Months }}</h6>
-        <h6>Since your last donation or in the last 12 months, did you get a tatoo, piercing or any form of acupuncture?: {{ selectedForm.tattoosOrPiercingsLast12Months }}</h6>
-        <h6>Since your last donation or in the last 12 months, did you undergo a transfusion?: {{ selectedForm.transfusionLast12Months }}</h6>
-        <h6>Have you been pregnant?: {{ selectedForm.beenPregnant }}</h6>
-        <h6>Child birth date?: {{ selectedForm.birthDate }}</h6>
-        <h6>Last menstruation date?: {{ selectedForm.lastMenstruation }}</h6>
-        <h6>Where you born or have you lived or traveled abroad?: {{ selectedForm.bornLivedTraveledAbroad }}</h6>
-        <h6>Where?: {{ selectedForm.travelWhere }}</h6>
-        <h6>When?: {{ selectedForm.travelWhen }}</h6>
-        <h6>Were you in detention last year?: {{ selectedForm.prisonLastYear }}</h6>
-        <h6>Were you exposed to hepatithis? (Sick family members or professional risk): {{ selectedForm.exposedHepatitis }}</h6>
-        <h6>Have you ever suffered from icter, tuberculosis, malaria, reumatic fever?: {{ selectedForm.sufferFromSet1 }}</h6>
-        <h6>Have you ever suffered from heart diseases, abnormal arterial pressure?: {{ selectedForm.sufferFromSet2 }}</h6>
-        <h6>Have you ever suffered from cardiac or cerebral accidents?: {{ selectedForm.sufferFromSet3 }}</h6>
-        <h6>Have you ever suffered from asthma?: {{ selectedForm.sufferFromSet4 }}</h6>
-        <h6>Have you ever suffered from convulsions or neurological diseases?: {{ selectedForm.sufferFromSet5 }}</h6>
-        <h6>Have you ever suffered from chronic diseases (diabetes, ulcer, cancer)?: {{ selectedForm.sufferFromSet6 }}</h6>
-        <h6>Have you ever suffered from sexually transmitted diseases?: {{ selectedForm.sufferFromSet7 }}</h6>
-        <h6>Are you a smoker?: {{ selectedForm.smoker }}</h6>
-
-        <h6>When did you last consume alcohol?: {{ selectedForm.lastAlcoholUse }}</h6>
-
-        <h6>What alcohol did you consume?: {{ selectedForm.alcoholDrank }}</h6>
-        <h6>In what quantity?: {{ selectedForm.alcoholQuantity }}</h6>
-
-        <h6>Were you previously refused or postponed at a donation?: {{ selectedForm.beenRefused }}</h6>
-        <h6>Does your job require special attention 24 hours after the donation? (ex. driver, alpinist, diver): {{ selectedForm.requireAttentionPostDonation }}</h6>
+        <h5>Do you consider yourself to be healthy?</h5>
+        <p>{{ (selectedForm.generalGoodHealth === null || selectedForm.generalGoodHealth === undefined) ? "Error fetching answer" : (selectedForm.generalGoodHealth ? "Yes" : "No")  }}</p>
+        <h5>Have you recently had an unexpected weight loss?</h5>
+        <p>{{ (selectedForm.recentLossOfWeight === null || selectedForm.recentLossOfWeight === undefined) ? "Error fetching answer" : (selectedForm.recentLossOfWeight ? "Yes" : "No")  }}</p>
+        <h5>Have you recently had an unexplainable fever?</h5>
+        <p>{{ (selectedForm.recentInexplicableFever === null || selectedForm.recentInexplicableFever === undefined) ? "Error fetching answer" : (selectedForm.recentInexplicableFever ? "Yes" : "No")  }}</p>
+        <h5>Have you recently had any stomatological treatment or any vaccinations?</h5>
+        <p>{{ (selectedForm.recentStomatoTreatmentOrVaccine === null || selectedForm.recentStomatoTreatmentOrVaccine === undefined) ? "Error fetching answer" : (selectedForm.recentStomatoTreatmentOrVaccine ? "Yes" : "No")  }}</p>
+        <h5>Are you following any medical treatment?</h5>
+        <p>{{ (selectedForm.currentDrugTreatment === null || selectedForm.currentDrugTreatment === undefined) ? "Error fetching answer" : (selectedForm.currentDrugTreatment ? "Yes" : "No")  }}</p>
+        <h5>Did you have sexual contact with a partner that had hepatithis or was HIV positive in the last 12 months?</h5>
+        <p>{{ (selectedForm.sexWithHIVOrHepatitisLast12Months === null || selectedForm.sexWithHIVOrHepatitisLast12Months === undefined) ? "Error fetching answer" : (selectedForm.sexWithHIVOrHepatitisLast12Months ? "Yes" : "No")  }}</p>
+        <h5>Did you have sexual contact with a partner that uses intravenous drugs in the last 12 months?</h5>
+        <p>{{ (selectedForm.sexWithPersonWhoInjectsDrugsLast12Months === null || selectedForm.sexWithPersonWhoInjectsDrugsLast12Months === undefined) ? "Error fetching answer" : (selectedForm.sexWithPersonWhoInjectsDrugsLast12Months ? "Yes" : "No")  }}</p>
+        <h5>Did you have sexual contact with a partner that was payed for the act in the last 12 months?</h5>
+        <p>{{ (selectedForm.sexWithProstituteLast12Months === null || selectedForm.sexWithProstituteLast12Months === undefined) ? "Error fetching answer" : (selectedForm.sexWithProstituteLast12Months ? "Yes" : "No")  }}</p>
+        <h5>Did you have sexual contact with a multiple partners in the last 12 months?</h5>
+        <p>{{ (selectedForm.sexWithMultiplePartnersLast12Months === null || selectedForm.sexWithMultiplePartnersLast12Months === undefined) ? "Error fetching answer" : (selectedForm.sexWithMultiplePartnersLast12Months ? "Yes" : "No")  }}</p>
+        <h5>Have you ever used injectable drugs?</h5>
+        <p>{{ (selectedForm.injectedDrugs === null || selectedForm.injectedDrugs === undefined) ? "Error fetching answer" : (selectedForm.injectedDrugs ? "Yes" : "No")  }}</p>
+        <h5>Have you ever accepted drugs or money in exchange for sexual intercourse?</h5>
+        <p>{{ (selectedForm.acceptedMoneyOrDrugsForSex === null || selectedForm.acceptedMoneyOrDrugsForSex === undefined) ? "Error fetching answer" : (selectedForm.acceptedMoneyOrDrugsForSex ? "Yes" : "No")  }}</p>
+        <h5>Have you changed your partner in the last 6 months?</h5>
+        <p>{{ (selectedForm.changedSexPartnerLast6Months === null || selectedForm.changedSexPartnerLast6Months === undefined) ? "Error fetching answer" : (selectedForm.changedSexPartnerLast6Months ? "Yes" : "No")  }}</p>
+        <h5>Number of parteners in the last 6 months?: {{ selectedForm.numberOfPartnersLast6Months }}</h5>
+        <p>{{ (selectedForm.numberOfPartnersLast6Months === null || selectedForm.numberOfPartnersLast6Months === undefined) ? "Error fetching answer" : (selectedForm.numberOfPartnersLast6Months)  }}</p>
+        <h5>Since your last donation or in the last 12 months, did you undergo surgery or medical investigations?</h5>
+        <p>{{ (selectedForm.surgeryOrInvestigationsLast12Months === null || selectedForm.surgeryOrInvestigationsLast12Months === undefined) ? "Error fetching answer" : (selectedForm.surgeryOrInvestigationsLast12Months ? "Yes" : "No")  }}</p>
+        <h5>Since your last donation or in the last 12 months, did you get a tatoo, piercing or any form of acupuncture?</h5>
+        <p>{{ (selectedForm.tattoosOrPiercingsLast12Months === null || selectedForm.tattoosOrPiercingsLast12Months === undefined) ? "Error fetching answer" : (selectedForm.tattoosOrPiercingsLast12Months ? "Yes" : "No")  }}</p>
+        <h5>Since your last donation or in the last 12 months, did you undergo a transfusion?</h5>
+        <p>{{ (selectedForm.transfusionLast12Months === null || selectedForm.transfusionLast12Months === undefined) ? "Error fetching answer" : (selectedForm.transfusionLast12Months ? "Yes" : "No")  }}</p>
+        <h5>Have you been pregnant?</h5>
+        <p>{{ (selectedForm.beenPregnant === null || selectedForm.beenPregnant === undefined) ? "Not Answered" : (selectedForm.beenPregnant ? "Yes" : "No")  }}</p>
+        <h5>Child birth date?</h5>
+        <p>{{ (selectedForm.birthDate === null || selectedForm.birthDate === undefined) ? "Not Answered" : (selectedForm.birthDate)  }}</p>
+        <h5>Last menstruation date?</h5>
+        <p>{{ (selectedForm.lastMenstruation === null || selectedForm.lastMenstruation === undefined) ? "Not Answered" : (selectedForm.lastMenstruation)  }}</p>
+        <h5>Where you born or have you lived or traveled abroad?</h5>
+        <p>{{ (selectedForm.bornLivedTraveledAbroad === null || selectedForm.bornLivedTraveledAbroad === undefined) ? "Error fetching answer" : (selectedForm.bornLivedTraveledAbroad ? "Yes" : "No")  }}</p>
+        <h5>Where?</h5>
+        <p>{{ (selectedForm.travelWhere === null || selectedForm.travelWhere === undefined) ? "Error fetching answer" : (selectedForm.travelWhere)  }}</p>
+        <h5>When?</h5>
+        <p>{{ (selectedForm.travelWhen === null || selectedForm.travelWhen === undefined) ? "Error fetching answer" : (selectedForm.travelWhen)  }}</p>
+        <h5>Were you in detention last year?</h5>
+        <p>{{ (selectedForm.prisonLastYear === null || selectedForm.prisonLastYear === undefined) ? "Error fetching answer" : (selectedForm.prisonLastYear ? "Yes" : "No")  }}</p>
+        <h5>Were you exposed to hepatithis? (Sick family members or professional risk)</h5>
+        <p>{{ (selectedForm.exposedHepatitis === null || selectedForm.exposedHepatitis === undefined) ? "Error fetching answer" : (selectedForm.exposedHepatitis ? "Yes" : "No")  }}</p>
+        <h5>Have you ever suffered from icter, tuberculosis, malaria, reumatic fever?</h5>
+        <p>{{ (selectedForm.sufferFromSet1 === null || selectedForm.sufferFromSet1 === undefined) ? "Error fetching answer" : (selectedForm.sufferFromSet1 ? "Yes" : "No")  }}</p>
+        <h5>Have you ever suffered from heart diseases, abnormal arterial pressure?</h5>
+        <p>{{ (selectedForm.sufferFromSet2 === null || selectedForm.sufferFromSet2 === undefined) ? "Error fetching answer" : (selectedForm.sufferFromSet2 ? "Yes" : "No")  }}</p>
+        <h5>Have you ever suffered from cardiac or cerebral accidents?</h5>
+        <p>{{ (selectedForm.sufferFromSet3 === null || selectedForm.sufferFromSet3 === undefined) ? "Error fetching answer" : (selectedForm.sufferFromSet3 ? "Yes" : "No")  }}</p>
+        <h5>Have you ever suffered from asthma?</h5>
+        <p>{{ (selectedForm.sufferFromSet4 === null || selectedForm.sufferFromSet4 === undefined) ? "Error fetching answer" : (selectedForm.sufferFromSet4 ? "Yes" : "No")  }}</p>
+        <h5>Have you ever suffered from convulsions or neurological diseases?</h5>
+        <p>{{ (selectedForm.sufferFromSet5 === null || selectedForm.sufferFromSet5 === undefined) ? "Error fetching answer" : (selectedForm.sufferFromSet5 ? "Yes" : "No")  }}</p>
+        <h5>Have you ever suffered from chronic diseases (diabetes, ulcer, cancer)?</h5>
+        <p>{{ (selectedForm.sufferFromSet6 === null || selectedForm.sufferFromSet6 === undefined) ? "Error fetching answer" : (selectedForm.sufferFromSet6 ? "Yes" : "No")  }}</p>
+        <h5>Have you ever suffered from sexually transmitted diseases?</h5>
+        <p>{{ (selectedForm.sufferFromSet7 === null || selectedForm.sufferFromSet7 === undefined) ? "Error fetching answer" : (selectedForm.sufferFromSet7 ? "Yes" : "No")  }}</p>
+        <h5>Are you a smoker?</h5>
+        <p>{{ (selectedForm.smoker === null || selectedForm.smoker === undefined) ? "Error fetching answer" : (selectedForm.smoker ? "Yes" : "No")  }}</p>
+        <h5>When did you last consume alcohol?</h5>
+        <p>{{ (selectedForm.lastAlcoholUse === null || selectedForm.lastAlcoholUse === undefined) ? "Error fetching answer" : (selectedForm.lastAlcoholUse)  }}</p>
+        <h5>What alcohol did you consume?</h5>
+        <p>{{ (selectedForm.alcoholDrank === null || selectedForm.alcoholDrank === undefined) ? "Error fetching answer" : (selectedForm.alcoholDrank)  }}</p>
+        <h5>In what quantity?</h5>
+        <p>{{ (selectedForm.alcoholQuantity === null || selectedForm.alcoholQuantity === undefined) ? "Error fetching answer" : (selectedForm.alcoholQuantity)  }}</p>
+        <h5>Were you previously refused or postponed at a donation?</h5>
+        <p>{{ (selectedForm.beenRefused === null || selectedForm.beenRefused === undefined) ? "Error fetching answer" : (selectedForm.beenRefused ? "Yes" : "No")  }}</p>
+        <h5>Does your job require special attention 24 hours after the donation? (ex. driver, alpinist, diver)</h5>
+        <p>{{ (selectedForm.requireAttentionPostDonation === null || selectedForm.requireAttentionPostDonation === undefined) ? "Error fetching answer" : (selectedForm.requireAttentionPostDonation ? "Yes" : "No")  }}</p>
 
  
 

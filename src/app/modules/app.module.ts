@@ -1,4 +1,3 @@
-import { DonationBooking } from 'src/shared/models/donation/booking/donation-booking';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AlertModule } from 'ngx-bootstrap';
@@ -85,6 +84,8 @@ import { AllRequestsComponent } from './components/dcp/all-requests/all-requests
 import { MyCommitmentsComponent } from './components/dcp/my-commitments/my-commitments.component';
 import { MyRequestsComponent } from './components/doctor/my-requests/my-requests.component';
 import { CreateMockComponent } from './components/admin/create-mock/create-mock.component';
+import { BloodStocksComponent } from './components/dcp/blood-stocks/blood-stocks.component';
+import { RegisterSuccessComponent } from './components/register-success/register-success.component';
 
 @NgModule({
   declarations: [
@@ -113,7 +114,9 @@ import { CreateMockComponent } from './components/admin/create-mock/create-mock.
     AllRequestsComponent,
     MyCommitmentsComponent,
     MyRequestsComponent,
-    CreateMockComponent
+    CreateMockComponent,
+    BloodStocksComponent,
+    RegisterSuccessComponent
   ],
   imports: [
     BrowserModule,

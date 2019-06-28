@@ -1,0 +1,73 @@
+<h2>Expired blood in your Donation Center</h2>
+
+<table class="table table-hover" *ngIf="expiredBlood && expiredBlood.length > 0; else no_blood">
+        <thead>
+            <tr>
+                <th scope="col" class="th-id">Group</th>
+                <th scope="col" class="th-name">RH</th>
+                <th scope="col" class="th-name">Component</th>
+                <th scope="col" class="th-name">Quantity</th>
+                <th scope="col" class="th-name">Bag ID</th>
+                <th scope="col" class="th-name">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let blood of expiredBlood ; let i = index" data-="blood.id">
+                <td class="td-name">{{ blood.separatedBloodType.bloodType.groupLetter }}</td>
+                <td class="td-name">{{ blood.separatedBloodType.bloodType.rh }}</td>
+                <td class="td-name">{{ blood.separatedBloodType.component }}</td>
+                <td class="td-name">{{ blood.amount }}</td>
+                <td class="td-name">{{ blood.bagIdentifier }}</td>
+                <td>
+                    <span class="btn btn-danger remove-button" (click)="discardBlood(blood)">Mark as Discarded</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+<h2> Blood Stocks in your Donation Center </h2>
+
+<table class="table table-hover" *ngIf="dcStocks && dcStocks.length > 0; else no_blood_dc">
+    <thead>
+        <tr>
+            <th scope="col" class="th-id">Component</th>
+            <th scope="col" class="th-name">Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let blood of dcStocks ; let i = index" data-="blood.id">
+            <td class="td-name">{{ blood.component }}</td>
+            <td class="td-name">{{ blood.amount }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2> Blood Stocks in Romania </h2>
+
+<table class="table table-hover" *ngIf="countryStocks && countryStocks.length > 0; else no_blood_country">
+    <thead>
+        <tr>
+            <th scope="col" class="th-id">Component</th>
+            <th scope="col" class="th-name">Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let blood of countryStocks ; let i = index" data-="blood.id">
+            <td class="td-name">{{ blood.component }}</td>
+            <td class="td-name">{{ blood.amount }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ng-template #no_blood>
+    <h5>You have no blood in stock that is expired.</h5>
+</ng-template>
+
+<ng-template #no_blood_dc>
+    <h5>You have no blood in your donation center.</h5>
+</ng-template>
+
+<ng-template #no_blood_country>
+    <h5>There is no blood in the whole country. You can panic now.</h5>
+</ng-template>
+

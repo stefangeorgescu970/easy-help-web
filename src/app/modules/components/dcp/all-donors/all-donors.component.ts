@@ -1,11 +1,10 @@
+import { DcpDonorAccount } from './../../../../../shared/models/dcp/incoming/dcp-donor-account';
+import { DonationCenterPersonnelService } from './../../../../../core/donation-center-personnel.service';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';
-import { AuthService } from './../../../../../core/auth-service/auth.service';
-import { BaseAccount } from './../../../../../shared/models/accounts/base-account';
+import { AuthService } from '../../../../../core/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { DonorService } from 'src/core/donor-service/donor-service';
-import { EnumsService } from 'src/core/enums-service/enums-service';
+import { EnumsService } from 'src/core/enums-service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DonorAccount } from 'src/shared/models/accounts/donor-account/donor-account';
 
 @Component({
   selector: 'app-all-donors',
@@ -14,10 +13,10 @@ import { DonorAccount } from 'src/shared/models/accounts/donor-account/donor-acc
 })
 export class AllDonorsComponent implements OnInit {
 
-  constructor(private donorService: DonorService , private enumService: EnumsService,
+  constructor(private dcpService: DonationCenterPersonnelService , private enumService: EnumsService,
               private authService: AuthService) { }
 
-  donors: BaseAccount[];
+  donors: DcpDonorAccount[];
   canDonateOptions = [true, false];
   bloodGroups = ['0', 'A', 'B', 'AB'];
   currentDCP: ProfileData;
@@ -45,16 +44,16 @@ export class AllDonorsComponent implements OnInit {
     if (group === '') {
       group = null;
     }
-    this.donorService.filterDonors(this.currentDCP.county, canDonate, group).subscribe(
-      (res: DonorAccount[]) => {
+    this.dcpService.filterDonors(this.currentDCP.county, canDonate, group).subscribe(
+      (res: DcpDonorAccount[]) => {
       this.donors = res;
     });
 
   }
 
   getAllDonors(clearForm: boolean) {
-      this.donorService.getDonorsByCounty(this.currentDCP.county).subscribe(
-          (res: DonorAccount[]) => {
+      this.dcpService.getDonorsByCounty(this.currentDCP.county).subscribe(
+          (res: DcpDonorAccount[]) => {
            this.donors = res;
           });
       if (clearForm === true) {

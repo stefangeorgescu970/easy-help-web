@@ -3,14 +3,23 @@
 <table class="table table-hover" *ngIf="doctorAccounts && doctorAccounts.length > 0; else no_account_requests">
         <thead>
           <tr>
-            <th scope="col" class="th-id">Id</th>
+            <th scope="col" class="th-email">Name</th>
             <th scope="col" class="th-email">Email</th>
+            <th scope="col" class="th-email">County</th>
+            <th scope="col" class="th-email">Date of Birth</th>
+            <th scope="col" class="th-email">Hospital</th>
+            <th scope="col" class="th-email">Hospital Contact</th>
+            <th scope="col" class="th-email">Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let accountReq of doctorAccounts ; let i = index" data-="accountReq.id">
-            <td class="td-id">{{ accountReq.id }}</td>
+            <td class="td-email">{{ accountReq.firstName }} {{ accountReq.lastName }}</td>
             <td class="td-email">{{ accountReq.email }}</td>
+            <td class="td-email">{{ accountReq.county }}</td>
+            <td class="td-email">{{ accountReq.dateOfBirth }}</td>
+            <td class="td-email">{{ accountReq.locationName }}</td>
+            <td class="td-email">{{ accountReq.locationPhone }}</td>
             <td>
               <span class="btn btn-success add-button" (click)="approveDoctorRequest(accountReq.id, i)" >Approve</span>
               <span class="btn btn-danger remove-button" (click)="declineDoctorRequest(accountReq.id, i)">Decline</span>

@@ -1,4 +1,4 @@
-import { AdminService } from './../../../../../core/admin-service/admin-service.service';
+import { AdminService } from './../../../../../core/admin.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -15,6 +15,14 @@ export class CreateMockComponent implements OnInit {
 
   createMock() {
     this.adminService.populateTables();
+  }
+
+  createMockAdi() {
+    this.adminService.createMockAdi();
+  }
+
+  createMockStefan() {
+    this.adminService.createMockStefan();
   }
 
 }

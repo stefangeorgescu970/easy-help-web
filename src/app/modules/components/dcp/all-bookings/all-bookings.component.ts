@@ -1,13 +1,13 @@
-import { DonationForm } from './../../../../../shared/models/donation/donation-form/donation-form';
+import { DonationCenterPersonnelService } from './../../../../../core/donation-center-personnel.service';
+import { DonationForm } from '../../../../../shared/models/shared/donation-form';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { BooleanServerResponse } from './../../../../../shared/models/boolean-server-response/boolean-server-response';
-import { AuthService } from './../../../../../core/auth-service/auth.service';
+import { BooleanServerResponse } from '../../../../../shared/models/shared/boolean-server-response';
+import { AuthService } from '../../../../../core/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { DonationCenterService } from 'src/core/donation-center-service/donation-center.service';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';
-import { DonationBooking } from 'src/shared/models/donation/booking/donation-booking';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import { DonorAccount } from 'src/shared/models/accounts/donor-account/donor-account';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DcpDonationBooking } from 'src/shared/models/dcp/incoming/dcp-donation-booking';
+import { DcpDonorAccount } from 'src/shared/models/dcp/incoming/dcp-donor-account';
 
 @Component({
   selector: 'app-all-bookings',
@@ -16,15 +16,15 @@ import { DonorAccount } from 'src/shared/models/accounts/donor-account/donor-acc
 })
 export class AllBookingsComponent implements OnInit {
 
-    constructor(private authService: AuthService, private dcService: DonationCenterService,
+    constructor(private authService: AuthService, private dcService: DonationCenterPersonnelService,
                 private modalService: NgbModal, private formBuilder: FormBuilder) { }
 
     currentDCP: ProfileData;
-    bookings: DonationBooking[];
+    bookings: DcpDonationBooking[];
 
-    selectedDonor: DonorAccount;
+    selectedDonor: DcpDonorAccount;
     bloodDetailsForm: FormGroup;
-    selectedBooking: DonationBooking;
+    selectedBooking: DcpDonationBooking;
     selectedForm: DonationForm;
     submitted = false;
 
@@ -37,7 +37,7 @@ export class AllBookingsComponent implements OnInit {
         });
 
         this.dcService.getBookingsAtDonationCenter(this.currentDCP.locationId).subscribe(
-            (res: DonationBooking[]) => {
+            (res: DcpDonationBooking[]) => {
                 this.bookings = res;
         });
     }
@@ -47,9 +47,9 @@ export class AllBookingsComponent implements OnInit {
     open(content, booking) {
         this.selectedDonor = booking.donor;
         this.selectedBooking = booking;
-        if (booking.donor.group != null){
-            this.bloodDetailsForm.controls['group'].setValue(booking.donor.group);
-            this.bloodDetailsForm.controls['rh'].setValue(booking.donor.rh);
+        if (booking.donor.bloodType != null){
+            this.bloodDetailsForm.controls['group'].setValue(booking.donor.bloodType.groupLetter);
+            this.bloodDetailsForm.controls['rh'].setValue(booking.donor.bloodType.rh);
         } else {
             this.bloodDetailsForm.reset();
         }
@@ -69,7 +69,7 @@ export class AllBookingsComponent implements OnInit {
         });
     }
 
-    cancelBooking(booking: DonationBooking) {
+    cancelBooking(booking: DcpDonationBooking) {
         this.dcService.cancelBooking(booking).subscribe(
             (res: BooleanServerResponse) => {
                 if (res.success === true) {
@@ -78,7 +78,7 @@ export class AllBookingsComponent implements OnInit {
         });
     }
 
-    markBookingAsDonated(booking: DonationBooking) {
+    markBookingAsDonated(booking: DcpDonationBooking) {
         this.submitted = true;
         if (this.bloodDetailsForm.invalid) {
             return;

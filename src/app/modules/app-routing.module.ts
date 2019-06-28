@@ -1,3 +1,4 @@
+import { BloodStocksComponent } from './components/dcp/blood-stocks/blood-stocks.component';
 import { MyRequestsComponent } from './components/doctor/my-requests/my-requests.component';
 import { MyCommitmentsComponent } from './components/dcp/my-commitments/my-commitments.component';
 import { AllRequestsComponent } from './components/dcp/all-requests/all-requests.component';
@@ -13,7 +14,7 @@ import { LoginComponent } from './components/login/login.component';
 import { DoctorAccountRequestsComponent } from './components/admin/doctor-account-requests/doctor-account-requests.component';
 import { DoctorAccountsComponent } from './components/admin/doctor-accounts/doctor-accounts.component';
 import { AuthGuard } from '../guards/auth.guard';
-import { UserRole } from 'src/shared/enums/user-role/user-role.enum';
+import { UserRole } from 'src/shared/enums/user-role.enum';
 import { IntroComponent } from './components/intro/intro.component';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
@@ -27,6 +28,7 @@ import { PatientsComponent } from './components/doctor/patients/patients.compone
 import { TestPushComponent } from './components/admin/test-push/test-push.component';
 import { TestResultsComponent } from './components/dcp/test-results/test-results.component';
 import { CreateMockComponent } from './components/admin/create-mock/create-mock.component';
+import { RegisterSuccessComponent } from './components/register-success/register-success.component';
 
 const routes: Routes = [
     { path: '', component: HomeLayoutComponent, children: [
@@ -34,10 +36,11 @@ const routes: Routes = [
     ] },
     { path: 'login', component: LoginLayoutComponent, children: [
         { path: '', component: LoginComponent },
-        { path: 'register', component: RegisterComponent}
+        { path: 'register', component: RegisterComponent},
+        { path: 'success', component: RegisterSuccessComponent }
     ] },
     { path: 'admin', component: AdminLayoutComponent, canActivate: [AuthGuard], data: {roles: [UserRole.Admin]}, children: [
-        { path: '', component: DoctorAccountRequestsComponent },
+        { path: '', redirectTo: 'doctor-reqs', pathMatch: 'full' },
         { path: 'doctor-reqs', component: DoctorAccountRequestsComponent },
         { path: 'dcp-reqs', component: DcpAccountRequestsComponent },
         { path: 'doctors', component: DoctorAccountsComponent },
@@ -49,17 +52,21 @@ const routes: Routes = [
     ] },
 
     { path: 'dcp', component: DcpLayoutComponent, canActivate: [AuthGuard], data: {roles: [UserRole.Dcp]}, children: [
-        { path: '', component: AllDonorsComponent },
+        { path: '', redirectTo: 'all-donors', pathMatch: 'full' },
         { path: 'all-donors', component: AllDonorsComponent },
         { path: 'bookings', component: AllBookingsComponent },
         { path: 'test-results', component: TestResultsComponent },
         { path: 'split-results', component: SplitResultsComponent },
         { path: 'all-requests', component: AllRequestsComponent },
-        { path: 'my-commitments', component: MyCommitmentsComponent }
+        { path: 'my-commitments', component: MyCommitmentsComponent },
+        { path: 'blood-stocks', component: BloodStocksComponent }
     ] },
 
-    { path: 'doctor', component: DoctorLayoutComponent, canActivate: [AuthGuard], data: {roles: [UserRole.Doctor]}, children: [
-        { path: '', component: RequestBloodComponent },
+    { path: 'doctor', component: DoctorLayoutComponent,
+                canActivate: [AuthGuard],
+                data: {roles: [UserRole.Doctor]},
+                children: [
+        { path: '', redirectTo: 'request', pathMatch: 'full' },
         { path: 'request', component: RequestBloodComponent },
         { path: 'patients', component: PatientsComponent },
         { path: 'my-requests', component: MyRequestsComponent }

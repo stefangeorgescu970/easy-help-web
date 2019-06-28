@@ -5,30 +5,39 @@
             <tr>
                 <th scope="col" class="th-id">Urgency</th>
                 <th scope="col" class="th-name">Stored Blood Identifier</th>          
+                <th scope="col" class="th-id">Hospital</th>
+                <th scope="col" class="th-name">Hospital Phone</th>        
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let commitment of proposedDonationCommitments ; let i = index" data-="blood.id">
                 <td class="td-name">{{ commitment.urgency }}</td>
-                <td class="td-name">{{ commitment.storedBloodIdentifier }}</td>
+                <td class="td-name">{{ commitment.storedBlood.bagIdentifier }}</td>
+                <td class="td-name">{{ commitment.destinationHospital.name }}</td>
+                <td class="td-name">{{ commitment.destinationHospital.phone }}</td>
             </tr>
         </tbody>
     </table>
 
     <h5>Commitments waiting to be sent</h5>
 
-    <table class="table table-hover" *ngIf="waitingSendDonationCommitments && waitingSendDonationCommitments.length > 0; else no_proposedcommitments">
+        <table class="table table-hover" 
+        *ngIf="waitingSendDonationCommitments && waitingSendDonationCommitments.length > 0; else no_proposedcommitments">
             <thead>
                 <tr>
                     <th scope="col" class="th-id">Urgency</th>
                     <th scope="col" class="th-name">Stored Blood Identifier</th>   
+                    <th scope="col" class="th-id">Hospital</th>
+                    <th scope="col" class="th-name">Hospital Phone</th>     
                     <th scope="col" class="th-name">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let commitment of waitingSendDonationCommitments ; let i = index" data-="blood.id">
                     <td class="td-name">{{ commitment.urgency }}</td>
-                    <td class="td-name">{{ commitment.storedBloodIdentifier }}</td>
+                    <td class="td-name">{{ commitment.storedBlood.bagIdentifier }}</td>
+                    <td class="td-name">{{ commitment.destinationHospital.name }}</td>
+                    <td class="td-name">{{ commitment.destinationHospital.phone }}</td>
                     <td>
                         <span class="btn btn-success add-button" (click)="markCommitmentAsDeparted(commitment)">Mark as Shipped</span>
                     </td>
@@ -39,7 +48,7 @@
 
         <ng-template #no_proposedcommitments>
             <h6>You have not forwarded any commitments</h6>
-          </ng-template>
+        </ng-template>
     
           <ng-template #no_waitingsenddcommitments>
             <h6>There are no commitments waiting to be sent from your donation center.</h6>

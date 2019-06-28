@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { HospitalService } from 'src/core/hospital-service/hospital.service';
-import { RealLocation } from 'src/shared/models/locations/real-location';
-import { EnumsService } from 'src/core/enums-service/enums-service';
+import { IdResponse } from './../../../../../shared/models/shared/id-response';
+import { ExtendedLocation } from 'src/shared/models/shared/extended-location';
+import { AdminService } from '../../../../../core/admin.service';
+import { Component, OnInit } from '@angular/core';;
+import { EnumsService } from 'src/core/enums-service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
-import { LocationResponse } from 'src/shared/models/locations/location-response';
+import { BooleanServerResponse } from 'src/shared/models/shared/boolean-server-response';
 
 
 @Component({
@@ -14,17 +14,17 @@ import { LocationResponse } from 'src/shared/models/locations/location-response'
 })
 export class HospitalsComponent implements OnInit {
 
-    constructor(private hospitalService: HospitalService, private enumService: EnumsService) { }
+    constructor(private adminService: AdminService, private enumService: EnumsService) { }
 
     hospitalForm: FormGroup;
     counties: string[];
-    hospitals: RealLocation[];
+    hospitals: ExtendedLocation[];
 
     ngOnInit() {
         const formBuilder = new FormBuilder();
 
-        this.hospitalService.getHospitals().subscribe(
-            (res: RealLocation[]) => {
+        this.adminService.getHospitals().subscribe(
+            (res: ExtendedLocation[]) => {
               this.hospitals = res;
             }
         );
@@ -38,7 +38,8 @@ export class HospitalsComponent implements OnInit {
           address: ['', Validators.required],
           latitude: ['', Validators.required],
           longitude: ['', Validators.required],
-          county: ['', Validators.required]
+          county: ['', Validators.required],
+          phone: ['', Validators.required]
         });
     }
 
@@ -50,18 +51,26 @@ export class HospitalsComponent implements OnInit {
 
     addHospital() {
       const hospital = this.hospitalForm.value;
-      this.hospitalService.addHospital(hospital).subscribe(
-        (res: LocationResponse) => {
-          if(res.success){
-            this.hospitals.push(res.model);
-          }else{
-            alert(res.exception)
-          } 
+      this.adminService.addHospital(hospital).subscribe(
+        (res: IdResponse) => {
+            if (res.success) {
+                 const newHospital = new ExtendedLocation();
+                 newHospital.id = res.newId;
+                 newHospital.address = hospital.address;
+                 newHospital.county = hospital.county;
+                 newHospital.latitude = hospital.latitude;
+                 newHospital.longitude = hospital.longitude;
+                 newHospital.name = hospital.name;
+                 newHospital.phone = hospital.phone;
+                 this.hospitals.push(newHospital);
+            } else {
+              alert(res.exception);
+            }
         } );
       }
 
       removeHospital(hospitalId: number, index : number) {
-        this.hospitalService.removeHospital(hospitalId)
+        this.adminService.removeHospital(hospitalId)
           .subscribe((res: BooleanServerResponse) => {
             if (res.success === true){
               this.hospitals.splice(index, 1);

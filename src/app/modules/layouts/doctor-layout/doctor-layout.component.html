@@ -1,19 +1,19 @@
-<div class="row nav-bar">
-    <mat-toolbar color="primary">
-                <span>
-                    <img class="faculty-logo" src="../../../assets/images/bloodDrop.jpg">
-                    <span class="example-spacer"></span>
-                    Doctor
-                </span> 
-                <span class="example-spacer"></span>
-                <a routerLink="request" class="error-message" mat-button>Request Blood</a> 
-                <a routerLink="patients" class="error-message" mat-button>My Patients</a> 
-                <a routerLink="my-requests" class="error-message" mat-button>My Requests</a> 
-                <span class="example-fill-remaining-space"></span>
-                <a class="error-message" mat-button (click)="logout()">Logout</a> 
-    </mat-toolbar>
-</div>  
-        
+<nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" style="background-color: #C21E24;">
+    <div class="container">
+        <a class="navbar-brand" style="color: white;">Doctor App</a>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" routerLink="request" routerLinkActive="routerLinkActive">Request Blood</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="patients" routerLinkActive="routerLinkActive">My Patients</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="my-requests" routerLinkActive="routerLinkActive">My Requests</a></li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" (click)="logout()">Logout</a> 
+            </li>
+          </ul>
+    </div>
+</nav>
+
         <div class="content">
             <div class="card col-lg-10 mx-auto mt-3 p-5">
                 <router-outlet></router-outlet>

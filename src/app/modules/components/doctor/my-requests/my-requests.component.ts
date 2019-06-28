@@ -1,12 +1,12 @@
-import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
-import { DonationRequestDetails } from './../../../../../shared/models/donation/request-details/donation-request-details';
-import { DoctorService } from './../../../../../core/doctor-service/doctor.service';
-import { AuthService } from './../../../../../core/auth-service/auth.service';
+import { DoctorDonationRequestDetails } from './../../../../../shared/models/doctor/incoming/doctor-donation-request-details';
+import { BooleanServerResponse } from 'src/shared/models/shared/boolean-server-response';
+import { DoctorService } from '../../../../../core/doctor.service';
+import { AuthService } from '../../../../../core/auth.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';
-import { DonationCommitment } from 'src/shared/models/donation/donation-commitment/donation-commitment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DoctorDonationCommitment } from 'src/shared/models/doctor/incoming/doctor-donation-commitment';
 
 @Component({
   selector: 'app-my-requests',
@@ -15,15 +15,15 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class MyRequestsComponent implements OnInit {
     
-    recentRequests: Array<DonationRequestDetails> = [];
-    partiallyCommittedRequests: Array<DonationRequestDetails> = [];
-    fullyCommittedRequests: Array<DonationRequestDetails> = [];
+    recentRequests: Array<DoctorDonationRequestDetails> = [];
+    partiallyCommittedRequests: Array<DoctorDonationRequestDetails> = [];
+    fullyCommittedRequests: Array<DoctorDonationRequestDetails> = [];
 
-    proposedDonationCommitments: Array<DonationCommitment> = [];
-    waitingSendDonationCommitments: Array<DonationCommitment> = [];
-    sentDonationCommitments: Array<DonationCommitment> = [];
+    proposedDonationCommitments: Array<DoctorDonationCommitment> = [];
+    waitingSendDonationCommitments: Array<DoctorDonationCommitment> = [];
+    sentDonationCommitments: Array<DoctorDonationCommitment> = [];
 
-    selectedRequest: DonationRequestDetails;
+    selectedRequest: DoctorDonationRequestDetails;
 
     currentDoctor: ProfileData;
 
@@ -37,7 +37,10 @@ export class MyRequestsComponent implements OnInit {
     }
 
     loadRequests() {
-        this.doctorService.getBloodRequests(this.currentDoctor.id).subscribe((res: DonationRequestDetails[]) => {
+        this.recentRequests = [];
+        this.partiallyCommittedRequests = [];
+        this.fullyCommittedRequests = [];
+        this.doctorService.getBloodRequests(this.currentDoctor.id).subscribe((res: DoctorDonationRequestDetails[]) => {
             res.forEach(element => {
                 switch (element.status) {
                     case 'PROCESSING':
@@ -57,7 +60,7 @@ export class MyRequestsComponent implements OnInit {
         });
     }
 
-    cancelRequest(request: DonationRequestDetails) {
+    cancelRequest(request: DoctorDonationRequestDetails) {
         this.selectedRequest = request;
         this.doctorService.cancelRequest(request.id).subscribe((res: BooleanServerResponse) => {
             if (res.success === true) {
@@ -69,7 +72,7 @@ export class MyRequestsComponent implements OnInit {
         });
     }
 
-    approveCommitment(commitment: DonationCommitment) {
+    approveCommitment(commitment: DoctorDonationCommitment) {
         this.doctorService.approveCommitment(commitment.id).subscribe((res: String) => {
             if (res !== undefined) {
                 this.proposedDonationCommitments = this.proposedDonationCommitments.filter(cmt => cmt.id !== commitment.id);
@@ -90,7 +93,7 @@ export class MyRequestsComponent implements OnInit {
         });
     }
 
-    declineCommitment(commitment: DonationCommitment) {
+    declineCommitment(commitment: DoctorDonationCommitment) {
         this.doctorService.declineCommitment(commitment.id).subscribe((res: BooleanServerResponse) => {
             if (res.success === true) {
                 this.proposedDonationCommitments = this.proposedDonationCommitments.filter(cmt => cmt.id !== commitment.id);
@@ -100,10 +103,11 @@ export class MyRequestsComponent implements OnInit {
         });
     }
 
-    markCommitmentAsArrived(commitment: DonationCommitment) {
+    markCommitmentAsArrived(commitment: DoctorDonationCommitment) {
         this.doctorService.markCommitmentAsArrived(commitment.id).subscribe((res: BooleanServerResponse) => {
             if (res.success === true) {
-                this.waitingSendDonationCommitments = this.waitingSendDonationCommitments.filter(cmt => cmt.id !== commitment.id);
+                this.sentDonationCommitments = this.sentDonationCommitments.filter(cmt => cmt.id !== commitment.id);
+                this.loadRequests();
             } else {
                 alert(res.exception);
             }
@@ -113,7 +117,7 @@ export class MyRequestsComponent implements OnInit {
     open(content, request) {
         this.selectedRequest = request;
         this.doctorService.getCommitments(request.id).subscribe(
-            (res: DonationCommitment[]) => {
+            (res: DoctorDonationCommitment[]) => {
                 res.forEach(commitment => {
                     switch (commitment.status) {
                         case 'COMMITTED_BY_DONATION_CENTER':

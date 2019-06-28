@@ -1,11 +1,11 @@
-import { BooleanServerResponse } from './../../../../../shared/models/boolean-server-response/boolean-server-response';
-import { AuthService } from './../../../../../core/auth-service/auth.service';
-import { DonationRequestDetails } from './../../../../../shared/models/donation/request-details/donation-request-details';
+import { StoredBloodLevel1 } from './../../../../../shared/models/dcp/incoming/stored-blood-level1';
+import { BooleanServerResponse } from '../../../../../shared/models/shared/boolean-server-response';
+import { AuthService } from '../../../../../core/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { ProfileData } from 'src/shared/models/profile-data/profile-data';
-import { DonationCenterService } from 'src/core/donation-center-service/donation-center.service';
-import { StoredBlood } from 'src/shared/models/donation/stored-blood/stored-blood';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DonationCenterPersonnelService } from 'src/core/donation-center-personnel.service';
+import { DcpDonationRequestDetails } from 'src/shared/models/dcp/incoming/dcp-donation-request-details';
 
 @Component({
   selector: 'app-all-requests',
@@ -14,14 +14,15 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class AllRequestsComponent implements OnInit {
 
-    requests: Array<DonationRequestDetails> = [];
-    storedBlood: Array<StoredBlood> = [];
-    filteredStoredBlood: Array<StoredBlood> = [];
-    selectedRequest: DonationRequestDetails;
+    requestsUncommitted: Array<DcpDonationRequestDetails> = [];
+    requestsCommitted: Array<DcpDonationRequestDetails> = [];
+    storedBlood: Array<StoredBloodLevel1> = [];
+    filteredStoredBlood: Array<StoredBloodLevel1> = [];
+    selectedRequest: DcpDonationRequestDetails;
 
     currentDcp: ProfileData;
 
-    constructor(private modalService: NgbModal, private authService: AuthService, private donationCenterService: DonationCenterService) { }
+    constructor(private modalService: NgbModal, private authService: AuthService, private donationCenterService: DonationCenterPersonnelService) { }
 
     ngOnInit() {
 
@@ -32,20 +33,28 @@ export class AllRequestsComponent implements OnInit {
     }
 
     loadRequests() {
-        this.donationCenterService.getBloodRequests(this.currentDcp.locationId).subscribe((res: DonationRequestDetails[]) => {
-            this.requests = res;
+        this.requestsCommitted = [];
+        this.requestsUncommitted = [];
+        this.donationCenterService.getBloodRequests(this.currentDcp.locationId).subscribe((res: DcpDonationRequestDetails[]) => {
+            res.forEach(request => {
+                if (request.hasCommitted) {
+                    this.requestsCommitted.push(request);
+                } else {
+                    this.requestsUncommitted.push(request);
+                }
+            });
         });
     }
 
     loadStoredBlood() {
-        this.donationCenterService.getBloodInDonationCenter(this.currentDcp.locationId).subscribe((res: StoredBlood[]) => {
+        this.donationCenterService.getBloodInDonationCenter(this.currentDcp.locationId).subscribe((res: StoredBloodLevel1[]) => {
             this.storedBlood = res;
         });
     }
 
     open(content, request) {
-        this.filteredStoredBlood = this.storedBlood.filter(blood => blood.component === request.component &&
-                                                                    blood.matches(request.patient.rh, request.patient.group));
+        this.filteredStoredBlood = this.storedBlood.filter(blood => blood.separatedBloodType.component === request.separatedBloodType.component);
+        this.filteredStoredBlood = this.filteredStoredBlood.filter(blood => blood.separatedBloodType.bloodType.canDonateTo(request.separatedBloodType.bloodType, request.separatedBloodType.component));
         this.selectedRequest = request;
 
         this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', centered: true, size: 'lg'}).result.then((result) => {
@@ -53,6 +62,7 @@ export class AllRequestsComponent implements OnInit {
         }, (reason) => {
             this.filteredStoredBlood = [];
             this.selectedRequest = undefined;
+            this.loadRequests();
         });
     }
 

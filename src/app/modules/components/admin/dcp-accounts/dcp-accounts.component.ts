@@ -1,7 +1,7 @@
+import { AdminDCPAccount } from '../../../../../shared/models/admin/incoming/admin-dcp-account';
+import { AdminService } from 'src/core/admin.service';
 import { Component, OnInit } from '@angular/core';
-import { AdminService } from 'src/core/admin-service/admin-service.service';
-import { DcpAccount } from 'src/shared/models/accounts/dcp-account/dcp-account';
-import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
+import { BooleanServerResponse } from 'src/shared/models/shared/boolean-server-response';
 
 @Component({
   selector: 'app-dcp-accounts',
@@ -12,18 +12,18 @@ export class DcpAccountsComponent implements OnInit {
 
     constructor(private adminService: AdminService) { }
 
-    activeDcpAccounts: DcpAccount[];
-    bannedDcpAccounts: DcpAccount[];
+    activeDcpAccounts: AdminDCPAccount[];
+    bannedDcpAccounts: AdminDCPAccount[];
 
     ngOnInit() {
         this.adminService.getDcpAccounts(true).subscribe(
-            (res: DcpAccount[]) => {
+            (res: AdminDCPAccount[]) => {
               this.activeDcpAccounts = res;
             }
         );
 
         this.adminService.getDcpAccounts(false).subscribe(
-            (res: DcpAccount[]) => {
+            (res: AdminDCPAccount[]) => {
               this.bannedDcpAccounts = res;
             }
         );

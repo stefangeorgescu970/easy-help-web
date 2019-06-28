@@ -1,5 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
+$easy-black: #120309;
+$easy-red: #C21E24;
+$easy-green: #198715;
+
 $white: #fff;
 $black: #120309;
 $primary: #fff;
@@ -12,19 +16,51 @@ $red: #7f0e24;
 $emergency: #7f0e24;
 $dark: #120309;
 $grey: #dddddd;
+
+.btn {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.btn-success {
+    background-color: $easy-green;
+    border-color: $easy-green;
+}
+
+.btn-danger {
+    background-color: $easy-red;
+    border-color: $easy-red;
+}
+
 body {
     background-color: $light-gray;
 }
 
-.navbar-nav {
-    display:inline;
+@media (min-width: 1200px) {
+    .container{
+        max-width: 1400px;
+
+        .nav-link {
+            color: white;
+        }
+    }
 }
 
-.faculty-logo {
-    width: 40px;
-    height: 40px;   
+.nav-link {
+    color: white;
 }
 
+.container{
+    .nav-link {
+        color: white;
+    }
+    .nav-link:hover {
+        text-decoration: underline;
+    }
+    .routerLinkActive {
+        text-decoration: underline;
+    }
+}
 
 .error-message {
     color: red;
@@ -41,15 +77,6 @@ body {
 .log-out:hover {
     img {
         fill: $black;
-    }
-}
-
-.nav-bar {
-    margin-bottom: 32px;
-    background-color: $light-blue;
-    .logo-div {
-        padding: 16px 0;
-        text-align: center;
     }
 }
 
@@ -105,4 +132,8 @@ body {
     /* This fills the remaining space, by using flexbox. 
        Every toolbar row uses a flexbox row layout. */
     flex: 1 1 auto;
-  }
+}
+
+.fixed-heigth-spacer {
+    min-height: 30px;
+}

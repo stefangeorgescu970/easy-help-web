@@ -11,7 +11,7 @@
     <tbody>
       <tr *ngFor="let donation of donations ; let i = index" data-="donation">
         <td class="td-name">{{ donation.donor.firstName }} {{ donation.donor.lastName }}</td>
-        <td class="td-name">{{ donation.date.toLocaleString() }}</td>
+        <td class="td-name">{{ donation.date | date: "dd-MM-yyy" }}</td>
         <td>
             <span class="btn btn-success add-button" (click)="open(content, donation)">Add Test Results</span>
         </td>
@@ -32,50 +32,71 @@
       </button>
     </div>
     <div class="modal-body">
-        <h6>Name: {{ selectedDonation.donor.firstName }} {{ selectedDonation.donor.lastName }}</h6>
+        <h5>Name: {{ selectedDonation.donor.firstName }} {{ selectedDonation.donor.lastName }}</h5>
         
-        <div *ngIf="submitted && invalid">
-            <p>All fields are required</p>
+        <div class="danger" *ngIf="submitted && invalid">
+            <p>All fields are required!</p>
         </div>
 
         <form class="form-horizontal" [formGroup]="testResultsForm">
-          
-          <div class="form-group col-md-12">
-              <label>Hepatitis B:</label>
-              <input type="radio" value="false" formControlName="hepatitisB"> Negative
-              <input type="radio" value="true" formControlName="hepatitisB"> Positive
-          </div>
+                <table class="table">
+                <thead>
+                        <tr>
+                          <th scope="col" class="th-name">Test</th>
+                          <th scope="col" class="th-name">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="td-name text-center">Hepatitis B</td>
+                          <td class="td-name">
+                                <input type="radio" value="false" formControlName="hepatitisB"> Negative
+                                <input type="radio" value="true" formControlName="hepatitisB"> Positive
+                          </td>
+                        </tr>
 
-          <div class="form-group col-md-12">
-            <label>Hepatitis C:</label>
-            <input type="radio" value="false" formControlName="hepatitisC" ngModel> Negative
-            <input type="radio" value="true" formControlName="hepatitisC" ngModel> Positive
-        </div>
-      
-        <div class="form-group col-md-12">
-            <label>HIV:</label>
-            <input type="radio" value="false" formControlName="hiv" ngModel> Negative
-            <input type="radio" value="true" formControlName="hiv" ngModel> Positive
-        </div>
+                        <tr>
+                                <td class="td-name text-center">Hepatitis C</td>
+                                <td class="td-name">
+                                      <input type="radio" value="false" formControlName="hepatitisC"> Negative
+                                      <input type="radio" value="true" formControlName="hepatitisC"> Positive
+                                </td>
+                        </tr>
 
-        <div class="form-group col-md-12">
-            <label>HTLV:</label>
-            <input type="radio" value="false" formControlName="htlv" ngModel> Negative
-            <input type="radio" value="true" formControlName="htlv" ngModel> Positive
-        </div>
+                        <tr>
+                                <td class="td-name text-center">HIV</td>
+                                <td class="td-name">
+                                      <input type="radio" value="false" formControlName="hiv"> Negative
+                                      <input type="radio" value="true" formControlName="hiv"> Positive
+                                </td>
+                        </tr>
 
-        <div class="form-group col-md-12">
-            <label>VDRL:</label>
-            <input type="radio" value="false" formControlName="vdrl" ngModel> Negative
-            <input type="radio" value="true" formControlName="vdrl" ngModel> Positive
-        </div>
 
-        <div class="form-group col-md-12">
-            <label>ALT:</label>
-            <input type="radio" value="false" formControlName="alt" ngModel> Negative
-            <input type="radio" value="true" formControlName="alt" ngModel> Positive
-        </div>
+                        <tr>
+                                <td class="td-name text-center">HTLV</td>
+                                <td class="td-name">
+                                      <input type="radio" value="false" formControlName="htlv"> Negative
+                                      <input type="radio" value="true" formControlName="htlv"> Positive
+                                </td>
+                        </tr>
 
+                        <tr>
+                                <td class="td-name text-center">VDRL</td>
+                                <td class="td-name">
+                                      <input type="radio" value="false" formControlName="vdrl"> Negative
+                                      <input type="radio" value="true" formControlName="vdrl"> Positive
+                                </td>
+                        </tr>
+
+                        <tr>
+                                <td class="td-name text-center">ALT</td>
+                                <td class="td-name">
+                                      <input type="radio" value="false" formControlName="alt"> Negative
+                                      <input type="radio" value="true" formControlName="alt"> Positive
+                                </td>
+                        </tr>
+                      </tbody>
+                    </table>
         </form>
 
     </div>

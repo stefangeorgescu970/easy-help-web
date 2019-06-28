@@ -1,10 +1,11 @@
+import { AdminDonationCenter } from './../../../../../shared/models/admin/incoming/admin-donation-center';
+import { IdResponse } from './../../../../../shared/models/shared/id-response';
+import { ExtendedLocation } from './../../../../../shared/models/shared/extended-location';
+import { AdminService } from 'src/core/admin.service';
 import { Component, OnInit } from '@angular/core';
-import { DonationCenterService } from 'src/core/donation-center-service/donation-center.service';
-import { RealLocation } from 'src/shared/models/locations/real-location';
-import { EnumsService } from 'src/core/enums-service/enums-service';
+import { EnumsService } from 'src/core/enums-service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { LocationResponse } from 'src/shared/models/locations/location-response';
-import { BooleanServerResponse } from 'src/shared/models/boolean-server-response/boolean-server-response';
+import { BooleanServerResponse } from 'src/shared/models/shared/boolean-server-response';
 
 @Component({
   selector: 'app-donation-centers',
@@ -13,17 +14,17 @@ import { BooleanServerResponse } from 'src/shared/models/boolean-server-response
 })
 export class DonationCentersComponent implements OnInit {
 
-    constructor(private donationCenterService: DonationCenterService, private enumService : EnumsService) { }
+    constructor(private adminService: AdminService, private enumService: EnumsService) { }
 
-    donationCenters: RealLocation[];
+    donationCenters: AdminDonationCenter[];
     donationCenterForm: FormGroup;
     counties: string[];
 
     ngOnInit() {
       const formBuilder = new FormBuilder();
-      
-      this.donationCenterService.getDonationCenters().subscribe(
-            (res: RealLocation[]) => {
+
+      this.adminService.getDonationCenters().subscribe(
+            (res: AdminDonationCenter[]) => {
               this.donationCenters = res;
             }
         );
@@ -37,7 +38,9 @@ export class DonationCentersComponent implements OnInit {
           address: ['', Validators.required],
           latitude: ['', Validators.required],
           longitude: ['', Validators.required],
-          county: ['', Validators.required]
+          county: ['', Validators.required],
+          phone: ['', Validators.required],
+          numberOfConcurrentDonors: ['', Validators.required]
         });
     }
 
@@ -49,18 +52,27 @@ export class DonationCentersComponent implements OnInit {
 
  addDonationCenter() {
    const donationCenter = this.donationCenterForm.value;
-   this.donationCenterService.addDonationCenter(donationCenter).subscribe(
-     (res: LocationResponse) => {
-       if(res.success){
-         this.donationCenters.push(res.model);
-       }else{
-         alert(res.exception)
-       } 
+   this.adminService.addDonationCenter(donationCenter).subscribe(
+     (res: IdResponse) => {
+       if (res.success) {
+            const newDC = new AdminDonationCenter();
+            newDC.id = res.newId;
+            newDC.address = donationCenter.address;
+            newDC.county = donationCenter.county;
+            newDC.latitude = donationCenter.latitude;
+            newDC.longitude = donationCenter.longitude;
+            newDC.name = donationCenter.name;
+            newDC.phone = donationCenter.phone;
+            newDC.numberOfConcurrentDonors = donationCenter.numberOfConcurrentDonors;
+            this.donationCenters.push(newDC);
+       } else {
+         alert(res.exception);
+       }
      } );
    }
 
    removeDonationCenter(centerId: number, index : number) {
-     this.donationCenterService.removeDonationCenter(centerId)
+     this.adminService.removeDonationCenter(centerId)
        .subscribe((res: BooleanServerResponse) => {
          if (res.success === true){
            this.donationCenters.splice(index, 1);
