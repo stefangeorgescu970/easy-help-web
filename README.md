@@ -1,7 +1,7 @@
 
 # EasyHelpWeb
 
-This project represents part of the Bachelor Thesis I have developed in collaboration with [Adrian Moldovan](https://github.com/AdrianMoldovan97). The web application found in this repository is the result of combined work.
+This project represents part of the Bachelor Thesis I have developed in collaboration with [Adrian Moldovan](https://github.com/AdrianMoldovan97). The web application found in this repository is the result of our combined work.
 
 More information on the project together with the Paper I authored related to this and other parts of the system can be found [on my website](http://stefangeorgescu.com/thesis.html).
 
