@@ -1,5 +1,11 @@
+
 # EasyHelpWeb
 
+This project represents part of the Bachelor Thesis I have developed in collaboration with [Adrian Moldovan](https://github.com/AdrianMoldovan97). The web application found in this repository is represents the work of both of us.
+
+More information on the project together with the Paper I authored related to this and other parts of the system can be found [on my website](http://stefangeorgescu.com/thesis.html).
+
+# Project Information
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.5.
 
 ## Development server
